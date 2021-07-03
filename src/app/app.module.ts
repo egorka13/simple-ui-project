@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { LibraryModule } from './library/library.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ButtonComponent } from './library/button/button.component';
 
 @NgModule({
     declarations: [
-        AppComponent,
-        ButtonComponent
+        AppComponent
     ],
     imports: [
+        LibraryModule,
         BrowserModule,
         AppRoutingModule
     ],
