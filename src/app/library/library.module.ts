@@ -3,10 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from './components/button/button.component';
+import { ResultComponent } from './components/result/result.component';
 
 @NgModule({
     declarations: [
-        ButtonComponent
+        ButtonComponent,
+        ResultComponent
     ],
     imports: [
         BrowserModule,
@@ -14,7 +16,8 @@ import { ButtonComponent } from './components/button/button.component';
         CommonModule
     ],
     exports: [
-        ButtonComponent
+        ButtonComponent,
+        ResultComponent
     ],
     providers: []
 })
