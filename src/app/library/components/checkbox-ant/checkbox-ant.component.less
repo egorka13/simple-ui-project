@@ -1,0 +1,102 @@
+@import '../../assets/styles/base.less';
+
+.checkbox-ant {
+    //.checkbox-ant__input
+    &__input {
+        position: absolute;
+        opacity: 0;
+        z-index: -1;
+    }
+
+    //.checkbox-ant__label
+    &__label {
+        cursor: pointer;
+
+        display: inline-flex;
+        align-items: center;
+    }
+
+    &__label:hover > &__box {
+        border: 1px solid @lib-active-blue;
+    }
+
+    //.checkbox-ant__box
+    &__box {
+        margin-right: 10px;
+        position: relative;
+
+        height: 18px;
+        width: 18px;
+
+        border: 1px solid lightgray;
+        border-radius: 2px;
+
+        transition: all 0.3s;
+
+        //.checkbox-ant__box::before
+        &::before {
+            content: ' ';
+
+            height: 60%;
+            width: 40%;
+
+            position: absolute;
+            top: 50%;
+            left: 21%;
+            opacity: 0;
+
+            border-bottom: 2px solid white;
+            border-right: 2px solid white;
+
+            transform: rotate(45deg) scale(0) translate(-50%, -50%);
+            transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+        }
+
+        //.checkbox-ant__box::after
+        &::after {
+            content: ' ';
+
+            height: 18px;
+            width: 18px;
+
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            opacity: 0;
+
+            border: 1px solid @lib-active-blue;
+            border-radius: inherit;
+        }
+    }
+
+    //.checkbox-ant__input:checked + .checkbox-ant__box
+    &__input:checked + &__box {
+        background-color: @lib-active-blue;
+        border: 1px solid @lib-active-blue;
+
+        //.checkbox-ant__input:checked + .checkbox-ant__box::before
+        &::before {
+            content: ' ';
+
+            opacity: 1;
+
+            transform: rotate(45deg) scale(1) translate(-50%, -50%);
+        }
+
+        //.checkbox-ant__input:checked + .checkbox-ant__box::after
+        &::after {
+            animation: vanishingBorder 0.36s ease-in-out;
+        }
+    }
+}
+
+@keyframes vanishingBorder {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.6);
+        opacity: 0;
+    }
+}
