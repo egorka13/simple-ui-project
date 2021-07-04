@@ -8,4 +8,10 @@ import { Component, Input } from '@angular/core';
 export class CheckboxAntComponent {
     @Input()
     labelText: string = 'Chechbox-ant';
+
+    @Input()
+    isDisabled: string = 'false';
+
+    @Input()
+    isChecked: string = '';
 }
