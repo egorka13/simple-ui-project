@@ -8,6 +8,7 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { ResultComponent } from './components/result/result.component';
 import { InputComponent } from './components/input/input.component';
 import { InputNumberComponent } from './components/input-number/input-number.component';
+import { SliderComponent } from './components/slider/slider.component';
 
 @NgModule({
     declarations: [
@@ -15,7 +16,8 @@ import { InputNumberComponent } from './components/input-number/input-number.com
         CheckboxComponent,
         ResultComponent,
         InputComponent,
-        InputNumberComponent
+        InputNumberComponent,
+        SliderComponent
     ],
     imports: [
         BrowserModule,
@@ -27,7 +29,8 @@ import { InputNumberComponent } from './components/input-number/input-number.com
         CheckboxComponent,
         ResultComponent,
         InputComponent,
-        InputNumberComponent
+        InputNumberComponent,
+        SliderComponent
     ],
     providers: []
 })
