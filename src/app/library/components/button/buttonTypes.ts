@@ -1,0 +1,1 @@
+export type buttonType = undefined | 'primary' | 'dashed' | 'text' | 'link';

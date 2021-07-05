@@ -1,1 +1,4 @@
-<button>Click me!</button>
+<button
+    [ngClass]="['button', typeModifier, sizeModifier]"
+    (click)="handleClick($event)"
+    (animationend)="handleAnimationEnd($event)">{{ innerText }}</button>
