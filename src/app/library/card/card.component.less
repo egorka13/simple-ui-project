@@ -1,0 +1,53 @@
+.card{
+    font-family: -apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
+    width: 300px;
+    color: #000000d9;
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    font-feature-settings: "tnum";
+    position: relative;
+    background: #fff;
+    border-radius: 2px;
+    border: 1px solid #f0f0f0;
+    &__header{
+        display: flex;
+        align-items: center;
+        min-height: 48px;
+        margin-bottom: -1px;
+        padding: 0 24px;
+        font-weight: 500;
+        font-size: 16px;
+        background: 0 0;
+        border-bottom: 1px solid #f0f0f0;
+        border-radius: 2px 2px 0 0;
+        &-title{
+            display: inline-block;
+            flex: 1;
+            padding: 16px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        &-extra{
+            padding: 16px 0;
+            font-weight: 400;
+            font-size: 14px;
+            & a {
+                color: #1890ff;
+                text-decoration: none;
+                background-color: transparent;
+                outline: none;
+                cursor: pointer;
+                transition: color .3s ease;
+                &:hover{
+                    color: #40a9ff;
+                }
+            }
+        }
+    }
+    &__content{
+        padding: 24px;
+    }
+}
