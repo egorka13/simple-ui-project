@@ -1,0 +1,35 @@
+.input-ant__input {
+    padding: 4px 11px;
+
+    border: 1px solid hsl(0deg, 0%, 85%);
+    border-radius: 2px;
+    background-color: white;
+
+    line-height: 1.5;
+    font-size: 1rem;
+
+    transition: all 0.3s;
+
+    &:hover,
+    &:focus {
+        border-color: hsl(209deg 100% 63%);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 2px hsla(209deg, 100%, 55%, 20%);
+    }
+
+    &::placeholder {
+        color: hsl(0deg, 0%, 75%);
+    }
+
+    &._large {
+        padding: 6.5px 11px;
+        font-size: 1.1rem;
+    }
+
+    &._small {
+        padding: 0 7px;
+        font-size: 0.9rem;
+    }
+}
