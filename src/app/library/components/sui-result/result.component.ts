@@ -31,7 +31,7 @@ export class ResultComponent implements OnInit {
 
     ngOnInit(): void {
         this.generalType = this.types[this.type] || this.type;
-        this.generalCurType = this.checkValidType(this.types[this.type]) ? this.type : '';
+        this.generalCurType = this.checkValidType(this.types[this.type]) ? `_${this.type}` : '';
         this.generalCurAlt = this.checkValidType(this.types[this.type])
             ? `here ${this.type} image`
             : `${this.title} image`;
