@@ -1,0 +1,38 @@
+.slider {
+    &__standart {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20%;
+        box-sizing: border-box;
+    }
+
+    &__obj {
+        position: relative;
+        height: 34px;
+        -webkit-appearance: none;
+        margin: 10px 0;
+        width: 50%;
+        //Scroll line
+        &::-webkit-slider-runnable-track {
+            height: 4px;
+            //the first digit corresponds to the progress of the strip
+            background:white;
+            background: conic-gradient(from 90deg at 100% 0%, #f5f5f5 0deg, #91d5ff 210deg, #f5f5f5 360deg), #f5f5f5;
+            border-radius: 10px;
+        }
+
+        //Scroll thumb
+        &::-webkit-slider-thumb {
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #91d5ff;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -5px;
+        }
+    }
+}
