@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { resultTypes, TypeResults } from './resultTypes';
 
 @Component({
-    selector: 'app-result',
+    selector: 'sui-result',
     templateUrl: './result.component.html',
     styleUrls: ['./result.component.less'],
 })

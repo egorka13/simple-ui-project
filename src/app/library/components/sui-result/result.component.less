@@ -1,0 +1,155 @@
+//Icon params
+@lowIcoResolution: 64px;
+@highIcoWidth: 251px;
+@highIcoHeight: 294px;
+
+//Title params
+@mainTitleColor: #000000d9;
+@subTitleColor: #00000073;
+@mainFont: Arial, Helvetica, sans-serif;
+@mainTitleSize: 24px;
+
+//Button params (general)
+@shadow: 0 2px #00000004;
+@generalColor: #1890ff;
+@generalColorHover: #40a9ff;
+
+//Button params (additional)
+@resultCadditionalBack: #fff;
+@resultCadditionalBorder: #d9d9d9;
+
+//Links
+@resultClinksColor: white;
+
+.sui-result {
+    display: flex;
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    &__image {
+        &-ico._success {
+            width: @lowIcoResolution;
+            height: @lowIcoResolution;
+        }
+
+        &-ico._info {
+            width: @lowIcoResolution;
+            height: @lowIcoResolution;
+        }
+
+        &-ico._warning {
+            width: @lowIcoResolution;
+            height: @lowIcoResolution;
+        }
+
+        &-ico._error {
+            width: @lowIcoResolution;
+            height: @lowIcoResolution;
+        }
+
+        &-ico._403 {
+            width: @highIcoWidth;
+            height: @highIcoHeight;
+        }
+
+        &-ico._404 {
+            width: @highIcoWidth;
+            height: @highIcoHeight;
+        }
+
+        &-ico._500 {
+            width: @highIcoWidth;
+            height: @highIcoHeight;
+        }
+    }
+
+    &__information {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        gap: 2px;
+        font-family: @mainFont;
+
+        &-title {
+            color: @mainTitleColor;
+            font-size: @mainTitleSize;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        &-subtitle {
+            color: @subTitleColor;
+            font-size: 14px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+    }
+
+    &__navigation {
+        display: flex;
+        gap: 10px;
+
+        &-btn {
+            line-height: 1.5715;
+            position: relative;
+            display: inline-block;
+            font-weight: 400;
+            white-space: nowrap;
+            text-align: center;
+            background-image: none;
+            border: 1px solid transparent;
+            box-shadow: @shadow;
+            cursor: pointer;
+            transition: all .3s cubic-bezier(.645, .045, .355, 1);
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            touch-action: manipulation;
+            height: 32px;
+            padding: 4px 15px;
+            font-size: 14px;
+            border-radius: 2px;
+            background: @resultCadditionalBack;
+            border-color: @resultCadditionalBorder;
+
+            &:hover {
+                border-color: @generalColorHover;
+            }
+
+            &._general {
+                background: @generalColor;
+
+                &:hover {
+                    background: @generalColorHover;
+                }
+            }
+        }
+
+        &-link {
+            text-decoration: none;
+            color: @mainTitleColor;
+            transition: all .3s cubic-bezier(.645, .045, .355, 1);
+
+            &._general {
+                color: @resultClinksColor;
+
+                &:hover {
+                    color: @resultClinksColor;
+                }
+            }
+
+            &:active {
+                text-decoration: none;
+            }
+
+            &:hover {
+                color: @generalColorHover;
+            }
+        }
+    }
+}

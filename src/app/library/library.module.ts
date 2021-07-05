@@ -3,12 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from './components/button/button.component';
-import { ResultComponent } from './components/result/result.component';
+import { ResultComponent } from './components/sui-result/result.component';
+import { SliderComponent } from './components/sui-slider/slider.component';
 
 @NgModule({
     declarations: [
         ButtonComponent,
-        ResultComponent
+        ResultComponent,
+        SliderComponent
     ],
     imports: [
         BrowserModule,
@@ -17,7 +19,8 @@ import { ResultComponent } from './components/result/result.component';
     ],
     exports: [
         ButtonComponent,
-        ResultComponent
+        ResultComponent,
+        SliderComponent
     ],
     providers: []
 })

@@ -1,0 +1,19 @@
+<div class="sui-result">
+    <div class="sui-result__wrapper">
+        <div class="sui-result__image">
+            <img class="sui-result__image-ico {{generalCurType}}" src="{{ generalType }}" alt={{generalCurAlt}} />
+        </div>
+        <div class="sui-result__information">
+            <h1 class="sui-result__information-title">{{ title }}</h1>
+            <h2 *ngIf="subtitle" class="sui-result__information-subtitle">{{ subtitle }}</h2>
+        </div>
+        <div class="sui-result__navigation">
+            <button class="sui-result__navigation-btn _general">
+                <a class="sui-result__navigation-link _general" href="{{ hrefGeneral[0] }}">{{ hrefGeneral[1] }}</a>
+            </button>
+            <button *ngIf="hrefAdditional" class="sui-result__navigation-btn">
+                <a class="sui-result__navigation-link" href="{{ hrefAdditional[0] }}">{{ hrefAdditional[1] }}</a>
+            </button>
+        </div>
+    </div>
+</div>
