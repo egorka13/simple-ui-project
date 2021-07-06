@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { resultTypes, TypeResults } from './result.model';
-import { ResultTitlesStyles } from "./font.model";
+import { ResultTitlesStyles } from './font.model';
 
 @Component({
     selector: 'sui-result',
@@ -74,7 +74,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
     /**
      * A method that checks all input type (@see resultTypes). Sets values according to input parameters
      */
-    initInputTypesCheck():void{
+    initInputTypesCheck(): void {
         this.generalType = this.types[this.type] || this.type;
         this.generalCurType = this.checkValidType(this.types[this.type]) ? `_${this.type}` : '';
         this.generalCurAlt = this.checkValidType(this.types[this.type])
@@ -115,19 +115,19 @@ export class ResultComponent implements OnInit, AfterViewInit {
      * @param data - original input  @see title
      * @returns styles object for the heading if the input parameter exists
      */
-    setFontStyles(data?:string[]):ResultTitlesStyles{
-        if(data){
+    setFontStyles(data?: string[]): ResultTitlesStyles {
+        if (data) {
             const fontFamily = data[1];
             const fontColor = data[2];
             const fontSize = data[3];
-            let result:ResultTitlesStyles = {};
-            if(fontFamily){
+            let result: ResultTitlesStyles = {};
+            if (fontFamily) {
                 result['font-family'] = fontFamily;
             }
-            if(fontColor){
+            if (fontColor) {
                 result['color'] = fontColor;
             }
-            if(fontSize){
+            if (fontSize) {
                 result['font-size'] = fontSize;
             }
             return result;
