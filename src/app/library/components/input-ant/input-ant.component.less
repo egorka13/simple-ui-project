@@ -1,7 +1,9 @@
+@import '../../assets/styles/';
+
 .input-ant__input {
     padding: 4px 11px;
 
-    border: 1px solid hsl(0deg, 0%, 85%);
+    border: 1px solid @lib-grey;
     border-radius: 2px;
     background-color: white;
 
@@ -12,15 +14,15 @@
 
     &:hover,
     &:focus {
-        border-color: hsl(209deg 100% 63%);
+        border-color: lighten(@lib-active-blue, 8%);
     }
 
     &:focus {
-        box-shadow: 0 0 0 2px hsla(209deg, 100%, 55%, 20%);
+        box-shadow: 0 0 0 2px fade(@lib-active-blue, 20%);
     }
 
     &::placeholder {
-        color: hsl(0deg, 0%, 75%);
+        color: darken(@lib-grey, 10%);
     }
 
     &._large {

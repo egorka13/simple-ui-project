@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { SizeType } from './input-ant.model';
+import { SizeModifierType } from './input-ant.model';
 
 @Component({
-    selector: 'app-input-ant',
+    selector: 'sui-input-ant',
     templateUrl: './input-ant.component.html',
     styleUrls: ['./input-ant.component.less'],
 })
@@ -11,5 +11,5 @@ export class InputAntComponent {
     placeholder: string = 'input text';
 
     @Input()
-    sizeModificator: SizeType = '';
+    sizeModifier: SizeModifierType = '';
 }
