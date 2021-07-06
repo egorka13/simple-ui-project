@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { resultTypes, TypeResults } from './result.model';
+import { ResultTitlesStyles } from "./font.model";
 
 @Component({
     selector: 'sui-result',
@@ -18,11 +19,27 @@ export class ResultComponent implements OnInit, AfterViewInit {
     @ViewChild('additionalBtn')
     additionalBtnEdentifier: ElementRef;
 
-    @Input()
-    title: string = "Here's sample title";
+    @ViewChild('resultTitle')
+    resultTitle: ElementRef;
 
+    @ViewChild('resultSubTitle')
+    resultSubTitle: ElementRef;
+
+    //An input parameter responsible for setting the component headers
+    /**
+     * @param first - Responsible for title text
+     * @param second - Responsible for title font-family style
+     * @param third - Responsible for title font-color style
+     * @param fourth - Responsible for title font-size style (e.g 24px or .5em or other)
+     */
     @Input()
-    subtitle?: string;
+    title: string[] = ["Here's sample title", '', '', ''];
+
+    /**
+     * @see title
+     */
+    @Input()
+    subtitle?: string[];
 
     @Input()
     type: string = 'success';
@@ -50,8 +67,8 @@ export class ResultComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
         //Required Styles on Buttons
-        this.setButtonColor(this.hrefGeneral, this.generalBtnEdentifier);
-        this.setButtonColor(this.hrefAdditional, this.additionalBtnEdentifier);
+        this.setButtonStyles(this.hrefGeneral, this.generalBtnEdentifier);
+        this.setButtonStyles(this.hrefAdditional, this.additionalBtnEdentifier);
     }
 
     /**
@@ -79,7 +96,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
      * @param data original array with values  (@see hrefGeneral) or (@see hrefAdditional)
      * @param element original button element  (@see generalBtnEdentifier) or (@see additionalBtnEdentifier)
      */
-    setButtonColor(data?: string[], element?: ElementRef): void {
+    setButtonStyles(data?: string[], element?: ElementRef): void {
         if (element && data) {
             if (data[2] !== '' && data[2] !== undefined) {
                 element.nativeElement.style.background = data[2];
@@ -91,5 +108,30 @@ export class ResultComponent implements OnInit, AfterViewInit {
                 element.nativeElement.childNodes[0].style.color = data[4];
             }
         }
+    }
+
+    /**
+     * The method responsible for converting the header styles of the component
+     * @param data - original input  @see title
+     * @returns styles object for the heading if the input parameter exists
+     */
+    setFontStyles(data?:string[]):ResultTitlesStyles{
+        if(data){
+            const fontFamily = data[1];
+            const fontColor = data[2];
+            const fontSize = data[3];
+            let result:ResultTitlesStyles = {};
+            if(fontFamily){
+                result['font-family'] = fontFamily;
+            }
+            if(fontColor){
+                result['color'] = fontColor;
+            }
+            if(fontSize){
+                result['font-size'] = fontSize;
+            }
+            return result;
+        }
+        return {};
     }
 }

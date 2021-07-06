@@ -4,8 +4,8 @@
             <img class="sui-result__image-ico {{generalCurType}}" src="{{ generalType }}" alt={{generalCurAlt}} />
         </div>
         <div class="sui-result__information">
-            <h1 class="sui-result__information-title">{{ title }}</h1>
-            <h2 *ngIf="subtitle" class="sui-result__information-subtitle">{{ subtitle }}</h2>
+            <h1 #resultTitle class="sui-result__information-title" [ngStyle]="setFontStyles(title)">{{ title[0] }}</h1>
+            <h2 #resultSubTitle *ngIf="subtitle" class="sui-result__information-subtitle" [ngStyle]="setFontStyles(subtitle)">{{ subtitle[0] }}</h2>
         </div>
         <div class="sui-result__navigation">
             <button #generalBtn class="sui-result__navigation-btn _general">
