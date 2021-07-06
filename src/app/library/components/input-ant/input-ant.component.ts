@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SizeType } from './inputAntTypes';
+import { SizeType } from './input-ant.model';
 
 @Component({
     selector: 'app-input-ant',
