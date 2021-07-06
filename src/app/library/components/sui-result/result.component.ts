@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { resultTypes, TypeResults } from './resultTypes';
+import { resultTypes, TypeResults } from './result.model';
 
 @Component({
     selector: 'sui-result',
