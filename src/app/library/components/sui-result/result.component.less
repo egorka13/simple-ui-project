@@ -1,28 +1,29 @@
 //Icon params
-@lowIcoResolution: 64px;
-@highIcoWidth: 251px;
-@highIcoHeight: 294px;
+@sui-resultC-lowIcoResolution: 64px;
+@sui-resultC-lhighIcoWidth: 251px;
+@sui-resultC-highIcoHeight: 294px;
 
 //Title params
-@mainTitleColor: #000000d9;
-@subTitleColor: #00000073;
-@mainFont: Arial, Helvetica, sans-serif;
-@mainTitleSize: 24px;
+@sui-resultC-mainTitleColor: #000000d9;
+@sui-resultC-subTitleColor: #00000073;
+@sui-resultC-mainFont: Arial, Helvetica, sans-serif;
+@sui-resultC-mainTitleSize: 24px;
 
 //Button params (general)
-@shadow: 0 2px #00000004;
-@generalColor: #1890ff;
-@generalColorHover: #40a9ff;
+@sui-resultC-shadow: 0 2px #00000004;
+@sui-resultC-generalColor: #1890ff;
+@sui-resultC-generalColorHover: #40a9ff;
 
 //Button params (additional)
-@resultCadditionalBack: #fff;
-@resultCadditionalBorder: #d9d9d9;
+@sui-resultC-additionalBack: #fff;
+@sui-resultC-additionalBorder: #d9d9d9;
 
 //Links
-@resultClinksColor: white;
+@sui-resultC-linksColor: white;
 
 .sui-result {
     display: inline-block;
+
     &__wrapper {
         display: flex;
         flex-direction: column;
@@ -32,38 +33,38 @@
 
     &__image {
         &-ico._success {
-            width: @lowIcoResolution;
-            height: @lowIcoResolution;
+            width: @sui-resultC-lowIcoResolution;
+            height: @sui-resultC-lowIcoResolution;
         }
 
         &-ico._info {
-            width: @lowIcoResolution;
-            height: @lowIcoResolution;
+            width: @sui-resultC-lowIcoResolution;
+            height: @sui-resultC-lowIcoResolution;
         }
 
         &-ico._warning {
-            width: @lowIcoResolution;
-            height: @lowIcoResolution;
+            width: @sui-resultC-lowIcoResolution;
+            height: @sui-resultC-lowIcoResolution;
         }
 
         &-ico._error {
-            width: @lowIcoResolution;
-            height: @lowIcoResolution;
+            width: @sui-resultC-lowIcoResolution;
+            height: @sui-resultC-lowIcoResolution;
         }
 
         &-ico._403 {
-            width: @highIcoWidth;
-            height: @highIcoHeight;
+            width: @sui-resultC-lhighIcoWidth;
+            height: @sui-resultC-highIcoHeight;
         }
 
         &-ico._404 {
-            width: @highIcoWidth;
-            height: @highIcoHeight;
+            width: @sui-resultC-lhighIcoWidth;
+            height: @sui-resultC-highIcoHeight;
         }
 
         &-ico._500 {
-            width: @highIcoWidth;
-            height: @highIcoHeight;
+            width: @sui-resultC-lhighIcoWidth;
+            height: @sui-resultC-highIcoHeight;
         }
     }
 
@@ -72,17 +73,17 @@
         flex-direction: column;
         text-align: center;
         gap: 2px;
-        font-family: @mainFont;
+        font-family: @sui-resultC-mainFont;
 
         &-title {
-            color: @mainTitleColor;
-            font-size: @mainTitleSize;
+            color: @sui-resultC-mainTitleColor;
+            font-size: @sui-resultC-mainTitleSize;
             line-height: 1.8;
             font-weight: 300;
         }
 
         &-subtitle {
-            color: @subTitleColor;
+            color: @sui-resultC-subTitleColor;
             font-size: 14px;
             line-height: 1.6;
             font-weight: 300;
@@ -102,7 +103,7 @@
             text-align: center;
             background-image: none;
             border: 1px solid transparent;
-            box-shadow: @shadow;
+            box-sui-resultC-shadow: @sui-resultC-shadow;
             cursor: pointer;
             transition: all .3s cubic-bezier(.645, .045, .355, 1);
             -webkit-user-select: none;
@@ -114,32 +115,36 @@
             padding: 4px 15px;
             font-size: 14px;
             border-radius: 2px;
-            background: @resultCadditionalBack;
-            border-color: @resultCadditionalBorder;
+            background: @sui-resultC-additionalBack;
+            border-color: @sui-resultC-additionalBorder;
 
             &:hover {
-                border-color: @generalColorHover;
+                border-color: @sui-resultC-generalColorHover;
+            }
+
+            &:focus {
+                outline: 1px solid @sui-resultC-generalColor;
             }
 
             &._general {
-                background: @generalColor;
+                background: @sui-resultC-generalColor;
 
                 &:hover {
-                    background: @generalColorHover;
+                    background: @sui-resultC-generalColorHover;
                 }
             }
         }
 
         &-link {
             text-decoration: none;
-            color: @mainTitleColor;
+            color: @sui-resultC-mainTitleColor;
             transition: all .3s cubic-bezier(.645, .045, .355, 1);
 
             &._general {
-                color: @resultClinksColor;
+                color: @sui-resultC-linksColor;
 
                 &:hover {
-                    color: @resultClinksColor;
+                    color: @sui-resultC-linksColor;
                 }
             }
 
@@ -148,7 +153,7 @@
             }
 
             &:hover {
-                color: @generalColorHover;
+                color: @sui-resultC-generalColorHover;
             }
         }
     }

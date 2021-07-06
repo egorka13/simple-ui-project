@@ -8,10 +8,10 @@
             <h2 *ngIf="subtitle" class="sui-result__information-subtitle">{{ subtitle }}</h2>
         </div>
         <div class="sui-result__navigation">
-            <button class="sui-result__navigation-btn _general">
+            <button #generalBtn class="sui-result__navigation-btn _general">
                 <a class="sui-result__navigation-link _general" href="{{ hrefGeneral[0] }}">{{ hrefGeneral[1] }}</a>
             </button>
-            <button *ngIf="hrefAdditional" class="sui-result__navigation-btn">
+            <button #additionalBtn *ngIf="hrefAdditional" class="sui-result__navigation-btn">
                 <a class="sui-result__navigation-link" href="{{ hrefAdditional[0] }}">{{ hrefAdditional[1] }}</a>
             </button>
         </div>
