@@ -14,10 +14,10 @@ export class ResultComponent implements OnInit, AfterViewInit {
     generalCurAlt: string = '';
 
     @ViewChild('generalBtn')
-    generalBtnEdentifier: ElementRef;
+    generalBtnIdentifier: ElementRef;
 
     @ViewChild('additionalBtn')
-    additionalBtnEdentifier: ElementRef;
+    additionalBtnIdentifier: ElementRef;
 
     @ViewChild('resultTitle')
     resultTitle: ElementRef;
@@ -67,8 +67,8 @@ export class ResultComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
         //Required Styles on Buttons
-        this.setButtonStyles(this.hrefGeneral, this.generalBtnEdentifier);
-        this.setButtonStyles(this.hrefAdditional, this.additionalBtnEdentifier);
+        this.setButtonStyles(this.hrefGeneral, this.generalBtnIdentifier);
+        this.setButtonStyles(this.hrefAdditional, this.additionalBtnIdentifier);
     }
 
     /**
@@ -94,7 +94,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
     /**
      * The method responsible for changing the button styles (background, border color, text color)
      * @param data original array with values  (@see hrefGeneral) or (@see hrefAdditional)
-     * @param element original button element  (@see generalBtnEdentifier) or (@see additionalBtnEdentifier)
+     * @param element original button element  (@see generalBtnIdentifier) or (@see additionalBtnIdentifier)
      */
     setButtonStyles(data?: string[], element?: ElementRef): void {
         if (element && data) {
@@ -117,9 +117,9 @@ export class ResultComponent implements OnInit, AfterViewInit {
      */
     setFontStyles(data?: string[]): ResultTitlesStyles {
         if (data) {
-            const fontFamily = data[1];
-            const fontColor = data[2];
-            const fontSize = data[3];
+            const fontFamily:string = data[1];
+            const fontColor:string = data[2];
+            const fontSize:string = data[3];
             let result: ResultTitlesStyles = {};
             if (fontFamily) {
                 result['font-family'] = fontFamily;

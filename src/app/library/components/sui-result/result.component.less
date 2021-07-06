@@ -102,8 +102,8 @@
             white-space: nowrap;
             text-align: center;
             background-image: none;
-            border: 1px solid transparent;
-            box-sui-resultC-shadow: @sui-resultC-shadow;
+            border: 1px solid @sui-resultC-additionalBorder;
+            box-shadow: @sui-resultC-shadow;
             cursor: pointer;
             transition: all .3s cubic-bezier(.645, .045, .355, 1);
             -webkit-user-select: none;
@@ -116,7 +116,6 @@
             font-size: 14px;
             border-radius: 2px;
             background: @sui-resultC-additionalBack;
-            border-color: @sui-resultC-additionalBorder;
 
             &:hover {
                 border-color: @sui-resultC-generalColorHover;
