@@ -1,0 +1,37 @@
+@import 'colors.less';
+
+.input__input-field {
+    padding: 4px 11px;
+
+    border: 1px solid @lib-grey;
+    border-radius: 2px;
+    background-color: white;
+
+    line-height: 1.5;
+    font-size: 1rem;
+
+    transition: all 0.3s;
+
+    &:hover,
+    &:focus {
+        border-color: lighten(@lib-active-blue, 8%);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 2px fade(@lib-active-blue, 20%);
+    }
+
+    &::placeholder {
+        color: darken(@lib-grey, 10%);
+    }
+
+    &._large {
+        padding: 6.5px 11px;
+        font-size: 1.1rem;
+    }
+
+    &._small {
+        padding: 0 7px;
+        font-size: 0.9rem;
+    }
+}
