@@ -2,9 +2,11 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.2.
 
-## Development server
+## Development process
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+1. Run `ng serve` to start a dev server.
+2. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+3. If you want to add new library component - please add it to the **app/library/components** folder
 
 ## Code scaffolding
 
