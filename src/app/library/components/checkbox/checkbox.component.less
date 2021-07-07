@@ -1,31 +1,37 @@
-@lib-active-blue: hsl(209deg 100% 55%);
+@import 'colors';
 
-.checkbox-ant {
-    //.checkbox-ant__input
+@lib-disabled-checkbox-bg: lighten(saturate(@lib-disabled, 6%), 64%);
+
+:host {
+    display: inline-block;
+}
+
+.checkbox {
+    //.checkbox__input
     &__input {
         position: absolute;
         opacity: 0;
         z-index: -1;
     }
 
-    //.checkbox-ant__box
-    //.checkbox-ant__text
-    &__box,
-    &__text {
-        cursor: pointer;
-    }
-
-    //.checkbox-ant__label
+    //.checkbox__label
     &__label {
         display: inline-flex;
         align-items: center;
     }
 
     &__label:hover > &__input:enabled + &__box {
-        border: 1px solid @lib-active-blue;
+        border: 1px solid @lib-blue;
     }
 
-    //.checkbox-ant__box
+    //.checkbox__box
+    //.checkbox__text
+    &__box,
+    &__text {
+        cursor: pointer;
+    }
+
+    //.checkbox__box
     &__box {
         margin-right: 10px;
         position: relative;
@@ -33,12 +39,12 @@
         height: 18px;
         width: 18px;
 
-        border: 1px solid lightgray;
+        border: 1px solid @lib-ph-color;
         border-radius: 2px;
 
         transition: all 0.3s;
 
-        //.checkbox-ant__box::before
+        //.checkbox__box::before
         &::before {
             content: ' ';
 
@@ -50,14 +56,14 @@
             left: 21%;
             opacity: 0;
 
-            border-bottom: 2px solid white;
-            border-right: 2px solid white;
+            border-bottom: 2px solid @lib-white;
+            border-right: 2px solid @lib-white;
 
             transform: rotate(45deg) scale(0) translate(-50%, -50%);
             transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
         }
 
-        //.checkbox-ant__box::after
+        //.checkbox__box::after
         &::after {
             content: ' ';
 
@@ -69,17 +75,17 @@
             right: -1px;
             opacity: 0;
 
-            border: 1px solid @lib-active-blue;
+            border: 1px solid @lib-blue;
             border-radius: inherit;
         }
     }
 
-    //.checkbox-ant__input:checked + .checkbox-ant__box
+    //.checkbox__input:checked + .checkbox__box
     &__input:enabled:checked + &__box {
-        background-color: @lib-active-blue;
-        border: 1px solid @lib-active-blue;
+        background-color: @lib-blue;
+        border: 1px solid @lib-blue;
 
-        //.checkbox-ant__input:checked + .checkbox-ant__box::before
+        //.checkbox__input:checked + .checkbox__box::before
         &::before {
             content: ' ';
 
@@ -88,23 +94,23 @@
             transform: rotate(45deg) scale(1) translate(-50%, -50%);
         }
 
-        //.checkbox-ant__input:checked + .checkbox-ant__box::after
+        //.checkbox__input:checked + .checkbox__box::after
         &::after {
             animation: vanishingBorder 0.36s ease-in-out;
         }
     }
 
-    //.checkbox-ant__input:disabled ~ *
+    //.checkbox__input:disabled ~ *
     &__input:disabled ~ * {
         cursor: not-allowed;
     }
 
-    //.checkbox-ant__input:disabled + .checkbox-ant__box
+    //.checkbox__input:disabled + .checkbox__box
     &__input:disabled + &__box {
-        background-color: hsl(216deg 14% 93%);
+        background-color: @lib-disabled-checkbox-bg;
     }
 
-    //.checkbox-ant__input:disabled:checked + .checkbox-ant__box::before
+    //.checkbox__input:disabled:checked + .checkbox__box::before
     &__input:disabled:checked + &__box::before {
         content: ' ';
 
@@ -112,8 +118,8 @@
 
         transform: rotate(45deg) scale(1) translate(-50%, -50%);
 
-        border-bottom: 2px solid hsl(216deg 8% 29%);
-        border-right: 2px solid hsl(216deg 8% 29%);
+        border-bottom: 2px solid @lib-disabled;
+        border-right: 2px solid @lib-disabled;
     }
 }
 
