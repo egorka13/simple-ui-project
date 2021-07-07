@@ -1,3 +1,4 @@
+@import 'colors.less';
 .input-number{
     position: relative;
     color: #000000d9;
@@ -7,14 +8,16 @@
     background-image: none;
     transition: all .3s;
     display: inline-block;
-    width: 90px;
     border: 1px solid #d9d9d9;
-    border-radius: 2px;
+    width: 90px;
+    &:hover .input-number__handler-wrap{
+        opacity: 1;
+    }
     &:hover{
         border-color: #40a9ff;
-        & .input-number__handler-wrap{
-            opacity: 1;
-        }
+    }
+    &:focus {
+        box-shadow: 0 0 0 2px fade(@lib-active-blue, 20%);
     }
     &__handler{
         &:hover{
@@ -93,5 +96,9 @@
         border: 0;
         outline: 0;
         transition: all .3s linear;
+        &:focus {
+            box-shadow: 0 0 0 2px fade(@lib-active-blue, 20%);
+        }
+        
     }
 }
