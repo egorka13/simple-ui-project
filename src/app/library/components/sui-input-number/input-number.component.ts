@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
-    selector: 'app-input-number',
+    selector: 'sui-input-number',
     templateUrl: './input-number.component.html',
     styleUrls: ['./input-number.component.less'],
 })
