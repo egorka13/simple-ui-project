@@ -1,6 +1,5 @@
-import { buttonType } from './buttonTypes';
 import { Component, Input, OnInit } from '@angular/core';
-import { buttonSize } from './buttonSizes';
+import { buttonSize, buttonType } from './button.model';
 
 @Component({
     selector: 'sui-button',
