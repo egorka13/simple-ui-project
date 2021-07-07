@@ -1,4 +1,3 @@
-<button
-    [ngClass]="['button', typeModifier, sizeModifier]"
-    (click)="handleClick($event)"
-    (animationend)="handleAnimationEnd($event)">{{ innerText }}</button>
+<button 
+    [ngClass]="getClasses()"
+    (click)="handleClick($event)">{{ innerText }}</button>

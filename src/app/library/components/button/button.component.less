@@ -1,4 +1,6 @@
-@import '../../../../assets/styles/base.less';
+@import 'colors.less';
+@import 'vars.less';
+@import '../../../../assets/styles/common/fonts';
 @font-size: 14px;
 
 .button {
@@ -6,58 +8,42 @@
     padding: 0.3em 1em;
 
     background-color: #fff;
-    border: 1px solid @gray;
+    border: 1px solid @lib-grey;
     border-radius: 2px;
 
     .font-regular();
     font-size: @font-size;
-    color: @black;
+    color: @lib-font-black;
 
     cursor: pointer;
     transition: @transition-default;
 
-    &,
-    &:focus,
-    &:active {
-        outline: 0;
-    }
-
-    &._clicked {
-        animation: box-shadow-animation 0.5s ease-out;
-    }
-
-    &:hover,
-    &:focus {
-        color: @light-primary;
-        border-color: currentColor;
-    }
-
     &._type_primary {
-        background-color: @primary;
-        border-color: @primary;
+        background-color: @lib-blue;
+        border-color: @lib-blue;
 
-        color: @white;
+        color: @lib-white;
 
         &:hover,
         &:focus {
-            color: @white;
-            background-color: @light-primary;
+            color: @lib-white;
+            background-color: @lib-blue-light;
+        }
+
+        &._ghost {
+            color: @lib-blue;
+
+            &:hover,
+            &:active,
+            &:focus {
+                color: @lib-blue-light;
+                background-color: transparent;
+            }
         }
     }
 
     &._type_dashed {
         border-style: dashed;
-    }
-
-    &._ghost {
-        color: @white;
-
-        background-color: transparent;
-        border-color: currentColor;
-
-        &-primary {
-            color: @primary;
-        }
     }
 
     &._type_text,
@@ -67,17 +53,17 @@
     }
 
     &._type_link {
-        color: @primary;
+        color: @lib-blue;
 
         &:hover,
         &:focus {
-            color: @light-primary;
+            color: @lib-blue-light;
         }
     }
 
     &._type_text:hover,
     &._type_text:focus {
-        background-color: @light-gray;
+        background-color: @lib-disabled-bg;
         color: initial;
     }
 
@@ -89,15 +75,57 @@
         padding: 0.5em 1.5em;
     }
 
+    &._ghost {
+        color: @lib-white;
+
+        background-color: transparent;
+        border-color: currentColor;
+
+        &:disabled,
+        &:disabled:hover, 
+        &:disabled:focus, 
+        &:disabled:active {
+            background-color: transparent;
+            color: @lib-font-disabled;
+        }
+    }
+
+    &._clicked {
+        animation: box-shadow-animation 0.4s ease-out;
+    }
+
+    &,
+    &:focus,
+    &:active {
+        outline: 0;
+    }
+
+    &:hover,
+    &:focus {
+        color: @lib-blue-light;
+        border-color: @lib-blue-light;
+    }
+
+    &:disabled,
+    &:disabled:hover, 
+    &:disabled:focus, 
+    &:disabled:active {
+        background-color: @lib-disabled-bg;
+        border-color: @lib-grey;
+        color: @lib-font-disabled;
+        
+        cursor: not-allowed;
+    }
+
     @keyframes box-shadow-animation {
         0% {
             box-shadow: 0px 0px 0px 0px rgba(124, 198, 255, 0);
         }
-        20% {
-            box-shadow: 0px 0px 0px 0.3em rgba(124, 198, 255, 0.2);
+        40% {
+            box-shadow: 0px 0px 0px 0.25em rgba(124, 198, 255, 0.2);
         }
         100% {
-            box-shadow: 0px 0px 0px 0.3em rgba(124, 198, 255, 0);
+            box-shadow: 0px 0px 0px 0.25em rgba(124, 198, 255, 0.05);
         }
     }
 }

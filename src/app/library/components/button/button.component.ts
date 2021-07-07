@@ -14,28 +14,39 @@ export class ButtonComponent implements OnInit {
     @Input()
     size: buttonSize;
 
+    @Input()
+    isGhost: boolean = false;
+
     @Input() 
     innerText: string = 'Button';
 
-    typeModifier: string = '';
-    sizeModifier: string = '';
-    isBlock: boolean = false;
+    classes: string = 'button';
     
     constructor() {
     }
 
     ngOnInit(): void {
-        this.typeModifier = this.type ? '_type_' + this.type : '';
-        this.sizeModifier = this.size ? '_size_' + this.size : '';
+        const typeModifier = this.type ? '_type_' + this.type : '';
+        const sizeModifier = this.size ? '_size_' + this.size : '';
+        this.classes = [this.classes, typeModifier, sizeModifier, 
+            this.isGhost ? '_ghost' : ''].join(' ');
+        console.log(this.isGhost);
+    }
+
+    getClasses(): string {
+        return this.classes;
     }
 
     handleClick(event: Event): void {
         const element: Element = <Element>event.target;
-        element.classList.add('_clicked');
-    }
-
-    handleAnimationEnd(event: Event): void {
-        const element: Element = <Element>event.target;
+        const elemClasses = element.classList;
+        if (elemClasses.contains('_type_text') ||
+            elemClasses.contains('_type_link')) {
+            return;
+        }
         element.classList.remove('_clicked');
+        setTimeout(() => {
+            element.classList.add('_clicked');
+        }, 0);
     }
 }
