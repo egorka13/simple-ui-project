@@ -1,0 +1,129 @@
+@import 'colors.less';
+@import 'vars.less';
+@import '../../../../assets/styles/common/fonts';
+
+.sui-button {
+    gap: 0.5em;
+    padding: 0.3em 1em;
+
+    background-color: @lib-white;
+    border: 1px solid @lib-grey;
+    border-radius: 2px;
+
+    .font-regular();
+    color: @lib-font-black;
+
+    cursor: pointer;
+    transition: @transition-default;
+
+    &._type_primary {
+        background-color: @lib-blue;
+        border-color: @lib-blue;
+
+        color: @lib-white;
+
+        &:hover,
+        &:focus {
+            color: @lib-white;
+            background-color: @lib-blue-light;
+        }
+
+        &._ghost {
+            color: @lib-blue;
+
+            &:hover,
+            &:active,
+            &:focus {
+                color: @lib-blue-light;
+                background-color: transparent;
+            }
+        }
+    }
+
+    &._type_dashed {
+        border-style: dashed;
+    }
+
+    &._type_text,
+    &._type_link {
+        background-color: transparent;
+        border: 0;
+    }
+
+    &._type_link {
+        color: @lib-blue;
+
+        &:hover,
+        &:focus {
+            color: @lib-blue-light;
+        }
+    }
+
+    &._type_text:hover,
+    &._type_text:focus {
+        background-color: @lib-disabled-bg;
+        color: initial;
+    }
+
+    &._size_small {
+        padding: 0.2em 0.4em;
+    }
+
+    &._size_large {
+        padding: 0.5em 1.5em;
+    }
+
+    &._ghost {
+        color: @lib-white;
+
+        background-color: transparent;
+        border-color: currentColor;
+
+        &:disabled,
+        &:disabled:hover, 
+        &:disabled:focus, 
+        &:disabled:active {
+            background-color: transparent;
+            color: @lib-font-disabled;
+        }
+    }
+
+    &._clicked {
+        animation: box-shadow-animation 0.4s ease-out;
+    }
+
+    &,
+    &:focus,
+    &:active {
+        outline: 0;
+    }
+
+    &:hover,
+    &:focus {
+        color: @lib-blue-light;
+        border-color: @lib-blue-light;
+    }
+
+    &:disabled,
+    &:disabled:hover, 
+    &:disabled:focus, 
+    &:disabled:active {
+        background-color: @lib-disabled-bg;
+        border-color: @lib-grey;
+        color: @lib-font-disabled;
+        
+        cursor: not-allowed;
+    }
+
+    @keyframes box-shadow-animation {
+        0% {
+            box-shadow: 0px 0px 0px 0px rgba(124, 198, 255, 0);
+        }
+        40% {
+            box-shadow: 0px 0px 0px 0.25em rgba(124, 198, 255, 0.2);
+        }
+        100% {
+            box-shadow: 0px 0px 0px 0.25em rgba(124, 198, 255, 0.05);
+        }
+    }
+}
