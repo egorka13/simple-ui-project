@@ -4,8 +4,7 @@ import { Radio } from './radio';
 @Component({
     selector: 'sui-radio',
     templateUrl: './radio.component.html',
-    styleUrls: ['../button/button.component.less',
-                './radio.component.less']
+    styleUrls: ['./radio.component.less']
 })
 export class RadioComponent implements OnInit {
     items: Radio[] = [];

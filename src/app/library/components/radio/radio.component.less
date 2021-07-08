@@ -1,10 +1,14 @@
-@import "../../../../assets/styles/base.less";
-@font-size: 14px;
+@import "colors.less";
+@import "vars.less";
+@import "../../../../assets/styles/common/fonts";
+
+@radio-box-shadow-blue: 0px 0px 0px 0.2em @lib-blue-transparent;
+@radio-box-shadow-white-inset: 0 0 0 0.2em @lib-white inset;  
+@radio-box-shadow-grey-inset: 0 0 0 0.2em @lib-disabled-bg inset;
 
 .radio {
     display: flex;
 
-    font-size: @font-size;
     .font-regular();
 
     &__label + &__input {
@@ -17,26 +21,37 @@
 
         &:not(:disabled):not(:checked)+.radio__label:hover::before,
         &:focus:not(:checked)+.radio__label::before {
-            border-color: @light-primary;
+            border-color: @lib-blue-light;
         }   
         
         &:focus+.radio__label::before {
-            box-shadow: 0px 0px 0px 0.2em rgba(124, 198, 255, 0.2);
+            box-shadow: @radio-box-shadow-blue;
         }
 
         &:checked+.radio__label::before {
-            background-color: @primary;
-            border-color: @primary;
-            box-shadow: 0px 0px 0px 0.2em rgba(124, 198, 255, 0.2),
-                0 0 0 0.2em rgb(255, 255, 255) inset;
+            background-color: @lib-blue;
+            border-color: @lib-blue;
+            box-shadow: @radio-box-shadow-blue,
+                @radio-box-shadow-white-inset;
         }
     
         &:checked:not(:focus)+.radio__label::before {
-            box-shadow: 0 0 0 0.2em rgb(255, 255, 255) inset;
+            box-shadow: @radio-box-shadow-white-inset;
         }
     
-        &:disabled+.radio__label::before {
-            background-color: #e9ecef;
+        &:disabled+.radio__label {
+            color: @lib-font-disabled;
+            cursor: not-allowed;
+
+            &::before {
+                border-color: @lib-grey;
+                background-color: @lib-disabled-bg;
+            }
+        }
+
+        &:disabled:checked+.radio__label::before {
+            background-color: @lib-grey;
+            box-shadow: @radio-box-shadow-grey-inset;
         }
     }
 
@@ -47,24 +62,19 @@
 
         border-radius: 0;
 
+        cursor: pointer;
+
         &::before {
             content: '';
             display: inline-block;
             width: 1em;
             height: 1em;
-            border: 1px solid @gray;
-            border-radius: 50%;
             margin-right: 0.5em;
-        }
 
-        &:first-child {
-            border-top-left-radius: 2px;
-            border-bottom-left-radius: 2px;
-        }
+            border: 1px solid @lib-grey;
+            border-radius: 50%;
 
-        &:last-child {
-            border-top-right-radius: 2px;
-            border-bottom-right-radius: 2px;
+            transition: @transition-default;
         }
     }
 
@@ -78,19 +88,67 @@
                 margin-left: 0;
 
                 &:checked+.radio__label {
-                    color: @primary;
+                    color: @lib-blue;
                     border-color: currentColor;
-                    box-shadow: 0px 0px 0px 0.2em rgba(124, 198, 255, 0.2);
+                    box-shadow: @radio-box-shadow-blue;
                     z-index: 2;
                 }
 
                 &:checked:not(:focus)+.radio__label {
                     box-shadow: none;
-                }              
+                }   
+                
+                &:disabled+.radio__label {
+                    background-color: @lib-disabled-bg;
+                    border-color: @lib-grey;
+                    color: @lib-font-disabled;
+                    
+                    cursor: not-allowed;
+                }
+
+                &:disabled:checked+.radio__label {
+                    background-color: @lib-grey;
+                }
             }
 
-            &__label::before {
-                display: none;
+            &__label {
+                gap: 0.5em;
+                padding: 0.3em 1em;
+
+                background-color: @lib-white;
+                border: 1px solid @lib-grey;
+
+                .font-regular();
+                color: @lib-font-black;
+
+                cursor: pointer;
+                transition: @transition-default;
+
+                &:first-child {
+                    border-top-left-radius: 2px;
+                    border-bottom-left-radius: 2px;
+                }
+        
+                &:last-child {
+                    border-top-right-radius: 2px;
+                    border-bottom-right-radius: 2px;
+                }
+
+                &,
+                &:focus,
+                &:active {
+                    outline: 0;
+                }
+
+                &:hover,
+                &:focus {
+                    color: @lib-blue-light;
+                    border-color: @lib-blue-light;
+                }
+
+                &::before {
+                    display: none;
+                }
             }                 
         }  
     }
