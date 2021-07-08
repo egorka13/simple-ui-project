@@ -1,14 +1,7 @@
-<div class="input-number">
-    <div class="input-number__handler-wrap handler">
-        <span
-            unselectable="on"
-            role="button"
-            aria-label="Increase Value"
-            aria-disabled="false"
-            class="input-number__handler handler__up"
-            (click)="onIncrement()"
-        >
-            <span class="anticon anticon-up handler__up-inner">
+<div class="sui-input-number">
+    <div class="sui-input-number__handler-wrap handler">
+        <span class="sui-input-number__handler handler__up" (click)="onIncrement()">
+            <span class="handler__up-inner">
                 <svg
                     viewBox="64 64 896 896"
                     focusable="false"
@@ -24,8 +17,8 @@
                 </svg>
             </span>
         </span>
-        <span class="input-number__handler handler__down" (click)="onDecrement()">
-            <span class="anticon anticon-down handler__down-inner">
+        <span class="sui-input-number__handler handler__down" (click)="onDecrement()">
+            <span class="handler__down-inner">
                 <svg
                     viewBox="64 64 896 896"
                     focusable="false"
@@ -42,14 +35,14 @@
             </span>
         </span>
     </div>
-    <div class="input-number__wrap">
+    <div class="sui-input-number__wrap">
         <input
             #inputNumber
             [min]="min"
             [max]="max"
             [(ngModel)]="value"
-            (keyup)="change()"
-            class="input-number__input"
+            (keyup)="onChange()"
+            class="sui-input-number__input"
         />
     </div>
 </div>

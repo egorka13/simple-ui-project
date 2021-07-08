@@ -1,16 +1,16 @@
 @import 'colors.less';
-.input-number{
+.sui-input-number{
+    display: inline-block;
     position: relative;
-    color: #000000d9;
+    width: 90px;
     font-size: 14px;
     line-height: 1.5715;
+    border: 1px solid #d9d9d9;
+    color: #000000d9;
     background-color: #fff;
     background-image: none;
     transition: all .3s;
-    display: inline-block;
-    border: 1px solid #d9d9d9;
-    width: 90px;
-    &:hover .input-number__handler-wrap{
+    &:hover .sui-input-number__handler-wrap{
         opacity: 1;
     }
     &:hover{
@@ -20,6 +20,7 @@
         box-shadow: 0 0 0 2px fade(@lib-active-blue, 20%);
     }
     &__handler{
+        transition: all .1s linear;
         &:hover{
             .handler__up-inner, .handler__down-inner{
                 color: #40a9ff;
@@ -36,18 +37,18 @@
         position: absolute;
         top: 0;
         right: 0;
+        opacity: 0;
         width: 22px;
         height: 100%;
-        background: #fff;
         border-left: 1px solid #d9d9d9;
         border-radius: 0 2px 2px 0;
-        opacity: 0;
+        background: #fff;
         transition: opacity .24s linear .1s;
         &__up{
-            position: relative;
             display: block;
-            border-top-right-radius: 2px;
+            position: relative;
             height: 50%;
+            border-top-right-radius: 2px;
             &:hover{
                 height: 60%;
             }
@@ -59,8 +60,8 @@
         }
 
         &__down{
-            position: relative;
             display: block;
+            position: relative;
             height: 50%;
             border-top: 1px solid #d9d9d9;
             border-bottom-right-radius: 2px;
@@ -77,13 +78,13 @@
             }
         }
         &__up-inner, &__down-inner{
-            font-size: 7px;
             position: absolute;
             right: 4px;
             width: 12px;
             height: 12px;
-            color: #00000073;
             line-height: 12px;
+            font-size: 7px;
+            color: #00000073;
             transition: all .1s linear;
             
         }

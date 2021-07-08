@@ -6,7 +6,7 @@ import { Component, OnInit, EventEmitter, Input, Output, ViewChild, ElementRef }
     styleUrls: ['./input-number.component.less'],
 })
 export class InputNumberComponent implements OnInit {
-    @Output() valueChange = new EventEmitter();
+    @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
     @Input() value: any = null;
     @Input() min: string = '';
     @Input() max: string = '';
@@ -18,23 +18,23 @@ export class InputNumberComponent implements OnInit {
 
     ngOnInit(): void {}
 
-    change(): void {
+    onChange(): void {
         if (this.value) {
             if (isNaN(this.inputElement.nativeElement.value)) {
-                this.value = 1;
+                this.value = '1';
                 this.valueChange.emit(this.value);
                 return;
             }
         }
         if (this.max) {
-            if (this.value > +this.max) {
+            if (+this.value > +this.max) {
                 this.value = this.max;
                 this.valueChange.emit(this.value);
                 return;
             }
         }
         if (this.min) {
-            if (this.value < +this.min && this.value !== '') {
+            if (+this.value < +this.min && this.value !== '') {
                 this.value = this.min;
                 this.valueChange.emit(this.value);
                 return;
