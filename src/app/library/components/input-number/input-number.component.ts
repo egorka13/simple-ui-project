@@ -7,18 +7,20 @@ import { Component, OnInit, EventEmitter, Input, Output, ViewChild, ElementRef }
 })
 export class InputNumberComponent implements OnInit {
     @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
-    @Input() value: any = null;
-    @Input() min: string = '';
-    @Input() max: string = '';
+    @Input() value: string = '';
+    @Input() min: string;
+    @Input() max: string;
+    valueToNumber: number;
 
     @ViewChild('inputNumber')
-    inputElement: any;
+    inputElement: ElementRef;
 
     constructor() {}
 
     ngOnInit(): void {}
 
     onChange(): void {
+        this.valueToNumber = +this.value;
         if (this.value) {
             if (isNaN(this.inputElement.nativeElement.value)) {
                 this.value = '1';
@@ -45,9 +47,14 @@ export class InputNumberComponent implements OnInit {
     }
 
     onIncrement(): void {
-        ++this.value;
+        this.valueToNumber = +this.value;
+        if (this.value === '') {
+            this.valueToNumber = 1;
+        }
+        ++this.valueToNumber;
+        this.value = String(this.valueToNumber);
         if (this.max) {
-            if (this.value > +this.max) {
+            if (+this.value > +this.max) {
                 this.value = this.max;
                 this.valueChange.emit(this.value);
                 return;
@@ -57,9 +64,14 @@ export class InputNumberComponent implements OnInit {
     }
 
     onDecrement(): void {
-        --this.value;
+        this.valueToNumber = +this.value;
+        if (this.value === '') {
+            this.valueToNumber = 1;
+        }
+        --this.valueToNumber;
+        this.value = String(this.valueToNumber);
         if (this.min) {
-            if (this.value < +this.min) {
+            if (+this.value < +this.min) {
                 this.value = this.min;
                 this.valueChange.emit(this.value);
                 return;
