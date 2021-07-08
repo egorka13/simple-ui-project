@@ -29,7 +29,6 @@ export class ButtonComponent implements OnInit {
         const sizeModifier = this.size ? '_size_' + this.size : '';
         this.classes = [this.classes, typeModifier, sizeModifier, 
             this.isGhost ? '_ghost' : ''].join(' ');
-        console.log(this.isGhost);
     }
 
     getClasses(): string {
