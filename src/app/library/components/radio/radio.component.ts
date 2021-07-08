@@ -9,14 +9,13 @@ import { Radio } from './radio';
 })
 export class RadioComponent implements OnInit {
     items: Radio[] = [];
-    titlesArr: string[] = [];
     typeModifier: string = '';
 
     @Input()
     name: string = 'radio' + Math.random().toFixed(5);
 
     @Input()
-    titles: string = 'Radio';
+    labels: string = 'Radio';
 
     @Input()
     type: undefined | 'button';
@@ -24,11 +23,11 @@ export class RadioComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
-        this.titlesArr = this.titles.split(' ');
-        for (let i: number = 0; i < this.titlesArr.length; i++) {
+        const labelsArr = this.labels.split(' ');
+        for (let i: number = 0; i < labelsArr.length; i++) {
             this.items.push({
-                id: this.name + i,
-                text: this.titlesArr[i]
+                id: [this.name,  i].join('_'),
+                text: labelsArr[i]
             })
         }
 
