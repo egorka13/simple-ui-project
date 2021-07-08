@@ -6,7 +6,7 @@
 @radio-box-shadow-white-inset: 0 0 0 0.2em @lib-white inset;  
 @radio-box-shadow-grey-inset: 0 0 0 0.2em @lib-disabled-bg inset;
 
-.radio {
+.sui-radio {
     display: flex;
 
     .font-regular();
@@ -19,27 +19,27 @@
         position: relative;
         opacity: 0;
 
-        &:not(:disabled):not(:checked)+.radio__label:hover::before,
-        &:focus:not(:checked)+.radio__label::before {
+        &:not(:disabled):not(:checked)+.sui-radio__label:hover::before,
+        &:focus:not(:checked)+.sui-radio__label::before {
             border-color: @lib-blue-light;
         }   
         
-        &:focus+.radio__label::before {
+        &:focus+.sui-radio__label::before {
             box-shadow: @radio-box-shadow-blue;
         }
 
-        &:checked+.radio__label::before {
+        &:checked+.sui-radio__label::before {
             background-color: @lib-blue;
             border-color: @lib-blue;
             box-shadow: @radio-box-shadow-blue,
                 @radio-box-shadow-white-inset;
         }
     
-        &:checked:not(:focus)+.radio__label::before {
+        &:checked:not(:focus)+.sui-radio__label::before {
             box-shadow: @radio-box-shadow-white-inset;
         }
     
-        &:disabled+.radio__label {
+        &:disabled+.sui-radio__label {
             color: @lib-font-disabled;
             cursor: not-allowed;
 
@@ -49,7 +49,7 @@
             }
         }
 
-        &:disabled:checked+.radio__label::before {
+        &:disabled:checked+.sui-radio__label::before {
             background-color: @lib-grey;
             box-shadow: @radio-box-shadow-grey-inset;
         }
@@ -79,7 +79,7 @@
     }
 
     &._type_button {
-        .radio {
+        .sui-radio {
             display: flex;
 
             &__input {
@@ -87,18 +87,18 @@
                 height: 0px;
                 margin-left: 0;
 
-                &:checked+.radio__label {
+                &:checked+.sui-radio__label {
                     color: @lib-blue;
                     border-color: currentColor;
                     box-shadow: @radio-box-shadow-blue;
                     z-index: 2;
                 }
 
-                &:checked:not(:focus)+.radio__label {
+                &:checked:not(:focus)+.sui-radio__label {
                     box-shadow: none;
                 }   
                 
-                &:disabled+.radio__label {
+                &:disabled+.sui-radio__label {
                     background-color: @lib-disabled-bg;
                     border-color: @lib-grey;
                     color: @lib-font-disabled;
@@ -106,7 +106,7 @@
                     cursor: not-allowed;
                 }
 
-                &:disabled:checked+.radio__label {
+                &:disabled:checked+.sui-radio__label {
                     background-color: @lib-grey;
                 }
             }

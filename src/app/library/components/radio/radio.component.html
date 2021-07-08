@@ -1,8 +1,8 @@
-<div class="radio" [class]="typeModifier">
+<div class="sui-radio" [class]="typeModifier">
     <ng-container *ngFor="let item of items">
-        <input [id]="item.id" type="radio" class="radio__input" [name]="name">
+        <input [id]="item.id" type="radio" class="sui-radio__input" [name]="name">
         <label 
-            class="radio__label"
+            class="sui-radio__label"
             [for]="item.id">{{ item.text }}</label>
     </ng-container>
 </div>
