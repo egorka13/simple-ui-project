@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Radio } from './radio';
 
 @Component({
-    selector: 'app-radio',
+    selector: 'sui-radio',
     templateUrl: './radio.component.html',
     styleUrls: ['../button/button.component.less',
                 './radio.component.less']
