@@ -1,1 +1,3 @@
-<button>Click me!</button>
+<button 
+    [ngClass]="classes"
+    (click)="handleClick($event)">{{ innerText }}</button>
