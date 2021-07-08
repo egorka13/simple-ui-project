@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 
 import { ButtonComponent } from './components/button/button.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
-import { ResultComponent } from './components/sui-result/result.component';
+import { ResultComponent } from './components/result/result.component';
 import { InputComponent } from './components/input/input.component';
 
 @NgModule({
