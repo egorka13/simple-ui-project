@@ -1,1 +1,1 @@
-export type SizeModifierType = '_small' | '_large' | '';
+export type SizeModifierType = 'small' | 'large' | '';
