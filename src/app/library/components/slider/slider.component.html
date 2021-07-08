@@ -1,5 +1,23 @@
-<div class="sui-slider__wrapper _classic">
-    <input #suiSlider class="sui-slider__item"type="range" name="sui-slider" id="">
-    <label class="sui-slider__mark" for="sui-slider">0</label>
-    <div class="sui-slider__progress-bar"></div>
+<div [ngStyle]="{width:wrapperWidth}" class="sui-slider__wrapper _classic"
+    (mouseup)="onMouseUp()"
+    (mousedown)="onMouseDown()"
+    (mouseover)="onMouseOver()"
+    (mouseout)="onMouseOut()">
+    <input min="{{minValue}}"
+           max="{{maxValue}}"
+           value="{{currentValue}}"
+           step="{{step}}"
+    #suiSlider class="sui-slider__item"type="range" name="sui-slider"
+    [(ngModel)]="currentValue"
+    (change)="onChange()">
+    <div  [ngClass]="{
+          'sui-slider__mark-text':true,
+          '_disabled': showMarker
+        }"
+        [ngStyle]="{marginLeft: getCurrentMarkerOffset()}" class="sui-slider__mark">
+        <label for="sui-slider">{{currentValue}}</label>
+    </div>
+    <div class="sui-slider__progress" id="progress-common">
+        <div #suiProgressBar [ngStyle]="{width:getCurrentProgressWidth()}" class="sui-slider__progress-bar"></div>
+    </div>
 </div>

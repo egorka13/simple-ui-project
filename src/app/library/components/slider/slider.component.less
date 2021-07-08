@@ -1,0 +1,123 @@
+@import "colors.less";
+
+//Parmas
+@sui-sliderCstandartblue: lighten(@lib-blue, 30%);
+@sui-sliderCstandartblueHover: lighten(@lib-blue, 25%);
+@sui-sliderCprogressNewGray: lighten(@lib-grey,10%);
+@sui-sliderCprogressNewGrayHover: lighten(@lib-grey, 5%);
+@sui-sliderCprogressNewGrayDisabled: darken(@lib-grey,8%);
+
+//Mixins
+
+.progressBarHover(){
+    .sui-slider__progress{
+        &:not(._disabled) {
+            cursor: pointer;
+            background: @sui-sliderCprogressNewGrayHover;
+            &>div {
+                background: @sui-sliderCstandartblueHover;
+            }
+        }
+        &._disabled{
+            background: @sui-sliderCprogressNewGrayHover;
+        }
+    }
+}
+
+.sui-slider {
+    &__wrapper {
+        margin:0 auto;
+        margin-top: 100px;
+        &._classic{
+            &:hover{
+                input[type="range"]:not(:disabled)::-webkit-slider-thumb{
+                    border: 2px solid @sui-sliderCstandartblueHover;
+                }
+                .progressBarHover();
+            }
+        }
+    }
+    &__item {
+        position: absolute;
+        -webkit-appearance: none;
+        width: inherit;
+        margin-top: -5px;
+        &:disabled{
+            &::-webkit-slider-thumb{
+                border: 2px solid @sui-sliderCprogressNewGrayDisabled;
+            }
+        }
+        //Задний фон прогресс бара
+        &::-webkit-slider-runnable-track {
+            background: none;
+            height: 5px;
+        }
+
+        //Ползунок
+        &::-webkit-slider-thumb {
+            transition: .2s;
+            height: 15px;
+            width: 15px;
+            border: 2px solid @sui-sliderCstandartblue;
+            border-radius: 50%;
+            background: #FFFFFF;
+            cursor: pointer;
+            -webkit-appearance: none;
+        }
+
+        &:not(:disabled){
+            &::-webkit-slider-thumb{
+                &:active{
+                    box-shadow: 0 0 0 5px #1890ff1f;
+                }
+            }
+        }
+    }
+
+    &__mark{
+        &._disabled{
+            opacity: 0;
+        }
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content:center;
+        box-sizing: border-box;
+        padding: 5px;
+        height:30px;
+        margin-top: -42px;
+        background:linear-gradient(174.71deg, rgba(0, 0, 0, 0.2) 15.64%, rgba(255, 255, 255, 0) 95.76%), #373737;
+        margin-left: 163px;
+        color:white;
+        border-radius:10%;
+        transition: 1s opacity;
+        &::after{
+            content: '';
+            position:absolute;
+            width:40px;
+            height:15px;
+            margin-top: 25px;
+            clip-path: polygon(50% 90%, 30% 40%, 70% 40%);
+            background:linear-gradient(174.71deg, rgba(0, 0, 0, 0.2) 15.64%, rgba(255, 255, 255, 0) 95.76%), #373737;
+        }
+    }
+
+    &__progress {
+        width: inherit;
+        height: 5px;
+        background: @sui-sliderCprogressNewGray;
+        transition: .2s;
+        border-radius: 50px;
+        &._disabled{
+            &>div {
+                background: @sui-sliderCprogressNewGrayDisabled;
+            }
+        }
+        &-bar {
+            width: 0%;
+            height: inherit;
+            background: @sui-sliderCstandartblue;
+            border-radius: 50px;
+        }
+    }
+}
