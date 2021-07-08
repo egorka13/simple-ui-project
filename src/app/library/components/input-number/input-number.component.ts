@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
+import { SizeModifierType } from './input-number.model';
 
 @Component({
     selector: 'sui-input-number',
@@ -15,9 +16,14 @@ export class InputNumberComponent implements OnInit {
     @ViewChild('inputNumber')
     inputElement: ElementRef;
 
-    constructor() {}
+    @Input()
+    size: SizeModifierType = '';
 
-    ngOnInit(): void {}
+    sizeModifier: string = '';
+
+    ngOnInit() {
+        this.sizeModifier = this.size ? `_${this.size}` : '';
+    }
 
     onChange(): void {
         this.valueToNumber = +this.value;
