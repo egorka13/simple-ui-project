@@ -6,15 +6,15 @@
     display: inline-block;
 }
 
-.checkbox {
-    //.checkbox__input
+.sui-checkbox {
+    //.sui-checkbox__input
     &__input {
         position: absolute;
         opacity: 0;
         z-index: -1;
     }
 
-    //.checkbox__label
+    //.sui-checkbox__label
     &__label {
         display: inline-flex;
         align-items: center;
@@ -24,14 +24,14 @@
         border: 1px solid @lib-blue;
     }
 
-    //.checkbox__box
-    //.checkbox__text
+    //.sui-checkbox__box
+    //.sui-checkbox__text
     &__box,
     &__text {
         cursor: pointer;
     }
 
-    //.checkbox__box
+    //.sui-checkbox__box
     &__box {
         margin-right: 10px;
         position: relative;
@@ -44,7 +44,7 @@
 
         transition: all 0.3s;
 
-        //.checkbox__box::before
+        //.sui-checkbox__box::before
         &::before {
             content: ' ';
 
@@ -63,7 +63,7 @@
             transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
         }
 
-        //.checkbox__box::after
+        //.sui-checkbox__box::after
         &::after {
             content: ' ';
 
@@ -80,12 +80,12 @@
         }
     }
 
-    //.checkbox__input:checked + .checkbox__box
+    //.sui-checkbox__input:checked + .sui-checkbox__box
     &__input:enabled:checked + &__box {
         background-color: @lib-blue;
         border: 1px solid @lib-blue;
 
-        //.checkbox__input:checked + .checkbox__box::before
+        //.sui-checkbox__input:checked + .sui-checkbox__box::before
         &::before {
             content: ' ';
 
@@ -94,23 +94,23 @@
             transform: rotate(45deg) scale(1) translate(-50%, -50%);
         }
 
-        //.checkbox__input:checked + .checkbox__box::after
+        //.sui-checkbox__input:checked + .sui-checkbox__box::after
         &::after {
             animation: vanishingBorder 0.36s ease-in-out;
         }
     }
 
-    //.checkbox__input:disabled ~ *
+    //.sui-checkbox__input:disabled ~ *
     &__input:disabled ~ * {
         cursor: not-allowed;
     }
 
-    //.checkbox__input:disabled + .checkbox__box
+    //.sui-checkbox__input:disabled + .sui-checkbox__box
     &__input:disabled + &__box {
         background-color: @lib-disabled-checkbox-bg;
     }
 
-    //.checkbox__input:disabled:checked + .checkbox__box::before
+    //.sui-checkbox__input:disabled:checked + .sui-checkbox__box::before
     &__input:disabled:checked + &__box::before {
         content: ' ';
 
