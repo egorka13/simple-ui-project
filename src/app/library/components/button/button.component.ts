@@ -18,21 +18,20 @@ export class ButtonComponent implements OnInit {
 
     @Input() 
     innerText: string = 'Button';
-
-    classes: string = 'button';
     
     constructor() {
     }
 
     ngOnInit(): void {
-        const typeModifier = this.type ? '_type_' + this.type : '';
-        const sizeModifier = this.size ? '_size_' + this.size : '';
-        this.classes = [this.classes, typeModifier, sizeModifier, 
-            this.isGhost ? '_ghost' : ''].join(' ');
     }
 
-    getClasses(): string {
-        return this.classes;
+    get classes(): string {
+        const typeModifier = this.type ? '_type_' + this.type : '';
+        const sizeModifier = this.size ? '_size_' + this.size : '';
+        const classNames = ['button', typeModifier, sizeModifier, 
+            this.isGhost ? '_ghost' : ''].join(' ');
+        
+        return classNames;
     }
 
     handleClick(event: Event): void {
