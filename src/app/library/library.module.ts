@@ -7,13 +7,15 @@ import { ButtonComponent } from './components/button/button.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { ResultComponent } from './components/result/result.component';
 import { InputComponent } from './components/input/input.component';
+import { InputNumberComponent } from './components/input-number/input-number.component';
 
 @NgModule({
     declarations: [
         ButtonComponent,
         CheckboxComponent,
         ResultComponent,
-        InputComponent
+        InputComponent,
+        InputNumberComponent
     ],
     imports: [
         BrowserModule,
@@ -24,7 +26,8 @@ import { InputComponent } from './components/input/input.component';
         ButtonComponent,
         CheckboxComponent,
         ResultComponent,
-        InputComponent
+        InputComponent,
+        InputNumberComponent
     ],
     providers: []
 })
