@@ -5,12 +5,14 @@ import { CommonModule } from '@angular/common';
 
 import { ButtonComponent } from './components/button/button.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
+import { ResultComponent } from './components/sui-result/result.component';
 import { InputComponent } from './components/input/input.component';
 
 @NgModule({
     declarations: [
         ButtonComponent,
         CheckboxComponent,
+        ResultComponent,
         InputComponent
     ],
     imports: [
@@ -21,6 +23,7 @@ import { InputComponent } from './components/input/input.component';
     exports: [
         ButtonComponent,
         CheckboxComponent,
+        ResultComponent,
         InputComponent
     ],
     providers: []
