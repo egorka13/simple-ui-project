@@ -1,25 +1,29 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
+import { suiSliderParams } from "./slider-params.model";
 
 @Component({
   selector: 'sui-slider',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.less']
 })
-export class SliderComponent implements OnInit, AfterViewInit {
+export class SliderComponent implements OnInit {
 
-  showMarker:boolean = true;
+  public showMarker:boolean = true;
+
+  @Input()
+  customparams?:suiSliderParams;
 
   @Input()
   wrapperWidth?:string = "500px";
 
   @Input()
-  maxValue?: number = 800;
+  maxValue?: number = 100;
 
   @Input()
   minValue?: number = 0;
 
   @Input()
-  currentValue?:number = 50;
+  currentValue?:number = 0;
 
   @Input()
   step?:number = 1;
@@ -36,23 +40,23 @@ export class SliderComponent implements OnInit, AfterViewInit {
   @Output()
   sliderValue: EventEmitter<number> = new EventEmitter<number>();
 
-  onChange():void{
+  public onChange():void{
     this.sliderValue.emit(this.currentValue);
   }
 
-  onMouseDown():void{
+  public onMouseDown():void{
     this.showMarker = false;
   }
 
-  onMouseUp():void{
+  public onMouseUp():void{
     this.showMarker = true;
   }
 
-  onMouseOver():void{
+  public onMouseOver():void{
     this.showMarker = false;
   }
 
-  onMouseOut():void{
+  public onMouseOut():void{
     this.showMarker = true;
   }
 
@@ -62,17 +66,10 @@ export class SliderComponent implements OnInit, AfterViewInit {
     this.checkValidParams();
   }
 
-  ngAfterViewInit():void{
-
-  }
-
-  getCurrentMarkerOffset():string{
+  public getCurrentMarkerOffset():string{
     let deltaX: number = 15;
-    if(((this.currentValue !== undefined && this.maxValue !== undefined))){
-      console.log(Number(this.getCurrentProgressWidth()
-      .substring(0, this.getCurrentProgressWidth().length - 2)));
-      let progressPersent:number = ((this.currentValue * 100) / this.maxValue);
-      console.log(progressPersent);
+    if(((this.currentValue !== undefined && this.maxValue !== undefined && this.minValue !== undefined))){
+      let progressPersent:number = ((Math.abs(this.minValue - this.currentValue) * 100) / (this.maxValue - this.minValue));
       if(progressPersent >= 85){
         deltaX = 25;
       }
@@ -96,28 +93,52 @@ export class SliderComponent implements OnInit, AfterViewInit {
     return "0px"
   }
 
-  getCurrentProgressWidth():String{
+  public getCurrentProgressWidth():String{
     if((this.minValue !== undefined) && (this.maxValue !== undefined) && (this.currentValue !== undefined)){
-      return `${this.currentValue * Number(this.wrapperWidth?.substring(0, this.wrapperWidth.length - 2)) / this.maxValue}px`;
+      return `${((Math.abs(this.minValue - this.currentValue)) *
+        Number(this.wrapperWidth?.substring(0, this.wrapperWidth.length - 2))) /
+        (this.maxValue - this.minValue)}px`;
     }
     return "0px";
   }
 
-  checkValidParams():void{
+  public checkValidParams():void{
     if((this.minValue !== undefined) && (this.maxValue !== undefined) && (this.currentValue !== undefined)){
       if(this.minValue > this.maxValue){
         this.minValue = 0;
         this.maxValue = 100;
         throw new Error("SUI-ERROR: Minimal value cannot be greater then maximum!");
       }
-      if((this.currentValue > this.maxValue)) {
+      if(((this.currentValue > this.maxValue) || (this.minValue > this.currentValue))) {
         this.currentValue = this.minValue;
         throw new Error("SUI-ERROR: Current value cannot be greater then maximum and less then minimum!");
       }
     }
   }
 
+  public setCustomColorProperty(type:string, value?:string):Object{
+    if(value !== undefined){
+      return {
+        [type]:value
+      };
+    }
+    return {};
+
+  }
+
   countDigits(number:number):number {
     return String(number).length;
- }
+  }
+
+  setSliderParams():Object{
+    if(this.customparams?.setSliderColor !== undefined){
+      return {
+        width: this.getCurrentProgressWidth(),
+        background: this.customparams?.setSliderColor
+      }
+    }
+    return {
+      width: this.getCurrentProgressWidth()
+    }
+  }
 }

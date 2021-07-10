@@ -8,7 +8,6 @@
 @sui-sliderCprogressNewGrayDisabled: darken(@lib-grey,8%);
 
 //Mixins
-
 .progressBarHover(){
     .sui-slider__progress{
         &:not(._disabled) {
@@ -118,6 +117,23 @@
             height: inherit;
             background: @sui-sliderCstandartblue;
             border-radius: 50px;
+        }
+    }
+
+    &__information{
+        display:flex;
+        padding: 1px;
+        justify-content:space-between;
+        font-family: Arial, Helvetica, sans-serif;
+        opacity: .5;
+        margin-top: 5px;
+        &-text._max:only-child{
+            margin-left: auto;
+        }
+        &-title{
+            order:0;
+            font-size: 18px;
+            font-weight: 200;
         }
     }
 }
