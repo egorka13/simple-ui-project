@@ -3,22 +3,27 @@
 //--Local color variables
 @sui-sliderCstandartblue: lighten(@lib-blue, 30%);
 @sui-sliderCstandartblueHover: lighten(@lib-blue, 25%);
-@sui-sliderCprogressNewGray: lighten(@lib-grey,10%);
+@sui-sliderCprogressNewGray: lighten(@lib-grey, 10%);
 @sui-sliderCprogressNewGrayHover: lighten(@lib-grey, 5%);
-@sui-sliderCprogressNewGrayDisabled: darken(@lib-grey,8%);
+@sui-sliderCprogressNewGrayDisabled: darken(@lib-grey, 8%);
+@sui-sliderCthumbShadow: 0 0 0 5px hsl(209, 100, 55, 100%);
+@sui-sliderCmarkerGradient: linear-gradient(174.71deg, hsl(0, 0, 0, 20%) 15.64%, hsl(0, 0, 100, 0%) 95.76%), hsl(0, 0, 22, 100%);
+@sui-sliderCBasicFont: Arial, Helvetica, sans-serif;
 
 //--Mixins
 //Mixin, performing for the component of styles when the state is disabled
-.progressBarDisableStatusHover(){
-    .sui-slider__progress{
+.progressBarDisableStatusHover() {
+    .sui-slider__progress {
         &:not(._disabled) {
             cursor: pointer;
             background: @sui-sliderCprogressNewGrayHover;
+
             &>div {
                 background: @sui-sliderCstandartblueHover;
             }
         }
-        &._disabled{
+
+        &._disabled {
             background: @sui-sliderCprogressNewGrayHover;
         }
     }
@@ -26,57 +31,66 @@
 
 .sui-slider {
     &__wrapper {
+        //Need this for marker view
         margin-top: 100px;
-        &._classic{
-            &:hover{
-                input[type="range"]:not(:disabled)::-webkit-slider-thumb{
-                    border: 2px solid @sui-sliderCstandartblueHover;
-                }
-                .progressBarDisableStatusHover();
+
+        &:hover {
+            input[type="range"]:not(:disabled)::-webkit-slider-thumb {
+                border: 2px solid @sui-sliderCstandartblueHover;
             }
+
+            .progressBarDisableStatusHover();
         }
     }
+
+    //sui-slider__item - basic slider
     &__item {
         position: absolute;
+        //General property to change slider styles
         -webkit-appearance: none;
         width: inherit;
         margin-top: -5px;
-        &:disabled{
-            &::-webkit-slider-thumb{
+
+        &:disabled {
+            &::-webkit-slider-thumb {
                 border: 2px solid @sui-sliderCprogressNewGrayDisabled;
             }
         }
-        //Задний фон прогресс бара
+
+        //Progress bar background
         &::-webkit-slider-runnable-track {
             background: none;
             height: 5px;
         }
 
-        //Ползунок
+        //Progress bar thumb
         &::-webkit-slider-thumb {
             transition: .2s;
             height: 15px;
             width: 15px;
             border: 2px solid @sui-sliderCstandartblue;
             border-radius: 50%;
-            background: #FFFFFF;
+            background: @lib-white;
             cursor: pointer;
             -webkit-appearance: none;
         }
 
-        &:not(:disabled){
-            &::-webkit-slider-thumb{
-                &:active{
-                    box-shadow: 0 0 0 5px #1890ff1f;
+        //If slider not disabled and you click on it
+        &:not(:disabled) {
+            &::-webkit-slider-thumb {
+                &:active {
+                    box-shadow: @sui-sliderCthumbShadow;
                 }
             }
         }
     }
 
-    &__mark{
-        &._disabled{
+    //sui-slider__mark - marker describing the current value
+    &__mark {
+        &._disabled {
             opacity: 0;
         }
+
         position: absolute;
         display: flex;
         align-items: center;
@@ -85,33 +99,41 @@
         padding: 5px;
         height:30px;
         margin-top: -42px;
-        background:linear-gradient(174.71deg, rgba(0, 0, 0, 0.2) 15.64%, rgba(255, 255, 255, 0) 95.76%), #373737;
+        background:@sui-sliderCmarkerGradient;
         margin-left: 163px;
-        color:white;
+        color:@lib-white;
         border-radius:10%;
         transition: 1s opacity;
-        &::after{
+
+        //sui-slider__mark::after
+        &::after {
             content: '';
-            position:absolute;
-            width:40px;
-            height:15px;
+            position: absolute;
+            width: 40px;
+            height: 15px;
             margin-top: 25px;
+            //Triangle
             clip-path: polygon(50% 90%, 30% 40%, 70% 40%);
-            background:linear-gradient(174.71deg, rgba(0, 0, 0, 0.2) 15.64%, rgba(255, 255, 255, 0) 95.76%), #373737;
+            background: @sui-sliderCmarkerGradient;
         }
     }
 
+    //sui-slider__progress - progress bar block
     &__progress {
         width: inherit;
         height: 5px;
         background: @sui-sliderCprogressNewGray;
         transition: .2s;
         border-radius: 50px;
-        &._disabled{
+
+        //sui-slider__progress _disabled - if progress disabled
+        &._disabled {
             &>div {
                 background: @sui-sliderCprogressNewGrayDisabled;
             }
         }
+
+        //sui-slider__progress-bar - inner progressbar width default options like width = zero%
         &-bar {
             width: 0%;
             height: inherit;
@@ -120,18 +142,23 @@
         }
     }
 
-    &__information{
-        display:flex;
+    //sui-slider__information - иottom block for slider description
+    &__information {
+        display: flex;
         padding: 1px;
-        justify-content:space-between;
-        font-family: Arial, Helvetica, sans-serif;
+        justify-content: space-between;
+        font-family: @sui-sliderCBasicFont;
         opacity: .5;
         margin-top: 5px;
-        &-text._max:only-child{
+
+        //sui-slider__information-text _max - captions for the maximum and minimum values of the slider (max - current)
+        &-text._max:only-child {
             margin-left: auto;
         }
-        &-title{
-            order:0;
+
+        //sui-slider__information-title - slider's legend
+        &-title {
+            order: 0;
             font-size: 18px;
             font-weight: 200;
         }
