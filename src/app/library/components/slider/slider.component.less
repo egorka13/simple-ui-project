@@ -1,14 +1,15 @@
 @import "colors.less";
 
-//Parmas
+//--Local color variables
 @sui-sliderCstandartblue: lighten(@lib-blue, 30%);
 @sui-sliderCstandartblueHover: lighten(@lib-blue, 25%);
 @sui-sliderCprogressNewGray: lighten(@lib-grey,10%);
 @sui-sliderCprogressNewGrayHover: lighten(@lib-grey, 5%);
 @sui-sliderCprogressNewGrayDisabled: darken(@lib-grey,8%);
 
-//Mixins
-.progressBarHover(){
+//--Mixins
+//Mixin, performing for the component of styles when the state is disabled
+.progressBarDisableStatusHover(){
     .sui-slider__progress{
         &:not(._disabled) {
             cursor: pointer;
@@ -25,14 +26,13 @@
 
 .sui-slider {
     &__wrapper {
-        margin:0 auto;
         margin-top: 100px;
         &._classic{
             &:hover{
                 input[type="range"]:not(:disabled)::-webkit-slider-thumb{
                     border: 2px solid @sui-sliderCstandartblueHover;
                 }
-                .progressBarHover();
+                .progressBarDisableStatusHover();
             }
         }
     }

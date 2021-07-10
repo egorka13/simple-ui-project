@@ -1,28 +1,58 @@
-<div [ngStyle]="{width:wrapperWidth}" class="sui-slider__wrapper _classic"
+<div
+    [ngStyle]="{ width: wrapperWidth }"
+    class="sui-slider__wrapper _classic"
     (mouseup)="onMouseUp()"
     (mousedown)="onMouseDown()"
     (mouseover)="onMouseOver()"
-    (mouseout)="onMouseOut()">
-    <input min="{{minValue}}"
-           max="{{maxValue}}"
-           value="{{currentValue}}"
-           step="{{step}}"
-    #suiSlider class="sui-slider__item"type="range" name="sui-slider"
-    [(ngModel)]="currentValue"
-    (change)="onChange()">
-    <div  [ngClass]="{
-          'sui-slider__mark-text':true,
-          '_disabled': showMarker
+    (mouseout)="onMouseOut()"
+>
+    <input
+        min="{{ minValue }}"
+        max="{{ maxValue }}"
+        value="{{ currentValue }}"
+        step="{{ step }}"
+        #suiSlider
+        class="sui-slider__item"
+        type="range"
+        name="sui-slider"
+        [(ngModel)]="currentValue"
+        (change)="onChange()"
+        disabled="{{disabled}}"
+    />
+    <div
+        [ngClass]="{
+            'sui-slider__mark-text': true,
+            _disabled: showMarker
         }"
-        [ngStyle]="{marginLeft: getCurrentMarkerOffset()}" class="sui-slider__mark">
-        <label for="sui-slider">{{currentValue}}</label>
+        [ngStyle]="{ marginLeft: getCurrentMarkerOffset() }"
+        class="sui-slider__mark"
+    >
+        <label for="sui-slider">{{ currentValue }}</label>
     </div>
-    <div class="sui-slider__progress" id="progress-common">
-        <div #suiProgressBar [ngStyle]="{width:getCurrentProgressWidth()}" class="sui-slider__progress-bar"></div>
+    <div [ngClass]="{_disabled: disabled}" class="sui-slider__progress" id="progress-common">
+        <div #suiProgressBar [ngStyle]="{ width: getCurrentProgressWidth() }" class="sui-slider__progress-bar"></div>
     </div>
-    <div *ngIf="customparams"class="sui-slider__information">
-        <span [ngStyle]="setCustomColorProperty('color', customparams.setValuesColor)" *ngIf="customparams.showMinimalValue"class="sui-slider__information-text" title="minimal value">{{minValue}}</span>
-        <h1 [ngStyle]="setCustomColorProperty('color', customparams.setLegendColor)" *ngIf="customparams.setLegend" class="sui-slider__information-title">Invariants</h1>
-        <span [ngStyle]="setCustomColorProperty('color', customparams.setValuesColor)" *ngIf="customparams.showMaximumValue" class="sui-slider__information-text _max" title="maximum value">{{maxValue}}</span>
+    <div *ngIf="customparams" class="sui-slider__information">
+        <span
+            [ngStyle]="setCustomColorProperty('color', customparams.setValuesColor)"
+            *ngIf="customparams.showMinimalValue"
+            class="sui-slider__information-text"
+            title="minimal value"
+            >{{ minValue }}</span
+        >
+        <h1
+            [ngStyle]="setCustomColorProperty('color', customparams.setLegendColor)"
+            *ngIf="customparams.setLegend"
+            class="sui-slider__information-title"
+        >
+            {{customparams.setLegend}}
+        </h1>
+        <span
+            [ngStyle]="setCustomColorProperty('color', customparams.setValuesColor)"
+            *ngIf="customparams.showMaximumValue"
+            class="sui-slider__information-text _max"
+            title="maximum value"
+            >{{ maxValue }}</span
+        >
     </div>
 </div>

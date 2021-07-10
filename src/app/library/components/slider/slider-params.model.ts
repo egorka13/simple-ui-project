@@ -1,3 +1,4 @@
+//The interface responsible for typing additional input parameters
 export interface suiSliderParams {
     showMinimalValue?: boolean;
     showMaximumValue?: boolean;

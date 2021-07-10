@@ -11,6 +11,9 @@ export class SliderComponent implements OnInit {
   public showMarker:boolean = true;
 
   @Input()
+  disabled?:boolean = false;
+
+  @Input()
   customparams?:suiSliderParams;
 
   @Input()
