@@ -3,11 +3,12 @@
 //--Local color variables
 @sui-sliderCstandartblue: lighten(@lib-blue, 30%);
 @sui-sliderCstandartblueHover: lighten(@lib-blue, 25%);
+@sui-sliderCstandartblueActive: darken(@lib-blue, 10%);
 @sui-sliderCprogressNewGray: lighten(@lib-grey, 10%);
 @sui-sliderCprogressNewGrayHover: lighten(@lib-grey, 5%);
 @sui-sliderCprogressNewGrayDisabled: darken(@lib-grey, 8%);
-@sui-sliderCthumbShadow: 0 0 0 5px hsl(209, 100, 55, 100%);
-@sui-sliderCmarkerGradient: linear-gradient(174.71deg, hsl(0, 0, 0, 20%) 15.64%, hsl(0, 0, 100, 0%) 95.76%), hsl(0, 0, 22, 100%);
+@sui-sliderCthumbShadow: 0 0 0 5px #1890ff1f;
+@sui-sliderCmarkerGradient: linear-gradient(174.71deg, rgba(0, 0, 0, 0.2) 15.64%, rgba(255, 255, 255, 0) 95.76%), hsl(0, 0%, 21.568627451%);
 @sui-sliderCBasicFont: Arial, Helvetica, sans-serif;
 
 //--Mixins
@@ -34,9 +35,9 @@
         //Need this for marker view
         margin-top: 100px;
 
-        &:hover {
+        &:active {
             input[type="range"]:not(:disabled)::-webkit-slider-thumb {
-                border: 2px solid @sui-sliderCstandartblueHover;
+                border: 2px solid @sui-sliderCstandartblueActive;
             }
 
             .progressBarDisableStatusHover();
