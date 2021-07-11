@@ -1,13 +1,14 @@
+@import 'colors.less';
 .sui-card{
     &__inner{
         position: relative;
         width: 300px;
         border-radius: 2px;
-        border: 1px solid #f0f0f0;
+        border: 1px solid @lib-grey;
         font-size: 14px;
         line-height: 1.5715;
-        color: #000000d9;
-        background: #fff;
+        color: @lib-font-black;
+        background: @lib-white;
         &._small > .sui-card__header{
             padding: 0 12px;
             font-size: 14px;
@@ -29,29 +30,23 @@
         font-weight: 500;
         font-size: 16px;
         background: 0 0;
-        border-bottom: 1px solid #f0f0f0;
+        border-bottom: 1px solid @lib-grey;
         border-radius: 2px 2px 0 0;
         &-title{
             display: inline-block;
             flex: 1;
             padding: 16px 0;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
         }
         &-extra{
             padding: 16px 0;
             font-weight: 400;
             font-size: 14px;
             & a {
-                color: #1890ff;
+                color: @lib-blue;
                 text-decoration: none;
-                background-color: transparent;
-                outline: none;
-                cursor: pointer;
                 transition: color .3s ease;
                 &:hover{
-                    color: #40a9ff;
+                    color: lib-blue-light;
                 }
             }
         }
