@@ -6,11 +6,11 @@
 @radio-box-shadow-white-inset: 0 0 0 0.2em @lib-white inset;  
 @radio-box-shadow-grey-inset: 0 0 0 0.2em @lib-disabled-bg inset;
 
+:host {
+    display: inline-block;
+}
+
 .sui-radio {
-    :host {
-        display: inline-block;
-    }
-    
     &__wrapper {
         display: flex;
 
@@ -84,10 +84,8 @@
         }
     }
 
-    &._type_button {
+    &__wrapper._type_button {
         .sui-radio {
-            display: flex;
-
             &__input {
                 width: 0px;
                 height: 0px;
@@ -130,12 +128,12 @@
                 cursor: pointer;
                 transition: @transition-default;
 
-                &:first-child {
+                &:first-of-type {
                     border-top-left-radius: 2px;
                     border-bottom-left-radius: 2px;
                 }
         
-                &:last-child {
+                &:last-of-type {
                     border-top-right-radius: 2px;
                     border-bottom-right-radius: 2px;
                 }
