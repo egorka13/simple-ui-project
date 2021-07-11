@@ -7,9 +7,15 @@
 @radio-box-shadow-grey-inset: 0 0 0 0.2em @lib-disabled-bg inset;
 
 .sui-radio {
-    display: flex;
+    :host {
+        display: inline-block;
+    }
+    
+    &__wrapper {
+        display: flex;
 
-    .font-regular();
+        .font-regular();
+    }
 
     &__label + &__input {
         margin-left: 0.5em;
