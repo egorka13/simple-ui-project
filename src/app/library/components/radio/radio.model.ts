@@ -1,4 +1,4 @@
-export interface Radio {
+export interface RadioItem {
     id: string;
     text: string;
 }

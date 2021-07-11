@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Radio } from './radio';
+import { RadioItem } from './radio.model';
 
 @Component({
     selector: 'sui-radio',
@@ -7,7 +7,7 @@ import { Radio } from './radio';
     styleUrls: ['./radio.component.less']
 })
 export class RadioComponent implements OnInit {
-    items: Radio[] = [];
+    items: RadioItem[] = [];
     typeModifier: string = '';
 
     @Input()
