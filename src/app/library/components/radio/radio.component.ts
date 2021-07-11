@@ -22,7 +22,7 @@ export class RadioComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
-        const labelsArr = this.labels.split(' ');
+        const labelsArr: string[] = this.labels.split(' ');
         for (let i: number = 0; i < labelsArr.length; i++) {
             this.items.push({
                 id: [this.name,  i].join('_'),
