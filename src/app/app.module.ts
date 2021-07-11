@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { LibraryModule } from './library/library.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+import { LibraryModule } from './library/library.module';
 import { HeaderComponent } from './components/header/header.component';
 import { ConfigPanelComponent } from './components/config-panel/config-panel.component';
 import { ComponentPanelComponent } from './components/component-panel/component-panel.component';
@@ -21,15 +21,10 @@ import { LibraryShowcaseComponent } from './components/library-showcase/library-
         WrapperComponent,
         ConfigPanelComponent,
         ComponentPanelComponent,
-        LibraryShowcaseComponent
+        LibraryShowcaseComponent,
     ],
-    imports: [
-        LibraryModule,
-        BrowserModule,
-        AppRoutingModule
-    ],
+    imports: [LibraryModule, BrowserModule, AppRoutingModule],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}
