@@ -1,0 +1,159 @@
+@import "colors.less";
+@import "vars.less";
+@import "../../../../assets/styles/common/fonts";
+
+@radio-box-shadow-blue: 0px 0px 0px 0.2em @lib-blue-transparent;
+@radio-box-shadow-white-inset: 0 0 0 0.2em @lib-white inset;  
+@radio-box-shadow-grey-inset: 0 0 0 0.2em @lib-disabled-bg inset;
+
+:host {
+    display: inline-block;
+}
+
+.sui-radio {
+    &__wrapper {
+        display: flex;
+
+        .font-regular();
+    }
+
+    &__label + &__input {
+        margin-left: 0.5em;
+    }
+
+    &__input {
+        position: relative;
+        opacity: 0;
+
+        &:not(:disabled):not(:checked)+.sui-radio__label:hover::before,
+        &:focus:not(:checked)+.sui-radio__label::before {
+            border-color: @lib-blue-light;
+        }   
+        
+        &:focus+.sui-radio__label::before {
+            box-shadow: @radio-box-shadow-blue;
+        }
+
+        &:checked+.sui-radio__label::before {
+            background-color: @lib-blue;
+            border-color: @lib-blue;
+            box-shadow: @radio-box-shadow-blue,
+                @radio-box-shadow-white-inset;
+        }
+    
+        &:checked:not(:focus)+.sui-radio__label::before {
+            box-shadow: @radio-box-shadow-white-inset;
+        }
+    
+        &:disabled+.sui-radio__label {
+            color: @lib-font-disabled;
+            cursor: not-allowed;
+
+            &::before {
+                border-color: @lib-grey;
+                background-color: @lib-disabled-bg;
+            }
+        }
+
+        &:disabled:checked+.sui-radio__label::before {
+            background-color: @lib-grey;
+            box-shadow: @radio-box-shadow-grey-inset;
+        }
+    }
+
+    &__label {
+        display: inline-flex;
+        align-items: center;
+        position: relative;
+
+        border-radius: 0;
+
+        cursor: pointer;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            margin-right: 0.5em;
+
+            border: 1px solid @lib-grey;
+            border-radius: 50%;
+
+            transition: @transition-default;
+        }
+    }
+
+    &__wrapper._type_button {
+        .sui-radio {
+            &__input {
+                width: 0px;
+                height: 0px;
+                margin-left: 0;
+
+                &:checked+.sui-radio__label {
+                    color: @lib-blue;
+                    border-color: currentColor;
+                    box-shadow: @radio-box-shadow-blue;
+                    z-index: 2;
+                }
+
+                &:checked:not(:focus)+.sui-radio__label {
+                    box-shadow: none;
+                }   
+                
+                &:disabled+.sui-radio__label {
+                    background-color: @lib-disabled-bg;
+                    border-color: @lib-grey;
+                    color: @lib-font-disabled;
+                    
+                    cursor: not-allowed;
+                }
+
+                &:disabled:checked+.sui-radio__label {
+                    background-color: @lib-grey;
+                }
+            }
+
+            &__label {
+                gap: 0.5em;
+                padding: 0.3em 1em;
+
+                background-color: @lib-white;
+                border: 1px solid @lib-grey;
+
+                .font-regular();
+                color: @lib-font-black;
+
+                cursor: pointer;
+                transition: @transition-default;
+
+                &:first-of-type {
+                    border-top-left-radius: 2px;
+                    border-bottom-left-radius: 2px;
+                }
+        
+                &:last-of-type {
+                    border-top-right-radius: 2px;
+                    border-bottom-right-radius: 2px;
+                }
+
+                &,
+                &:focus,
+                &:active {
+                    outline: 0;
+                }
+
+                &:hover,
+                &:focus {
+                    color: @lib-blue-light;
+                    border-color: @lib-blue-light;
+                }
+
+                &::before {
+                    display: none;
+                }
+            }                 
+        }  
+    }
+}
