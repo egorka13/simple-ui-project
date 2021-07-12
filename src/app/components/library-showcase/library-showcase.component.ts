@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { suiSliderParams } from '../../library/components/slider/slider-params.model'
 
 @Component({
     selector: 'sui-library-showcase',
@@ -6,4 +7,10 @@ import { Component } from '@angular/core';
     styleUrls: ['./library-showcase.component.less']
 })
 export class LibraryShowcaseComponent {
+    sliderComponentParams:suiSliderParams[] = [{
+        showMinimalValue:true,
+        showMaximumValue:true
+    }, {
+        setLegend:"Disabled Version"
+    }]
 }

@@ -33,13 +33,13 @@ export class ResultComponent implements OnInit, AfterViewInit {
      * @param fourth - Responsible for title font-size style (e.g 24px or .5em or other)
      */
     @Input()
-    title: string[] = ["Here's sample title", '', '', ''];
+    title: string[] = ["Successfully Purchased Cloud Server ECS!", '', '', ''];
 
     /**
      * @see title
      */
     @Input()
-    subtitle?: string[];
+    subtitle?: string[] = ["Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait.", '', '', ''];
 
     @Input()
     type: string = 'success';
@@ -56,7 +56,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
     hrefGeneral: string[] = ['', 'Go back', '', '', ''];
 
     @Input()
-    hrefAdditional?: string[];
+    hrefAdditional?: string[] = ['', 'Buy Again', '', '', ''];
 
     constructor() {}
 
