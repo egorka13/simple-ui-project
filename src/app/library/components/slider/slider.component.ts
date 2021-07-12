@@ -20,7 +20,7 @@ export class SliderComponent implements OnInit {
      * This property responsible for disabled state of slider
      */
     @Input()
-    disabled?: boolean = false;
+    disabled: boolean | string = false;
 
     /**
      * this property is responsible for accepting the settings of the current slider component
@@ -32,7 +32,7 @@ export class SliderComponent implements OnInit {
      * @param sixthParam @see suiSliderParams.setValuesColor
      */
     @Input()
-    customparams?: suiSliderParams;
+    customParams?: suiSliderParams;
 
     /**
      * The current input parameter sets the slider width
