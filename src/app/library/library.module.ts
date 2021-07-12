@@ -9,6 +9,7 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { ResultComponent } from './components/result/result.component';
 import { InputComponent } from './components/input/input.component';
 import { InputNumberComponent } from './components/input-number/input-number.component';
+import { CardComponent } from './components/card/card.component';
 
 @NgModule({
     declarations: [
@@ -17,12 +18,13 @@ import { InputNumberComponent } from './components/input-number/input-number.com
         CheckboxComponent,
         ResultComponent,
         InputComponent,
-        InputNumberComponent
+        InputNumberComponent,
+        CardComponent,
     ],
     imports: [
         BrowserModule,
         FormsModule,
-        CommonModule
+        CommonModule,
     ],
     exports: [
         ButtonComponent,
@@ -30,7 +32,8 @@ import { InputNumberComponent } from './components/input-number/input-number.com
         CheckboxComponent,
         ResultComponent,
         InputComponent,
-        InputNumberComponent
+        InputNumberComponent,
+        CardComponent,
     ],
     providers: []
 })
