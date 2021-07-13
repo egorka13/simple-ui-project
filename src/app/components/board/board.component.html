@@ -1,1 +1,8 @@
-<p>I am board component!</p>
+<section class="sui-board__field" draggable="false" [ngClass]="{ _smooth: smoothTransition }" #field>
+    <div
+        class="sui-board__move-plug"
+        draggable="false"
+        [ngClass]="{ _active: showDragPannel, _dragging: dragging }"
+        #fieldMovePlug
+    ></div>
+</section>

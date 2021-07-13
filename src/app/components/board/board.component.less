@@ -1,0 +1,42 @@
+@import '/src/assets/styles/variables/colors.less';
+
+:host {
+    overflow: hidden;
+}
+
+.sui-board {
+    &__field {
+        position: relative;
+        height: 30em; // TODO: Change this from board settings.
+        width: 50em; // TODO: Change this from board settings.
+
+        background-color: @white;
+
+        &._smooth {
+            transition: transform 0.3s ease-out;
+        }
+    }
+
+    &__move-plug {
+        position: absolute;
+        height: 0;
+        width: 0;
+        z-index: -1;
+        opacity: 0;
+
+        &._active {
+            height: 100%;
+            width: 100%;
+            opacity: 1;
+            z-index: 1000;
+
+            cursor: grab;
+
+            background-color: hsla(210deg, 100%, 50%, 10%); // TODO: remove later. Just visualization.
+        }
+
+        &._active._dragging {
+            cursor: grabbing;
+        }
+    }
+}
