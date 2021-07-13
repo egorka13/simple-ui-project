@@ -35,8 +35,8 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     /**
      * Function is a part of a logic provides an ability to move a board across the page.
      * For doing this you have to hold a space button then you can grab the board (move-plug actually).
-     * While the button is pressed it summons move-plug atop the board.
-     * So here contains listener for the space button.
+     * While the button is pressed it summons a move-plug atop the board.
+     * So here contains listeners for the space button.
      * @private
      * @memberof BoardComponent
      */
@@ -68,7 +68,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     // TODO: Maybe move this logic to a separate class because it will be the same for board-item.
     /**
      * This function sets listeners of mouse events to the move-plug of the board.
-     * Logic of shifting the board contains here.
+     * Logic of shifting the board is contained here.
      * @private
      * @memberof BoardComponent
      */
@@ -94,7 +94,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             },
         };
 
-        // Function is called on mousedown. Provoke the move listener to emits events.
+        // Function is called on mousedown. Provoking the move listener to emits events.
         // Save a starting mouse position and a current shift of the board if it exists.
         const dragStart: (e: MouseEvent) => void = e => {
             this.dragging = true;
@@ -108,7 +108,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             dragMetadata.prevShift.y = +transformMatrix[5];
         };
 
-        // Function is called on mousemove. Change the board's shift to a new value.
+        // Function is called on mousemove. Changing the board's shift to a new value.
         const onMove: (e: MouseEvent) => void = e => {
             const shiftX: number = e.clientX - dragMetadata.startPosition.x;
             const shiftY: number = e.clientY - dragMetadata.startPosition.y;
@@ -117,12 +117,12 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             }px)`;
         };
 
-        // Function is called on mouseup. Provoke the move listener to ignore events.
+        // Function is called on mouseup. Provoking the move listener to ignore events.
         const dragEnd: () => void = () => {
             this.dragging = false;
         };
 
-        // Function is called on dblclick. Restore the board's shift to 0.
+        // Function is called on dblclick. Restoring the board's shift to 0.
         const resetPosition: () => void = () => {
             this.smoothTransition = true;
             this.field.nativeElement.style.transform = `translate(0px, 0px)`;
