@@ -3,7 +3,7 @@ export interface IDragMetadata {
     prevShift: IPoint;
 }
 
-interface IPoint {
+export interface IPoint {
     x: number;
     y: number;
 }

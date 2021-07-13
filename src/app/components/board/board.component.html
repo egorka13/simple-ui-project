@@ -1,8 +1,16 @@
-<section class="sui-board__field" draggable="false" [ngClass]="{ _smooth: smoothTransition }" #field>
-    <div
-        class="sui-board__move-plug"
-        draggable="false"
-        [ngClass]="{ _active: showDragPannel, _dragging: dragging }"
-        #fieldMovePlug
-    ></div>
+<section
+    class="sui-board__field"
+    draggable="false"
+    [ngClass]="{ _smooth: _smoothTransition }"
+    [style.transform]="'scale(' + scaleState + ') translate(' + translateState.x + 'px, ' + translateState.y + 'px)'"
+    #field
+>
+    <h1>Title</h1>
 </section>
+
+<div
+    class="sui-board__move-plug"
+    draggable="false"
+    [ngClass]="{ _active: _showDragPannel, _dragging: _dragging }"
+    #fieldMovePlug
+></div>

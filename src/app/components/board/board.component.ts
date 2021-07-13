@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { IDragMetadata } from './board.model';
+import { IDragMetadata, IPoint } from './board.model';
 
 @Component({
     selector: 'sui-board',
@@ -9,9 +9,15 @@ import { IDragMetadata } from './board.model';
     styleUrls: ['./board.component.less'],
 })
 export class BoardComponent implements AfterViewInit, OnDestroy {
-    public showDragPannel: boolean = false;
-    public dragging: boolean = false;
-    public smoothTransition: boolean = false;
+    public _showDragPannel: boolean = false;
+    public _dragging: boolean = false;
+    public _smoothTransition: boolean = false;
+
+    public scaleState: number = 1;
+    public translateState: IPoint = {
+        x: 0,
+        y: 0,
+    };
 
     private toUnsubscribe: Array<Subscription> = [];
 
@@ -24,12 +30,43 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     ngAfterViewInit(): void {
         this.setSpaceHoldListener();
         this.setMoveListener();
+        this.setZoomListener();
     }
 
     ngOnDestroy() {
         this.toUnsubscribe.forEach(sub => {
             sub.unsubscribe();
         });
+    }
+
+    private setZoomListener() {
+        const wheel$: Observable<WheelEvent> = fromEvent<WheelEvent>(document, 'wheel');
+
+        let timeout: ReturnType<typeof setTimeout>;
+
+        const scale: (deltaY: number) => void = deltaY => {
+            if (timeout) clearTimeout(timeout);
+
+            this._smoothTransition = true;
+            // 300ms is a kinda magic number. In fact this is 0.3s duration of a smooth transition inside '._smooth'.
+            timeout = setTimeout(() => {
+                this._smoothTransition = false;
+            }, 300);
+
+            if (deltaY > 0) {
+                this.scaleState = this.scaleState - 0.1 < 0.3 ? 0.3 : (this.scaleState -= 0.1);
+            } else {
+                this.scaleState = this.scaleState + 0.1 > 2 ? 2 : (this.scaleState += 0.1);
+            }
+        };
+
+        this.toUnsubscribe.push(
+            wheel$.subscribe({
+                next: e => {
+                    scale(e.deltaY);
+                },
+            })
+        );
     }
 
     /**
@@ -42,15 +79,15 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
      */
     private setSpaceHoldListener(): void {
         const spacePressed: () => void = () => {
-            if (!this.showDragPannel) {
-                this.showDragPannel = true;
+            if (!this._showDragPannel) {
+                this._showDragPannel = true;
             }
         };
 
         const spaceReleased: () => void = () => {
-            if (this.showDragPannel) {
-                this.dragging = false;
-                this.showDragPannel = false;
+            if (this._showDragPannel) {
+                this._dragging = false;
+                this._showDragPannel = false;
             }
         };
 
@@ -97,43 +134,46 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         // Function is called on mousedown. Provoking the move listener to emits events.
         // Save a starting mouse position and a current shift of the board if it exists.
         const dragStart: (e: MouseEvent) => void = e => {
-            this.dragging = true;
+            this._dragging = true;
 
             dragMetadata.startPosition.x = e.clientX;
             dragMetadata.startPosition.y = e.clientY;
 
             const styles: CSSStyleDeclaration = getComputedStyle(this.field.nativeElement);
-            const transformMatrix: Array<string> = styles.transform.match(/-?\d+/g) || ['0', '0', '0', '0', '0', '0'];
+            // prettier-ignore
+            const transformMatrix: Array<string> = styles.transform.match(/-?\d+(\.\d+)?/g) ||
+                                                   [ '1', '0', '0', '1', '0', '0'];
+
             dragMetadata.prevShift.x = +transformMatrix[4];
             dragMetadata.prevShift.y = +transformMatrix[5];
         };
 
         // Function is called on mousemove. Changing the board's shift to a new value.
-        const onMove: (e: MouseEvent) => void = e => {
+        const move: (e: MouseEvent) => void = e => {
             const shiftX: number = e.clientX - dragMetadata.startPosition.x;
             const shiftY: number = e.clientY - dragMetadata.startPosition.y;
-            this.field.nativeElement.style.transform = `translate(${dragMetadata.prevShift.x + shiftX}px, ${
-                dragMetadata.prevShift.y + shiftY
-            }px)`;
+            this.translateState.x = (dragMetadata.prevShift.x + shiftX) / this.scaleState;
+            this.translateState.y = (dragMetadata.prevShift.y + shiftY) / this.scaleState;
         };
 
         // Function is called on mouseup. Provoking the move listener to ignore events.
         const dragEnd: () => void = () => {
-            this.dragging = false;
+            this._dragging = false;
         };
 
         // Function is called on dblclick. Restoring the board's shift to 0.
         const resetPosition: () => void = () => {
-            this.smoothTransition = true;
-            this.field.nativeElement.style.transform = `translate(0px, 0px)`;
+            this._smoothTransition = true;
+            this.translateState.x = 0;
+            this.translateState.y = 0;
 
             setTimeout(() => {
-                this.smoothTransition = false;
+                this._smoothTransition = false;
             }, 300); // 300ms is a kinda magic number. In fact this is 0.3s duration of a smooth transition inside '._smooth'.
         };
 
-        this.toUnsubscribe.push(mouseDown$.pipe(filter(() => !this.smoothTransition)).subscribe({ next: dragStart }));
-        this.toUnsubscribe.push(mouseMove$.pipe(filter(() => this.dragging)).subscribe({ next: onMove }));
+        this.toUnsubscribe.push(mouseDown$.pipe(filter(() => !this._smoothTransition)).subscribe({ next: dragStart }));
+        this.toUnsubscribe.push(mouseMove$.pipe(filter(() => this._dragging)).subscribe({ next: move }));
         this.toUnsubscribe.push(mouseUp$.subscribe({ next: dragEnd }));
         this.toUnsubscribe.push(dblclick$.subscribe({ next: resetPosition }));
     }
