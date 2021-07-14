@@ -1,1 +1,32 @@
-<p>I am config panel component!</p>
+<div class="sui-config-panel__wrapper">
+    <header 
+        class="sui-config-panel__header"
+        (click)="handleHeaderClick($event)">
+        <button id="designSection" class="sui-config-panel__title _active">Element design</button>
+        <button id="codeSection" class="sui-config-panel__title">Code</button>
+    </header>
+
+    <div *ngIf="isDesign; else code"
+        class="sui-config-panel__declarations">
+        <div *ngFor='let property of properties' 
+            class="sui-config-panel__property" 
+            [class._isGroup]="property.isGroup">
+            <span class="sui-config-panel__property-name">{{ property.name }}</span>
+            <input *ngIf="property.type"
+                class="sui-config-panel__property-input"
+                [type]="property.type" 
+                value="button-1"
+                [attr.min]="property.min ? '' : property.min"
+                [attr.max]="property.max ? '' : property.max"
+                [attr.step]="property.step ? '' : property.step">
+            <select *ngIf="property.options"
+                class="sui-config-panel__property-select">
+                <option *ngFor="let option of property.options">{{ option }}</option>
+            </select>
+        </div>
+    </div>
+
+    <ng-template #code>
+
+    </ng-template>
+</div>

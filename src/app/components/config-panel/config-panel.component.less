@@ -1,0 +1,141 @@
+@import "../../../assets/styles/base.less";
+
+@config-panel-header-blue: hsla(212, 100%, 17%, 1);
+
+@transition: all 0.2s ease-out;
+
+.sui-config-panel {
+    &__wrapper {
+        width: 270px;
+        height: 550px;
+        padding-bottom: 10px;
+        
+        background-color: @sui-blue-deep-1;
+
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+            width: 8px;
+            height: 16px;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            background: hsla(0, 0%, 65%, 1);
+        }
+        
+        &::-webkit-scrollbar-track {
+            background: hsla(220, 15%, 43%, 1);
+        }
+    }
+
+    &__header, 
+    &__property {
+        display: grid;
+        grid-template-columns: 60% 40%;
+    }
+
+    &__header {
+        background-color: @config-panel-header-blue;
+
+        .font-regular();
+        font-size: 14px;
+        color: @sui-white;
+        text-align: center;
+    }
+
+    &__title {
+        padding: 5px 0;
+        transition: @transition;
+
+        &:hover,
+        &._active {
+            background-color: lighten(@config-panel-header-blue, 20%);
+        }
+    }
+
+    &__declarations {
+        padding: 5px 15px;
+    }
+
+    &__property {
+        color: @sui-white;
+        font-size: 13px;
+
+        & + & {
+            margin-top: 8px;
+        }
+
+        &._isGroup {
+
+            padding-top: 8px;
+            border-top: 2px solid hsl(0, 0%, 50%);
+        }
+
+        &-name {
+            .font-bold();
+            text-transform: capitalize;
+        }
+
+        &-input,
+        &-select {
+            background-color: @sui-blue-2;
+            border-radius: 2px;
+            border: none;
+
+            .font-regular();
+            text-align: center;
+
+            transition: @transition;
+
+            &:hover,
+            &:focus,
+            &:active {
+                background-color: lighten(@sui-blue-2, 20%);
+            }
+        }
+
+        &-input {
+            &[type="color"] {
+                padding: 0;
+                height: 100%;
+                width: 100%;
+
+                cursor: pointer;
+                border: none;
+                outline: 0;
+                -webkit-appearance: none;
+
+                &::-webkit-color-swatch-wrapper {
+                    padding: 0;
+                }
+
+                &::-webkit-color-swatch {
+                    border: none;
+                    border-radius: 2px;
+                }
+            }
+
+            &[type="number"] {
+                &::-webkit-outer-spin-button,
+                &::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+            }
+        }
+
+        &-select {
+            padding: 0 5px;
+            text-align-last: center;
+            text-align: center; 
+            cursor: pointer;
+            appearance: none;
+
+            &:active,
+            &:focus{
+                outline: none;
+                border: 0;
+            }
+        }
+    }
+}
