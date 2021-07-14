@@ -1,11 +1,19 @@
 <section
     class="sui-board__field"
     draggable="false"
-    [ngClass]="{ _smooth: _smoothTransition }"
-    [style.transform]="'scale(' + scaleState + ') translate(' + translateState.x + 'px, ' + translateState.y + 'px)'"
+    [ngClass]="{ _smooth: boardSettingsService.isTransition }"
+    [style.transform]="
+        'scale(' +
+        boardSettingsService.scale +
+        ') translate(' +
+        boardSettingsService.translateX +
+        'px, ' +
+        boardSettingsService.translateY +
+        'px)'
+    "
     #field
 >
-    <h1>Title</h1>
+    <h1>Scale {{ boardSettingsService.scale }}</h1>
 </section>
 
 <div

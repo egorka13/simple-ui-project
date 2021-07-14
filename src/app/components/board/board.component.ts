@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { IDragMetadata, IPoint } from './board.model';
+import { IDragMetadata } from './board.model';
+import { BoardSettingsService } from 'src/app/core/services/board-settings.service';
 
 @Component({
     selector: 'sui-board',
@@ -11,13 +12,6 @@ import { IDragMetadata, IPoint } from './board.model';
 export class BoardComponent implements AfterViewInit, OnDestroy {
     public _showDragPannel: boolean = false;
     public _dragging: boolean = false;
-    public _smoothTransition: boolean = false;
-
-    public scaleState: number = 1;
-    public translateState: IPoint = {
-        x: 0,
-        y: 0,
-    };
 
     private toUnsubscribe: Array<Subscription> = [];
 
@@ -26,6 +20,8 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild('fieldMovePlug')
     fieldMovePlug: ElementRef;
+
+    constructor(public boardSettingsService: BoardSettingsService) {}
 
     ngAfterViewInit(): void {
         this.setSpaceHoldListener();
@@ -39,34 +35,21 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         });
     }
 
+    /**
+     * This function sets up a listener of the mouse wheel on the document.
+     * Changes the board scale on the wheel spin via boardSettingsService.
+     * @private
+     * @memberof BoardComponent
+     */
     private setZoomListener() {
         const wheel$: Observable<WheelEvent> = fromEvent<WheelEvent>(document, 'wheel');
 
-        let timeout: ReturnType<typeof setTimeout>;
-
-        const scale: (deltaY: number) => void = deltaY => {
-            if (timeout) clearTimeout(timeout);
-
-            this._smoothTransition = true;
-            // 300ms is a kinda magic number. In fact this is 0.3s duration of a smooth transition inside '._smooth'.
-            timeout = setTimeout(() => {
-                this._smoothTransition = false;
-            }, 300);
-
-            if (deltaY > 0) {
-                this.scaleState = this.scaleState - 0.1 < 0.3 ? 0.3 : (this.scaleState -= 0.1);
-            } else {
-                this.scaleState = this.scaleState + 0.1 > 2 ? 2 : (this.scaleState += 0.1);
-            }
+        const changeScale: (deltaY: number) => void = deltaY => {
+            this.boardSettingsService.enableSmoothTransition();
+            this.boardSettingsService.changeScale(deltaY / Math.abs(deltaY));
         };
 
-        this.toUnsubscribe.push(
-            wheel$.subscribe({
-                next: e => {
-                    scale(e.deltaY);
-                },
-            })
-        );
+        this.toUnsubscribe.push(wheel$.subscribe({ next: e => changeScale(e.deltaY) }));
     }
 
     /**
@@ -152,27 +135,28 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         const move: (e: MouseEvent) => void = e => {
             const shiftX: number = e.clientX - dragMetadata.startPosition.x;
             const shiftY: number = e.clientY - dragMetadata.startPosition.y;
-            this.translateState.x = (dragMetadata.prevShift.x + shiftX) / this.scaleState;
-            this.translateState.y = (dragMetadata.prevShift.y + shiftY) / this.scaleState;
+
+            this.boardSettingsService.translateX =
+                (dragMetadata.prevShift.x + shiftX) / this.boardSettingsService.scale;
+            this.boardSettingsService.translateY =
+                (dragMetadata.prevShift.y + shiftY) / this.boardSettingsService.scale;
         };
 
-        // Function is called on mouseup. Provoking the move listener to ignore events.
+        // Function is called on mouseup. Provoking the move listener to ignore mouse events.
         const dragEnd: () => void = () => {
             this._dragging = false;
         };
 
         // Function is called on dblclick. Restoring the board's shift to 0.
         const resetPosition: () => void = () => {
-            this._smoothTransition = true;
-            this.translateState.x = 0;
-            this.translateState.y = 0;
-
-            setTimeout(() => {
-                this._smoothTransition = false;
-            }, 300); // 300ms is a kinda magic number. In fact this is 0.3s duration of a smooth transition inside '._smooth'.
+            this.boardSettingsService.enableSmoothTransition();
+            this.boardSettingsService.translateX = 0;
+            this.boardSettingsService.translateY = 0;
         };
 
-        this.toUnsubscribe.push(mouseDown$.pipe(filter(() => !this._smoothTransition)).subscribe({ next: dragStart }));
+        this.toUnsubscribe.push(
+            mouseDown$.pipe(filter(() => !this.boardSettingsService.isTransition)).subscribe({ next: dragStart })
+        );
         this.toUnsubscribe.push(mouseMove$.pipe(filter(() => this._dragging)).subscribe({ next: move }));
         this.toUnsubscribe.push(mouseUp$.subscribe({ next: dragEnd }));
         this.toUnsubscribe.push(dblclick$.subscribe({ next: resetPosition }));
