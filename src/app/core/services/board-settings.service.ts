@@ -12,6 +12,8 @@ export class BoardSettingsService {
     };
     private smoothTransition: boolean = false;
     private smoothTransitionTO: ReturnType<typeof setTimeout>;
+    private heightState: number = 650;
+    private widthState: number = 1080;
 
     // Current board scale.
     get scale(): number {
@@ -35,6 +37,20 @@ export class BoardSettingsService {
     // Displays if board's 'smooth transition' enabled right now.
     get isTransition(): boolean {
         return this.smoothTransition;
+    }
+
+    // Current board height and width.
+    get height(): number {
+        return this.heightState;
+    }
+    set height(height: number) {
+        this.heightState = height;
+    }
+    get width(): number {
+        return this.widthState;
+    }
+    set width(width: number) {
+        this.widthState = width;
     }
 
     /**

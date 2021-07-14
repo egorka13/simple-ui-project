@@ -11,9 +11,14 @@
         boardSettingsService.translateY +
         'px)'
     "
+    [style.height]="boardSettingsService.height + 'px'"
+    [style.width]="boardSettingsService.width + 'px'"
     #field
 >
+    <!-- Showcases -->
     <h1>Scale {{ boardSettingsService.scale }}</h1>
+    <input type="number" [(ngModel)]="boardSettingsService.height" />
+    <input type="number" [(ngModel)]="boardSettingsService.width" />
 </section>
 
 <div
