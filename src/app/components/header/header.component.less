@@ -3,6 +3,7 @@
 .sui-header {
     &__wrapper {
         background: @sui-blue-deep-2;
+        box-sizing: border-box;
     }
 
     &__content {
@@ -16,16 +17,52 @@
     }
 
     &__rainbowBorder {
-        height: 5px;
-        background: linear-gradient(179.97deg, #FF0000 29.07%, #FF7A00 37.58%, #FAFF00 46.37%, #00FF29 56.28%, #0094FF 66.32%, #0038FF 76%, #5200FF 84.21%);
-        animation: rainbowLoad .5s ease-in-out, rainbowInfinite 2s infinite;
+        height: 2px;
+        background: linear-gradient(90deg, #FF0000 29.07%, #FF7A00 37.58%, #FAFF00 46.37%, #00FF29 56.28%, #0094FF 66.32%, #0038FF 76%, #5200FF 84.21%);
+        animation: rainbowLoad .5s ease-in-out;
     }
 
     &__navigation {
+        width:100%;
         display: flex;
         justify-content: center;
-        width: 100%;
-        min-height: 45px;
+        &-wrapper{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 500px;
+            height:45px;
+            gap:10px;
+        }
+        &-zoomInput{
+            width: 50px;
+            height:25px;
+            text-align: center;
+            box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 5px;
+            background: @sui-blue-deep-3;
+            color: @sui-white;
+            &::placeholder{
+                color:@sui-white;
+                font-size: 14px;
+            }
+        }
+        &-btn{
+            box-sizing: border-box;
+            padding-top: 5px;
+        }
+        &-btnZoom{
+            fill:@sui-white;
+            transition:.2s;
+            pointer-events:all;
+            &:hover{
+                fill:@sui-blue-1;
+            }
+        }
+
+        &-actions{
+            display: flex;
+        }
     }
 }
 
@@ -36,11 +73,5 @@
 
     100% {
         width: 100%;
-    }
-}
-
-@keyframes rainbowInfinite {
-    100% {
-        background-position: 0 5px;
     }
 }
