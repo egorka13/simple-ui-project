@@ -1,0 +1,46 @@
+@import "../../../assets/styles/variables/colors";
+
+.sui-header {
+    &__wrapper {
+        background: @sui-blue-deep-2;
+    }
+
+    &__content {
+        display: flex;
+        padding: 5px 0px 5px 30px;
+
+        &-logotype {
+            width: 45px;
+            height: 45px;
+        }
+    }
+
+    &__rainbowBorder {
+        height: 5px;
+        background: linear-gradient(179.97deg, #FF0000 29.07%, #FF7A00 37.58%, #FAFF00 46.37%, #00FF29 56.28%, #0094FF 66.32%, #0038FF 76%, #5200FF 84.21%);
+        animation: rainbowLoad .5s ease-in-out, rainbowInfinite 2s infinite;
+    }
+
+    &__navigation {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        min-height: 45px;
+    }
+}
+
+@keyframes rainbowLoad {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes rainbowInfinite {
+    100% {
+        background-position: 0 5px;
+    }
+}
