@@ -45,6 +45,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         const wheel$: Observable<WheelEvent> = fromEvent<WheelEvent>(document, 'wheel');
 
         const changeScale: (deltaY: number) => void = deltaY => {
+            if (!deltaY) return;
             this.boardSettingsService.enableSmoothTransition();
             this.boardSettingsService.changeScale(deltaY / Math.abs(deltaY));
         };
