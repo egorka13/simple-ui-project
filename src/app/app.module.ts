@@ -12,6 +12,9 @@ import { BoardComponent } from './components/board/board.component';
 import { BoardItemComponent } from './components/board/board-item/board-item.component';
 import { WrapperComponent } from './components/wrapper/wrapper.component';
 import { LibraryShowcaseComponent } from './components/library-showcase/library-showcase.component';
+import { HttpClientModule } from '@angular/common/http';
+
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @NgModule({
     declarations: [
@@ -24,7 +27,7 @@ import { LibraryShowcaseComponent } from './components/library-showcase/library-
         ComponentPanelComponent,
         LibraryShowcaseComponent,
     ],
-    imports: [LibraryModule, BrowserModule, AppRoutingModule, FormsModule],
+    imports: [HttpClientModule, AngularSvgIconModule.forRoot(), LibraryModule, BrowserModule, AppRoutingModule, FormsModule],
     providers: [],
     bootstrap: [AppComponent],
 })
