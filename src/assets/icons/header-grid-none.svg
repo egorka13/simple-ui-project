@@ -1,12 +1,12 @@
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="3.625" cy="3.625" r="1.625" fill="white"/>
-<circle cx="3.625" cy="8.5" r="1.625" fill="white"/>
-<circle cx="3.625" cy="13.375" r="1.625" fill="white"/>
-<circle cx="8.5" cy="13.375" r="1.625" fill="white"/>
-<circle cx="13.375" cy="13.375" r="1.625" fill="white"/>
-<circle cx="13.375" cy="8.5" r="1.625" fill="white"/>
-<circle cx="8.5" cy="8.5" r="1.625" fill="white"/>
-<circle cx="8.5" cy="3.625" r="1.625" fill="white"/>
-<circle cx="13.375" cy="3.625" r="1.625" fill="white"/>
-<rect x="0.709473" y="15.0506" width="20.4193" height="1.04681" rx="0.523405" transform="rotate(-45 0.709473 15.0506)" fill="white"/>
+<circle cx="3.625" cy="3.625" r="1.625" fill="red"/>
+<circle cx="3.625" cy="8.5" r="1.625" fill="red"/>
+<circle cx="3.625" cy="13.375" r="1.625" fill="red"/>
+<circle cx="8.5" cy="13.375" r="1.625" fill="red"/>
+<circle cx="13.375" cy="13.375" r="1.625" fill="red"/>
+<circle cx="13.375" cy="8.5" r="1.625" fill="red"/>
+<circle cx="8.5" cy="8.5" r="1.625" fill="red"/>
+<circle cx="8.5" cy="3.625" r="1.625" fill="red"/>
+<circle cx="13.375" cy="3.625" r="1.625" fill="red"/>
+<rect x="0.709473" y="15.0506" width="20.4193" height="1.04681" rx="0.523405" transform="rotate(-45 0.709473 15.0506)" fill="red"/>
 </svg>
