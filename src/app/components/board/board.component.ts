@@ -29,7 +29,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         this.setZoomListener();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.toUnsubscribe.forEach(sub => {
             sub.unsubscribe();
         });
@@ -41,7 +41,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
      * @private
      * @memberof BoardComponent
      */
-    private setZoomListener() {
+    private setZoomListener(): void {
         const wheel$: Observable<WheelEvent> = fromEvent<WheelEvent>(document, 'wheel', { passive: false }).pipe(
             filter(e => e.ctrlKey),
             map(e => {
