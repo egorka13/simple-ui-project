@@ -36,6 +36,7 @@ export class BoardSettingsService {
 
     public setScale(value:number){
         this.scaleState = value;
+        this.updateTransformStyle();
     }
 
     // Current board shift relatve to start position.
