@@ -45,7 +45,7 @@ export class BoardSettingsService {
      * @private
      * @memberof BoardSettingsService
      */
-    private updateTransformStyle() {
+    private updateTransformStyle(): void {
         this.transformStyle$.next(
             `scale(${this.scaleState}) translate(${this.translateState.x}px, ${this.translateState.y}px)`
         );
