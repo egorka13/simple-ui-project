@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@ang
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { IDragMetadata } from './board.model';
-import { BoardSettingsService } from 'src/app/core/services/board-settings.service';
+import { BoardSettingsService } from '@services/board-settings.service';
 
 @Component({
     selector: 'sui-board',

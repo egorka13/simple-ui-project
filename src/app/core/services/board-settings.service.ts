@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IPoint } from 'src/app/components/board/board.model';
+import { IPoint } from '@components/board/board.model';
 
 @Injectable({
     providedIn: 'root',
