@@ -3,12 +3,12 @@
         <a class="sui-header__content-mainlink" href="/"><img class="sui-header__content-logotype" src="../../../assets/icons/logotype.svg" alt="simple ui logotype"></a>
         <div class="sui-header__navigation">
             <nav class="sui-header__navigation-wrapper">
-                <input type="text" class="sui-header__navigation-zoomInput" placeholder="{{scale}}%" maxlength="3">
+                <input (change)="onChangeInput($event)" (click)="onClickInput($event)" (keyup)="onKeyUpInput($event)" type="text" class="sui-header__navigation-zoomInput" value="{{getRounderScale()}}%" maxlength="4">
                 <div class="sui-header__navigation-zoomBtns">
-                    <button type="button" class="sui-header__navigation-btn">
+                    <button (click)="onClickZoomIn()" type="button" class="sui-header__navigation-btn">
                         <svg-icon [svgClass]="'sui-header__navigation-btnZoom'" src="../../../assets/icons/header-zoom-in.svg"></svg-icon>
                     </button>
-                    <button type="button" class="sui-header__navigation-btn _zoom">
+                    <button (click)="onClickZoomOut()" type="button" class="sui-header__navigation-btn _zoom">
                         <svg-icon [svgClass]="'sui-header__navigation-btnZoom'" src="../../../assets/icons/header-zoom-out.svg"></svg-icon>
                     </button>
                 </div>
@@ -22,8 +22,8 @@
                     <button type="button" class="sui-header__navigation-btn _remove">
                         <svg-icon src="../../../assets/icons/header-remove.svg"></svg-icon>
                     </button>
-                    <button type="button" class="sui-header__navigation-btn _grid">
-                        <svg-icon src="../../../assets/icons/header-grid-btn.svg"></svg-icon>
+                    <button (click)="onClickSetGridState()" type="button" class="sui-header__navigation-btn _grid">
+                        <svg-icon [src]="getGridPath()"></svg-icon>
                     </button>
                 </div>
             </nav>
