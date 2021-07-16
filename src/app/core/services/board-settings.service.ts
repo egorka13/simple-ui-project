@@ -27,14 +27,14 @@ export class BoardSettingsService {
     }
     set translateX(x: number) {
         this.translateState.x = x;
-        this.UpdateTransformStyle();
+        this.updateTransformStyle();
     }
     get translateY(): number {
         return this.translateState.y;
     }
     set translateY(y: number) {
         this.translateState.y = y;
-        this.UpdateTransformStyle();
+        this.updateTransformStyle();
     }
 
     // Listener contsins computed transform style.
@@ -45,7 +45,7 @@ export class BoardSettingsService {
      * @private
      * @memberof BoardSettingsService
      */
-    private UpdateTransformStyle() {
+    private updateTransformStyle() {
         this.transformStyle$.next(
             `scale(${this.scaleState}) translate(${this.translateState.x}px, ${this.translateState.y}px)`
         );
@@ -79,7 +79,7 @@ export class BoardSettingsService {
      * @param {number} scaleValue - Amount of zoom.
      * @memberof BoardSettingsService
      */
-    public changeScale(scaleValue: number) {
+    public changeScale(scaleValue: number): void {
         this.scaleState += 0.1 * scaleValue;
 
         if (this.scaleState > 2) {
@@ -92,7 +92,7 @@ export class BoardSettingsService {
 
         this.scaleState = Math.round(this.scaleState * 100) / 100;
 
-        this.UpdateTransformStyle();
+        this.updateTransformStyle();
     }
 
     /**
@@ -101,7 +101,7 @@ export class BoardSettingsService {
      * Include debounce.
      * @memberof BoardSettingsService
      */
-    public enableSmoothTransition() {
+    public enableSmoothTransition(): void {
         if (this.smoothTransitionTO) clearTimeout(this.smoothTransitionTO);
         this.smoothTransition = true;
 
