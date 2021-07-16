@@ -1,1 +1,21 @@
-<p>I am board component!</p>
+<section
+    class="sui-board__field"
+    draggable="false"
+    [ngClass]="{ _smooth: boardSettingsService.isTransition }"
+    [style.transform]="boardSettingsService.transformStyle$ | async"
+    [style.height]="boardSettingsService.height + 'px'"
+    [style.width]="boardSettingsService.width + 'px'"
+    #field
+>
+    <!-- Showcases -->
+    <h1>Scale {{ boardSettingsService.scale }}</h1>
+    <input type="number" [(ngModel)]="boardSettingsService.height" />
+    <input type="number" [(ngModel)]="boardSettingsService.width" />
+</section>
+
+<div
+    class="sui-board__move-plug"
+    draggable="false"
+    [ngClass]="{ _active: _showDragPannel, _dragging: _dragging }"
+    #fieldMovePlug
+></div>
