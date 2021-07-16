@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IPoint } from '@components/board/board.model';
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -26,12 +27,28 @@ export class BoardSettingsService {
     }
     set translateX(x: number) {
         this.translateState.x = x;
+        this.UpdateTransformStyle();
     }
     get translateY(): number {
         return this.translateState.y;
     }
     set translateY(y: number) {
         this.translateState.y = y;
+        this.UpdateTransformStyle();
+    }
+
+    // Listener contsins computed transform style.
+    public transformStyle$: Subject<string> = new Subject<string>();
+
+    /**
+     * This function computes and updates actual transform style.
+     * @private
+     * @memberof BoardSettingsService
+     */
+    private UpdateTransformStyle() {
+        this.transformStyle$.next(
+            `scale(${this.scaleState}) translate(${this.translateState.x}px, ${this.translateState.y}px)`
+        );
     }
 
     // Displays if board's 'smooth transition' enabled right now.
@@ -74,6 +91,8 @@ export class BoardSettingsService {
         }
 
         this.scaleState = Math.round(this.scaleState * 100) / 100;
+
+        this.UpdateTransformStyle();
     }
 
     /**

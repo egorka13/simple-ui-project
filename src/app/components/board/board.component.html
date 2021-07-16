@@ -2,15 +2,7 @@
     class="sui-board__field"
     draggable="false"
     [ngClass]="{ _smooth: boardSettingsService.isTransition }"
-    [style.transform]="
-        'scale(' +
-        boardSettingsService.scale +
-        ') translate(' +
-        boardSettingsService.translateX +
-        'px, ' +
-        boardSettingsService.translateY +
-        'px)'
-    "
+    [style.transform]="boardSettingsService.transformStyle$ | async"
     [style.height]="boardSettingsService.height + 'px'"
     [style.width]="boardSettingsService.width + 'px'"
     #field
