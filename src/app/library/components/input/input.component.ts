@@ -15,7 +15,7 @@ export class InputComponent implements OnInit {
 
     sizeModifier: string = '';
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.sizeModifier = this.size ? `_size_${this.size}` : '';
     }
 }

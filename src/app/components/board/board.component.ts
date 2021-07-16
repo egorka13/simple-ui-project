@@ -10,7 +10,7 @@ import { BoardSettingsService } from '@services/board-settings.service';
     styleUrls: ['./board.component.less'],
 })
 export class BoardComponent implements AfterViewInit, OnDestroy {
-    public _showDragPannel: boolean = false;
+    public _showDragPanel: boolean = false;
     public _dragging: boolean = false;
 
     private toUnsubscribe: Array<Subscription> = [];
@@ -69,15 +69,15 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
      */
     private setSpaceHoldListener(): void {
         const spacePressed: () => void = () => {
-            if (!this._showDragPannel) {
-                this._showDragPannel = true;
+            if (!this._showDragPanel) {
+                this._showDragPanel = true;
             }
         };
 
         const spaceReleased: () => void = () => {
-            if (this._showDragPannel) {
+            if (this._showDragPanel) {
                 this._dragging = false;
-                this._showDragPannel = false;
+                this._showDragPanel = false;
             }
         };
 

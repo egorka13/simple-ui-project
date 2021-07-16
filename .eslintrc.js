@@ -28,6 +28,7 @@ module.exports = {
         quotes: 'off',
         '@typescript-eslint/quotes': ['error', 'single'],
         '@typescript-eslint/no-unused-vars': 'error',
+        '@typescript-eslint/no-inferrable-types': 'off',
         '@typescript-eslint/camelcase': 'off',
         '@typescript-eslint/no-use-before-define': [
             'error',

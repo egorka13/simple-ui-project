@@ -115,8 +115,6 @@ export class SliderComponent implements OnInit {
         this.showMarker = true;
     }
 
-    constructor() {}
-
     ngOnInit(): void {
         this.checkValidParams();
     }
@@ -131,26 +129,26 @@ export class SliderComponent implements OnInit {
     public getCurrentMarkerOffset(): string {
         let deltaX: number = 15;
         if (this.currentValue !== undefined && this.maxValue !== undefined && this.minValue !== undefined) {
-            let progressPersent: number =
+            const progressPercent: number =
                 (Math.abs(this.minValue - this.currentValue) * 100) / (this.maxValue - this.minValue);
             //These values are responsible for the displacement of the marker with the current value relative to the slider.
             //All values are calculated experimentally and have no final calculation!
             //Change this if you need
-            if (progressPersent >= 85) {
+            if (progressPercent >= 85) {
                 deltaX = 25;
             }
-            if (progressPersent > 20 && progressPersent <= 40) {
+            if (progressPercent > 20 && progressPercent <= 40) {
                 deltaX = 16;
             }
-            if (progressPersent > 5 && progressPersent <= 20) {
+            if (progressPercent > 5 && progressPercent <= 20) {
                 deltaX = 13;
             }
 
-            if (progressPersent <= 5) {
+            if (progressPercent <= 5) {
                 deltaX = 8;
             }
 
-            if (progressPersent <= 2) {
+            if (progressPercent <= 2) {
                 deltaX = 2;
             }
             return `${
@@ -166,7 +164,7 @@ export class SliderComponent implements OnInit {
      * Is performed without considering the offset of the marker of the current value
      * @returns
      */
-    public getCurrentProgressWidth(): String {
+    public getCurrentProgressWidth(): string {
         if (this.minValue !== undefined && this.maxValue !== undefined && this.currentValue !== undefined) {
             return `${
                 (Math.abs(this.minValue - this.currentValue) *
@@ -200,7 +198,7 @@ export class SliderComponent implements OnInit {
      * @param value the required value for the property
      * @returns Returns a css property object
      */
-    public setCustomProperty(type: string, value?: string): Object {
+    public setCustomProperty(type: string, value?: string): Record<string, string> {
         if (value !== undefined) {
             return {
                 [type]: value,

@@ -4,7 +4,7 @@ import { RadioItem } from './radio.model';
 @Component({
     selector: 'sui-radio',
     templateUrl: './radio.component.html',
-    styleUrls: ['./radio.component.less']
+    styleUrls: ['./radio.component.less'],
 })
 export class RadioComponent implements OnInit {
     items: RadioItem[] = [];
@@ -19,18 +19,15 @@ export class RadioComponent implements OnInit {
     @Input()
     type: undefined | 'button';
 
-    constructor() { }
-
     ngOnInit(): void {
         const labelsArr: string[] = this.labels.split(' ');
         for (let i: number = 0; i < labelsArr.length; i++) {
             this.items.push({
-                id: [this.name,  i].join('_'),
-                text: labelsArr[i]
-            })
+                id: [this.name, i].join('_'),
+                text: labelsArr[i],
+            });
         }
 
         this.typeModifier = this.type ? '_type_button' : '';
     }
-
 }
