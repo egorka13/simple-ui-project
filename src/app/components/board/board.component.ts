@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { fromEvent, Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { IDragMetadata } from './board.model';
 import { BoardSettingsService } from '@services/board-settings.service';
 
@@ -42,12 +42,18 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
      * @memberof BoardComponent
      */
     private setZoomListener() {
-        const wheel$: Observable<WheelEvent> = fromEvent<WheelEvent>(document, 'wheel');
+        const wheel$: Observable<WheelEvent> = fromEvent<WheelEvent>(document, 'wheel', { passive: false }).pipe(
+            filter(e => e.ctrlKey),
+            map(e => {
+                e.preventDefault();
+                return e;
+            })
+        );
 
         const changeScale: (deltaY: number) => void = deltaY => {
             if (!deltaY) return;
             this.boardSettingsService.enableSmoothTransition();
-            this.boardSettingsService.changeScale(deltaY / Math.abs(deltaY));
+            this.boardSettingsService.changeScale(-deltaY / Math.abs(deltaY));
         };
 
         this.toUnsubscribe.push(wheel$.subscribe({ next: e => changeScale(e.deltaY) }));
