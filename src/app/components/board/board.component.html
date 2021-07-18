@@ -5,17 +5,22 @@
     [style.transform]="boardSettingsService.transformStyle$ | async"
     [style.height]="boardSettingsService.height + 'px'"
     [style.width]="boardSettingsService.width + 'px'"
+    [style.zIndex]="5"
     #field
 >
     <!-- Showcases -->
-    <h1>Scale {{ boardSettingsService.scale }}</h1>
-    <input type="number" [(ngModel)]="boardSettingsService.height" />
-    <input type="number" [(ngModel)]="boardSettingsService.width" />
+    <div class="sui-board__field-showcases">
+        <h1>Scale {{ boardSettingsService.scale }}</h1>
+        <input type="number" [(ngModel)]="boardSettingsService.height" />
+        <input type="number" [(ngModel)]="boardSettingsService.width" />
+    </div>
+    <!-- Canvas grid field -->
+    <sui-grid></sui-grid>
 </section>
-
 <div
     class="sui-board__move-plug"
     draggable="false"
     [ngClass]="{ _active: _showDragPannel, _dragging: _dragging }"
+    [style.zIndex]="1"
     #fieldMovePlug
 ></div>

@@ -21,6 +21,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     @ViewChild('fieldMovePlug')
     fieldMovePlug: ElementRef;
 
+
     constructor(public boardSettingsService: BoardSettingsService) {}
 
     ngAfterViewInit(): void {

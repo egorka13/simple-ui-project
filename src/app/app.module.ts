@@ -16,6 +16,7 @@ import { LibraryShowcaseComponent } from './components/library-showcase/library-
 import { HttpClientModule } from '@angular/common/http';
 
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { GridComponent } from './components/grid/grid.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
         ConfigPanelComponent,
         ComponentPanelComponent,
         LibraryShowcaseComponent,
+        GridComponent,
     ],
     imports: [HttpClientModule, AngularSvgIconModule.forRoot(), LibraryModule, BrowserModule, AppRoutingModule, FormsModule],
     providers: [],
