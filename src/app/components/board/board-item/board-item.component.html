@@ -1,1 +1,3 @@
-<p>I am board item component!</p>
+<div class="sui-board-item__holder" [ngClass]="{ _interactive: boardSettingsService.isInteractiveMode }" #holder>
+    <div class="sui-board-item__place" #place></div>
+</div>

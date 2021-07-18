@@ -11,6 +11,21 @@
     <h1>Scale {{ boardSettingsService.scale }}</h1>
     <input type="number" [(ngModel)]="boardSettingsService.height" />
     <input type="number" [(ngModel)]="boardSettingsService.width" />
+    <button
+        (click)="boardSettingsService.isInteractiveMode = !boardSettingsService.isInteractiveMode"
+        [style.outline]="'1px solid gray'"
+    >
+        Toggle Interactive Mode
+    </button>
+    <button
+        (click)="boardSettingsService.isInfiniteBoardMde = !boardSettingsService.isInfiniteBoardMde"
+        [style.outline]="'1px solid gray'"
+    >
+        Toggle Infinite Mode
+    </button>
+
+    <br />
+    <sui-board-item></sui-board-item>
 </section>
 
 <div

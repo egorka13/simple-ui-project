@@ -40,16 +40,8 @@ export class BoardSettingsService {
     // Listener contsins computed transform style.
     public transformStyle$: Subject<string> = new Subject<string>();
 
-    /**
-     * This function computes and updates actual transform style.
-     * @private
-     * @memberof BoardSettingsService
-     */
-    private updateTransformStyle(): void {
-        this.transformStyle$.next(
-            `scale(${this.scaleState}) translate(${this.translateState.x}px, ${this.translateState.y}px)`
-        );
-    }
+    public isInteractiveMode: boolean = false;
+    public isInfiniteBoardMde: boolean = false;
 
     // Displays if board's 'smooth transition' enabled right now.
     get isTransition(): boolean {
@@ -108,5 +100,16 @@ export class BoardSettingsService {
         this.smoothTransitionTO = setTimeout(() => {
             this.smoothTransition = false;
         }, 300); // 300ms is a kinda magic number. In fact this is 0.3s duration of a smooth transition inside '._smooth'.
+    }
+
+    /**
+     * This function computes and updates actual transform style.
+     * @private
+     * @memberof BoardSettingsService
+     */
+    private updateTransformStyle(): void {
+        this.transformStyle$.next(
+            `scale(${this.scaleState}) translate(${this.translateState.x}px, ${this.translateState.y}px)`
+        );
     }
 }

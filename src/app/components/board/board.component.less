@@ -1,12 +1,22 @@
 @import '/src/assets/styles/variables/colors.less';
 
 :host {
-    overflow: hidden;
+    position: absolute;
+    min-width: 100%;
+
+    &._infinite {
+        background-color: @sui-white;
+        & .sui-board__field {
+            overflow: initial;
+        }
+    }
 }
 
 .sui-board {
     &__field {
         position: relative;
+
+        overflow: hidden;
 
         background-color: @sui-white;
 

@@ -1,6 +1,7 @@
-import { Component, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy, AfterViewInit, HostBinding } from '@angular/core';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+
 import { IDragMetadata } from './board.model';
 import { BoardSettingsService } from '@services/board-settings.service';
 
@@ -20,6 +21,10 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild('fieldMovePlug')
     fieldMovePlug: ElementRef;
+
+    @HostBinding('class._infinite') get infinite(): boolean {
+        return this.boardSettingsService.isInfiniteBoardMde;
+    }
 
     constructor(public boardSettingsService: BoardSettingsService) {}
 
