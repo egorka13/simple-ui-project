@@ -26,9 +26,10 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         return this.boardSettingsService.isInfiniteBoardMde;
     }
 
-    constructor(public boardSettingsService: BoardSettingsService) {}
+    constructor(public boardSettingsService: BoardSettingsService, public boardElement: ElementRef) {}
 
     ngAfterViewInit(): void {
+        this.boardSettingsService.setBoardElement(this.boardElement.nativeElement);
         this.setSpaceHoldListener();
         this.setMoveListener();
         this.setZoomListener();
