@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 })
 export class BoardSettingsService {
     private scaleState: number = 1;
+    private minScale: number = 0.3;
     private translateState: IPoint = {
         x: 0,
         y: 0,
@@ -15,6 +16,7 @@ export class BoardSettingsService {
     private smoothTransitionTO: ReturnType<typeof setTimeout>;
     private heightState: number = 650;
     private widthState: number = 1080;
+    private boardElement: HTMLElement;
 
     // Current board scale.
     get scale(): number {
@@ -45,16 +47,8 @@ export class BoardSettingsService {
     // Listener contsins computed transform style.
     public transformStyle$: Subject<string> = new Subject<string>();
 
-    /**
-     * This function computes and updates actual transform style.
-     * @private
-     * @memberof BoardSettingsService
-     */
-    private updateTransformStyle(): void {
-        this.transformStyle$.next(
-            `scale(${this.scaleState}) translate(${this.translateState.x}px, ${this.translateState.y}px)`
-        );
-    }
+    public isInteractiveMode: boolean = false;
+    public isInfiniteBoardMde: boolean = false;
 
     // Displays if board's 'smooth transition' enabled right now.
     get isTransition(): boolean {
@@ -66,13 +60,46 @@ export class BoardSettingsService {
         return this.heightState;
     }
     set height(height: number) {
+        this.translateState.x = 0;
+        this.translateState.y = 0;
+        this.enableSmoothTransition();
+        this.updateTransformStyle();
+
         this.heightState = height;
+        this.noramalizeScale();
     }
     get width(): number {
         return this.widthState;
     }
     set width(width: number) {
+        this.translateState.x = 0;
+        this.translateState.y = 0;
+        this.enableSmoothTransition();
+        this.updateTransformStyle();
+
         this.widthState = width;
+        this.noramalizeScale();
+    }
+
+    public setBoardElement(board: HTMLElement): void {
+        this.boardElement = board;
+    }
+
+    private noramalizeScale(): void {
+        if (this.boardElement) {
+            const computedWidthMinScale: number = this.boardElement.offsetWidth / this.width;
+            const computedHeightMinScale: number = this.boardElement.offsetHeight / this.height;
+
+            const computedMinScale = Math.floor(Math.min(computedHeightMinScale, computedWidthMinScale) * 100) / 100;
+            console.log(Math.floor((computedMinScale - this.scale) * 10) / 10);
+
+            this.minScale = computedMinScale < 0.3 ? computedMinScale : 0.3;
+
+            if (computedMinScale < 1) {
+                this.scaleState = Math.min(computedMinScale, this.scale);
+                this.updateTransformStyle();
+            }
+        }
     }
 
     /**
@@ -91,8 +118,8 @@ export class BoardSettingsService {
             this.scaleState = 2;
         }
 
-        if (this.scaleState < 0.3) {
-            this.scaleState = 0.3;
+        if (this.scaleState < this.minScale) {
+            this.scaleState = this.minScale;
         }
 
         this.scaleState = Math.round(this.scaleState * 100) / 100;
@@ -113,5 +140,16 @@ export class BoardSettingsService {
         this.smoothTransitionTO = setTimeout(() => {
             this.smoothTransition = false;
         }, 300); // 300ms is a kinda magic number. In fact this is 0.3s duration of a smooth transition inside '._smooth'.
+    }
+
+    /**
+     * This function computes and updates actual transform style.
+     * @private
+     * @memberof BoardSettingsService
+     */
+    private updateTransformStyle(): void {
+        this.transformStyle$.next(
+            `scale(${this.scaleState}) translate(${this.translateState.x}px, ${this.translateState.y}px)`
+        );
     }
 }

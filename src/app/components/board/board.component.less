@@ -1,17 +1,37 @@
 @import '/src/assets/styles/variables/colors.less';
 
 :host {
-    overflow: hidden;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    min-width: 100%;
+
+    background-color: @sui-gray-3;
+
+    &._infinite {
+        background-color: @sui-white;
+        & .sui-board__field {
+            overflow: initial;
+        }
+    }
 }
 
 .sui-board {
     &__field {
-        position: relative;
+        position: absolute;
+
+        overflow: hidden;
+
         background-color: @sui-white;
-        transition:.5s;
+
         &._smooth {
-            transition: transform 0.3s ease-out;
+            transition: transform 0.3s ease-out, height 0.3s ease-out, width 0.3s ease-out;
         }
+
         &-showcases{
             position: relative;
             z-index: 5;
