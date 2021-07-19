@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, SimpleChanges } from '@angular/core';
 import { GridSettingsService } from '@services/grid-settings.service';
 import { BoardSettingsService } from '@services/board-settings.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'sui-grid',
@@ -15,12 +16,11 @@ export class GridComponent implements OnInit, AfterViewInit {
   @ViewChild('suiGrid')
   suiGrid: ElementRef;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   ngAfterViewInit():void{
-    setInterval(() => {
-      this.initGrid();
-    }, 100);
+    this.initGrid();
   }
 
   public initGrid():void{

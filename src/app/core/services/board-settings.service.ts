@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IPoint } from '@components/board/board.model';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -17,6 +17,8 @@ export class BoardSettingsService {
     private heightState: number = 650;
     private widthState: number = 1080;
     private boardElement: HTMLElement;
+
+    public boardParametres$ = new BehaviorSubject<Array<number>>([this.widthState, this.heightState]);
 
     // Current board scale.
     get scale(): number {
@@ -67,6 +69,8 @@ export class BoardSettingsService {
 
         this.heightState = height;
         this.noramalizeScale();
+
+        this.boardParametres$.next([this.width, height]);
     }
     get width(): number {
         return this.widthState;
@@ -76,9 +80,10 @@ export class BoardSettingsService {
         this.translateState.y = 0;
         this.enableSmoothTransition();
         this.updateTransformStyle();
-
         this.widthState = width;
         this.noramalizeScale();
+
+        this.boardParametres$.next([width, this.height]);
     }
 
     public setBoardElement(board: HTMLElement): void {
@@ -91,7 +96,6 @@ export class BoardSettingsService {
             const computedHeightMinScale: number = this.boardElement.offsetHeight / this.height;
 
             const computedMinScale = Math.floor(Math.min(computedHeightMinScale, computedWidthMinScale) * 100) / 100;
-            console.log(Math.floor((computedMinScale - this.scale) * 10) / 10);
 
             this.minScale = computedMinScale < 0.3 ? computedMinScale : 0.3;
 
