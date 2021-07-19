@@ -11,9 +11,10 @@ import {
     NgZone,
 } from '@angular/core';
 
-import { InputComponent } from '@library-components/input/input.component';
 import { BoardSettingsService } from '@services/board-settings.service';
 import { IDragMetadata } from '@components/board/board.model';
+
+import { InputComponent } from '@library-components/input/input.component'; // TODO: remove this and add logic.
 
 @Component({
     selector: 'sui-board-item',
@@ -27,9 +28,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     @ViewChild('holder')
     holder: ElementRef;
 
-    private toUnsubscribe: Array<() => void> = [];
-    private unlistenMouseMove: () => void;
-    private unlistenMouseUp: () => void;
+    private toUnlisten: Array<() => void> = [];
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -47,18 +46,55 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.toUnsubscribe.forEach(unlistener => {
+        this.toUnlisten.forEach(unlistener => {
             unlistener();
         });
     }
 
-    addComponent(): void {
+    // TODO: rework this and add logic here.
+    private addComponent(): void {
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(InputComponent);
         this.place.createComponent(componentFactory);
     }
 
-    setMoveListener(): void {
-        const unlistenMouseDown = this.r2.listen(this.boardItem.nativeElement, 'mousedown', (e: MouseEvent) => {
+    /**
+     * This function checks if component goes outside the board field.
+     * If true returns new coordinates corresponding to the component on last available postition.
+     * @private
+     * @param {number} x - x position of the component (top left corner).
+     * @param {number} y - y position of the component (top left corner).
+     * @returns  {[newX: number, newY: number]} - Conponent's coordinates.
+     * @memberof BoardItemComponent
+     */
+    private disignateBorder(x: number, y: number): [newX: number, newY: number] {
+        const nativeEl: HTMLElement = this.boardItem.nativeElement as HTMLElement;
+
+        let newX: number = x;
+        let newY: number = y;
+
+        if (nativeEl.offsetLeft + x < 0) {
+            newX = nativeEl.offsetLeft;
+        }
+        if (nativeEl.offsetLeft + nativeEl.offsetWidth + x > this.boardSettingsService.width) {
+            newX = this.boardSettingsService.width - nativeEl.offsetLeft - nativeEl.offsetWidth;
+        }
+        if (nativeEl.offsetTop + y < 0) {
+            newY = -nativeEl.offsetTop;
+        }
+        if (nativeEl.offsetTop + nativeEl.offsetHeight + y > this.boardSettingsService.height) {
+            newY = this.boardSettingsService.height - nativeEl.offsetTop - nativeEl.offsetHeight;
+        }
+
+        return [newX, newY];
+    }
+
+    /**
+     * This function sets listeners of the mouse events to drag component.
+     * @private
+     * @memberof BoardItemComponent
+     */
+    private setMoveListener(): void {
+        const onMouseDown: (e: MouseEvent) => void = e => {
             if (this.boardSettingsService.isInteractiveMode) return;
 
             e.preventDefault();
@@ -79,30 +115,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
                 },
             };
 
-            const disignateBorder: (x: number, y: number) => [newX: number, newY: number] = (x, y) => {
-                const nativeEl: HTMLElement = this.boardItem.nativeElement as HTMLElement;
-
-                let newX: number = x;
-                let newY: number = y;
-
-                if (nativeEl.offsetLeft + x < 0) {
-                    newX = nativeEl.offsetLeft;
-                }
-                if (nativeEl.offsetLeft + nativeEl.offsetWidth + x > this.boardSettingsService.width) {
-                    newX = this.boardSettingsService.width - nativeEl.offsetLeft - nativeEl.offsetWidth;
-                }
-                if (nativeEl.offsetTop + y < 0) {
-                    newY = -nativeEl.offsetTop;
-                }
-                if (nativeEl.offsetTop + nativeEl.offsetHeight + y > this.boardSettingsService.height) {
-                    newY = this.boardSettingsService.height - nativeEl.offsetTop - nativeEl.offsetHeight;
-                }
-
-                console.log(newX);
-                return [newX, newY];
-            };
-
-            const move: (e: MouseEvent) => void = e => {
+            const onMove: (e: MouseEvent) => void = e => {
                 const shiftX: number = e.clientX - dragMetadata.startPosition.x;
                 const shiftY: number = e.clientY - dragMetadata.startPosition.y;
 
@@ -110,7 +123,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
                 let computedY = (dragMetadata.prevShift.y + shiftY) / this.boardSettingsService.scale;
 
                 if (!this.boardSettingsService.isInfiniteBoardMode) {
-                    [computedX, computedY] = disignateBorder(computedX, computedY);
+                    [computedX, computedY] = this.disignateBorder(computedX, computedY);
                 }
 
                 const transformString: string = `translate(${computedX}px, ${computedY}px)`;
@@ -118,16 +131,17 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
                 this.r2.setStyle(this.boardItem.nativeElement, 'transform', transformString);
             };
 
+            let unlistenMouseMove: () => void;
             this.ngZone.runOutsideAngular(() => {
-                this.unlistenMouseMove = this.r2.listen('document', 'mousemove', move);
+                unlistenMouseMove = this.r2.listen('document', 'mousemove', onMove);
             });
 
-            this.unlistenMouseUp = this.r2.listen('document', 'mouseup', () => {
-                this.unlistenMouseMove();
-                this.unlistenMouseUp();
+            const unlistenMouseUp = this.r2.listen('document', 'mouseup', () => {
+                unlistenMouseMove();
+                unlistenMouseUp();
             });
-        });
+        };
 
-        this.toUnsubscribe.push(unlistenMouseDown);
+        this.toUnlisten.push(this.r2.listen(this.boardItem.nativeElement, 'mousedown', onMouseDown));
     }
 }
