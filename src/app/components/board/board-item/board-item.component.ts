@@ -109,7 +109,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
                 let computedX = (dragMetadata.prevShift.x + shiftX) / this.boardSettingsService.scale;
                 let computedY = (dragMetadata.prevShift.y + shiftY) / this.boardSettingsService.scale;
 
-                if (!this.boardSettingsService.isInfiniteBoardMde) {
+                if (!this.boardSettingsService.isInfiniteBoardMode) {
                     [computedX, computedY] = disignateBorder(computedX, computedY);
                 }
 

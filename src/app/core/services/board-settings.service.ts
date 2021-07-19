@@ -17,6 +17,7 @@ export class BoardSettingsService {
     private heightState: number = 650;
     private widthState: number = 1080;
     private boardElement: HTMLElement;
+    private boardMargin = 400;
 
     // Current board scale.
     get scale(): number {
@@ -42,8 +43,10 @@ export class BoardSettingsService {
     // Listener contsins computed transform style.
     public transformStyle$: Subject<string> = new Subject<string>();
 
+    // Mode that allows user activates library components on the board.
     public isInteractiveMode: boolean = false;
-    public isInfiniteBoardMde: boolean = false;
+    // Mode that allows to use all visible space as a board.
+    public isInfiniteBoardMode: boolean = false;
 
     // Displays if board's 'smooth transition' enabled right now.
     get isTransition(): boolean {
@@ -57,11 +60,12 @@ export class BoardSettingsService {
     set height(height: number) {
         this.translateState.x = 0;
         this.translateState.y = 0;
-        this.enableSmoothTransition();
-        this.updateTransformStyle();
 
         this.heightState = height;
-        this.noramalizeScale();
+        this.normalizeScale();
+
+        this.enableSmoothTransition();
+        this.updateTransformStyle();
     }
     get width(): number {
         return this.widthState;
@@ -69,32 +73,21 @@ export class BoardSettingsService {
     set width(width: number) {
         this.translateState.x = 0;
         this.translateState.y = 0;
-        this.enableSmoothTransition();
-        this.updateTransformStyle();
 
         this.widthState = width;
-        this.noramalizeScale();
+        this.normalizeScale();
+
+        this.enableSmoothTransition();
+        this.updateTransformStyle();
     }
 
+    /**
+     * This method binds the board HTMLElement to boardSettingsService.
+     * @param {HTMLElement} board - sui-board (host) element.
+     * @memberof BoardSettingsService
+     */
     public setBoardElement(board: HTMLElement): void {
         this.boardElement = board;
-    }
-
-    private noramalizeScale(): void {
-        if (this.boardElement) {
-            const computedWidthMinScale: number = this.boardElement.offsetWidth / this.width;
-            const computedHeightMinScale: number = this.boardElement.offsetHeight / this.height;
-
-            const computedMinScale = Math.floor(Math.min(computedHeightMinScale, computedWidthMinScale) * 100) / 100;
-            console.log(Math.floor((computedMinScale - this.scale) * 10) / 10);
-
-            this.minScale = computedMinScale < 0.3 ? computedMinScale : 0.3;
-
-            if (computedMinScale < 1) {
-                this.scaleState = Math.min(computedMinScale, this.scale);
-                this.updateTransformStyle();
-            }
-        }
     }
 
     /**
@@ -146,5 +139,27 @@ export class BoardSettingsService {
         this.transformStyle$.next(
             `scale(${this.scaleState}) translate(${this.translateState.x}px, ${this.translateState.y}px)`
         );
+    }
+
+    /**
+     * This function computes a scale value while chaning the board size so the board always stay fully inside the screen.
+     * @private
+     * @memberof BoardSettingsService
+     */
+    private normalizeScale(): void {
+        if (!this.boardElement) return;
+
+        const computedWidthMinScale: number = (this.boardElement.offsetWidth - this.boardMargin) / this.width;
+        const computedHeightMinScale: number = this.boardElement.offsetHeight / this.height;
+
+        const computedMinScale = Math.floor(Math.min(computedHeightMinScale, computedWidthMinScale) * 100) / 100;
+
+        this.minScale = computedMinScale < 0.3 ? computedMinScale : 0.3;
+
+        if (computedMinScale < 1) {
+            this.scaleState = Math.min(computedMinScale, this.scale);
+        } else {
+            this.scaleState = Math.max(this.minScale, Math.min(this.scale, 1));
+        }
     }
 }

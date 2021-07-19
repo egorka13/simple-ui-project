@@ -22,8 +22,9 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     @ViewChild('fieldMovePlug')
     fieldMovePlug: ElementRef;
 
-    @HostBinding('class._infinite') get infinite(): boolean {
-        return this.boardSettingsService.isInfiniteBoardMde;
+    @HostBinding('class._infinite')
+    get infinite(): boolean {
+        return this.boardSettingsService.isInfiniteBoardMode;
     }
 
     constructor(public boardSettingsService: BoardSettingsService, public boardElement: ElementRef) {}
@@ -33,6 +34,12 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         this.setSpaceHoldListener();
         this.setMoveListener();
         this.setZoomListener();
+
+        // Setting up a starting board size.
+        setTimeout(() => {
+            this.boardSettingsService.height = 650;
+            this.boardSettingsService.width = 1080;
+        }, 0);
     }
 
     ngOnDestroy(): void {
