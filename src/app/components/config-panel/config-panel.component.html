@@ -1,4 +1,5 @@
-<div class="sui-config-panel__wrapper">
+<div class="sui-config-panel__wrapper" tabindex="0"
+    (focusout)="onBlur($event)">
     <header 
         class="sui-config-panel__header"
         (click)="handleHeaderClick($event)">
@@ -9,24 +10,49 @@
     <div *ngIf="isDesign; else code"
         class="sui-config-panel__declarations">
         <div *ngFor='let property of properties' 
-            class="sui-config-panel__property" 
-            [class._isGroup]="property.isGroup">
+            class="sui-config-panel__property">
+            <!-- [class._isGroup]="property.type == 'group'"> -->
+
             <span class="sui-config-panel__property-name">{{ property.name }}</span>
-            <input *ngIf="property.type"
+
+            <input *ngIf="property.type != 'select'"
                 class="sui-config-panel__property-input"
+                [(ngModel)]="property.value"
                 [type]="property.type" 
-                value="button-1"
                 [attr.min]="property.min ? '' : property.min"
                 [attr.max]="property.max ? '' : property.max"
                 [attr.step]="property.step ? '' : property.step">
-            <select *ngIf="property.options"
+
+            <select *ngIf="property.type == 'select'"
+                [(ngModel)]="property.value"
                 class="sui-config-panel__property-select">
-                <option *ngFor="let option of property.options">{{ option }}</option>
+                <option 
+                    *ngFor="let option of property.options"
+                    [value]="option"
+                    >{{ option }}</option>
             </select>
+            
         </div>
+
+        <!-- <div class="sui-config-panel__control">
+            <button 
+                class="sui-config-panel__control-button"
+                (click)="resetChanges()">Reset</button>
+            <button 
+                class="sui-config-panel__control-button _type_apply"
+                (click)="applyChanges()">Apply</button>
+        </div> -->
     </div>
 
     <ng-template #code>
-
+        <div class="sui-config-panel__code">
+            &lt;{{ suiComponentName }}&shy;
+            <span class="sui-config-panel__text-tab">
+                <ng-container *ngFor="let prop of properties">
+                    {{ prop.name }}="{{ prop.value }}"&shy;
+                </ng-container> 
+            </span><br>
+            &gt;&lt;/{{ suiComponentName }}&gt;
+        </div>
     </ng-template>
 </div>

@@ -7,10 +7,14 @@
 .sui-config-panel {
     &__wrapper {
         width: 270px;
-        height: 550px;
+        max-height: 550px;
         padding-bottom: 10px;
         
         background-color: @sui-blue-deep-1;
+
+        color: @sui-white;
+        .font-regular();
+        font-size: 14px;
 
         overflow-y: auto;
 
@@ -37,9 +41,7 @@
     &__header {
         background-color: @config-panel-header-blue;
 
-        .font-regular();
         font-size: 14px;
-        color: @sui-white;
         text-align: center;
     }
 
@@ -53,12 +55,12 @@
         }
     }
 
-    &__declarations {
+    &__declarations,
+    &__code {
         padding: 5px 15px;
     }
 
     &__property {
-        color: @sui-white;
         font-size: 13px;
 
         & + & {
@@ -82,7 +84,6 @@
             border-radius: 2px;
             border: none;
 
-            .font-regular();
             text-align: center;
 
             transition: @transition;
@@ -137,5 +138,40 @@
                 border: 0;
             }
         }
+    }
+
+    &__control {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 1.5rem;
+
+        font-size: 14px;
+
+        &-button {
+            padding: 0 12px;
+
+            background-color: @sui-gray-3;
+            border-radius: 2px;
+
+            transition: @transition;
+
+            &:hover {
+                background-color: darken(@sui-gray-3, 10%);
+            }
+
+            &._type_apply {
+                background-color: @sui-blue-1;
+
+                &:hover {
+                    background-color: darken(@sui-blue-1, 10%);
+                }
+            }
+        }
+    }
+
+    &__text-tab {
+        display: inline-block;
+        margin-left: 1rem;
     }
 }
