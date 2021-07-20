@@ -136,7 +136,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
                 unlistenMouseMove = this.r2.listen('document', 'mousemove', onMove);
             });
 
-            const unlistenMouseUp = this.r2.listen('document', 'mouseup', () => {
+            const unlistenMouseUp: () => void = this.r2.listen('document', 'mouseup', () => {
                 unlistenMouseMove();
                 unlistenMouseUp();
             });
