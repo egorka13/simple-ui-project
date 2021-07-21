@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input } from '@angular/core';
 import { IDataComponent } from './panel.model';
 import { IGroupItems } from './panel.model';
 

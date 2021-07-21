@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { buttonSize, buttonType } from './button.model';
 
 @Component({
     selector: 'sui-button',
     templateUrl: './button.component.html',
-    styleUrls: ['./button.component.less']
+    styleUrls: ['./button.component.less'],
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent {
     @Input()
     type: buttonType;
 
@@ -16,29 +16,19 @@ export class ButtonComponent implements OnInit {
     @Input()
     isGhost: boolean = false;
 
-    @Input() 
+    @Input()
     innerText: string = 'Button';
-    
-    constructor() {
-    }
-
-    ngOnInit(): void {
-    }
 
     get classes(): string {
         const typeModifier = this.type ? '_type_' + this.type : '';
         const sizeModifier = this.size ? '_size_' + this.size : '';
-        const classNames = ['sui-button', typeModifier, sizeModifier, 
-            this.isGhost ? '_ghost' : ''].join(' ');
-        
-        return classNames;
+        return ['sui-button', typeModifier, sizeModifier, this.isGhost ? '_ghost' : ''].join(' ');
     }
 
     handleClick(event: Event): void {
-        const element: Element = <Element>event.target;
+        const element: Element = event.target as Element;
         const elemClasses = element.classList;
-        if (elemClasses.contains('_type_text') ||
-            elemClasses.contains('_type_link')) {
+        if (elemClasses.contains('_type_text') || elemClasses.contains('_type_link')) {
             return;
         }
         element.classList.remove('_clicked');

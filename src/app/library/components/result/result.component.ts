@@ -33,13 +33,18 @@ export class ResultComponent implements OnInit, AfterViewInit {
      * @param fourth - Responsible for title font-size style (e.g 24px or .5em or other)
      */
     @Input()
-    title: string[] = ["Successfully Purchased Cloud Server ECS!", '', '', ''];
+    title: string[] = ['Successfully Purchased Cloud Server ECS!', '', '', ''];
 
     /**
      * @see title
      */
     @Input()
-    subtitle?: string[] = ["Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait.", '', '', ''];
+    subtitle?: string[] = [
+        'Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait.',
+        '',
+        '',
+        '',
+    ];
 
     @Input()
     type: string = 'success';
@@ -57,8 +62,6 @@ export class ResultComponent implements OnInit, AfterViewInit {
 
     @Input()
     hrefAdditional?: string[] = ['', 'Buy Again', '', '', ''];
-
-    constructor() {}
 
     ngOnInit(): void {
         //Checking the input parameters of a component
@@ -88,7 +91,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
      * @returns returns false if the value is undefined, true otherwise
      */
     checkValidType(data: string): boolean {
-        return data !== undefined ? true : false;
+        return data !== undefined;
     }
 
     /**
@@ -117,10 +120,10 @@ export class ResultComponent implements OnInit, AfterViewInit {
      */
     setFontStyles(data?: string[]): ResultTitlesStyles {
         if (data) {
-            const fontFamily:string = data[1];
-            const fontColor:string = data[2];
-            const fontSize:string = data[3];
-            let result: ResultTitlesStyles = {};
+            const fontFamily: string = data[1];
+            const fontColor: string = data[2];
+            const fontSize: string = data[3];
+            const result: ResultTitlesStyles = {};
             if (fontFamily) {
                 result['font-family'] = fontFamily;
             }

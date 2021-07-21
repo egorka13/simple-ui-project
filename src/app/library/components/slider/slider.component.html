@@ -7,17 +7,18 @@
     (mouseout)="onMouseOut()"
 >
     <input
-        min="{{ minValue }}"
-        max="{{ maxValue }}"
-        value="{{ currentValue }}"
-        step="{{ step }}"
+        [min]="minValue"
+        [max]="maxValue"
+        [value]="currentValue"
+        [step]="step"
         #suiSlider
         class="sui-slider__item"
         type="range"
         name="sui-slider"
+        id="sui-slider"
         [(ngModel)]="currentValue"
         (change)="onChange()"
-        disabled="{{ disabled }}"
+        [disabled]="disabled"
     />
     <div
         [ngClass]="{
@@ -32,24 +33,24 @@
     <div [ngClass]="{ _disabled: disabled }" class="sui-slider__progress" id="progress-common">
         <div #suiProgressBar [ngStyle]="{ width: getCurrentProgressWidth() }" class="sui-slider__progress-bar"></div>
     </div>
-    <div *ngIf="customparams" class="sui-slider__information">
+    <div *ngIf="customParams" class="sui-slider__information">
         <span
-            [ngStyle]="setCustomProperty('color', customparams.setValuesColor)"
-            *ngIf="customparams.showMinimalValue"
+            [ngStyle]="setCustomProperty('color', customParams.setValuesColor)"
+            *ngIf="customParams.showMinimalValue"
             class="sui-slider__information-text"
             title="minimal value"
             >{{ minValue }}</span
         >
         <h1
-            [ngStyle]="setCustomProperty('color', customparams.setLegendColor)"
-            *ngIf="customparams.setLegend"
+            [ngStyle]="setCustomProperty('color', customParams.setLegendColor)"
+            *ngIf="customParams.setLegend"
             class="sui-slider__information-title"
         >
-            {{ customparams.setLegend }}
+            {{ customParams.setLegend }}
         </h1>
         <span
-            [ngStyle]="setCustomProperty('color', customparams.setValuesColor)"
-            *ngIf="customparams.showMaximumValue"
+            [ngStyle]="setCustomProperty('color', customParams.setValuesColor)"
+            *ngIf="customParams.showMaximumValue"
             class="sui-slider__information-text _max"
             title="maximum value"
             >{{ maxValue }}</span
