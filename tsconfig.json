@@ -23,6 +23,7 @@
         ],
         "paths": {
             "@services/*": ["src/app/core/services/*"],
+            "@pipes/*": ["src/app/core/pipes/*"],
             "@components/*": ["src/app/components/*"],
             "@library-components/*": ["src/app/library/components/*"]
         }
