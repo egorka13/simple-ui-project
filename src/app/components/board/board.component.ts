@@ -21,7 +21,7 @@ import { InputComponent } from '@library-components/input/input.component'; // T
 import { BoardItemComponent } from './board-item/board-item.component';
 
 import { IDragMetadata } from '@models/board.model';
-import { ILibComponentConfig } from '@models/config-panel.model';
+import { IConfigPanelProperty } from '@models/config-panel.model';
 
 @Component({
     selector: 'sui-board',
@@ -94,44 +94,38 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     }
 
     public _addComponentDemo1(): void {
-        this.boardSettingsService.addLibraryComponent(InputComponent, {
-            suiComponent: 'asd',
-            properties: [
-                {
-                    name: 'placeholder',
-                    type: 'text',
-                    value: 'asdsdsda11',
-                },
-                {
-                    name: 'size',
-                    type: 'select',
-                    options: ['default', 'small', 'large'],
-                    value: 'large',
-                },
-            ],
-        });
+        this.boardSettingsService.addLibraryComponent(InputComponent, [
+            {
+                name: 'placeholder',
+                type: 'text',
+                value: 'asdsdsda11',
+            },
+            {
+                name: 'size',
+                type: 'select',
+                options: ['default', 'small', 'large'],
+                value: 'large',
+            },
+        ]);
     }
     public _addComponentDemo2(): void {
-        this.boardSettingsService.addLibraryComponent(InputComponent, {
-            suiComponent: 'asd',
-            properties: [
-                {
-                    name: 'placeholder',
-                    type: 'text',
-                    value: 'asdsdsda11',
-                },
-                {
-                    name: 'size',
-                    type: 'select',
-                    options: ['default', 'small', 'large'],
-                    value: 'small',
-                },
-            ],
-        });
+        this.boardSettingsService.addLibraryComponent(InputComponent, [
+            {
+                name: 'placeholder',
+                type: 'text',
+                value: 'asdsdsda11',
+            },
+            {
+                name: 'size',
+                type: 'select',
+                options: ['default', 'small', 'large'],
+                value: 'small',
+            },
+        ]);
     }
 
     private setAddComponentListener(): void {
-        const addLibComponent: ([comp, conf]: [any, ILibComponentConfig]) => void = ([libraryComponent, config]) => {
+        const addLibComponent: ([comp, conf]: [any, IConfigPanelProperty[]]) => void = ([libraryComponent, config]) => {
             const componentFactory: ComponentFactory<any> =
                 this.componentFactoryResolver.resolveComponentFactory(BoardItemComponent);
             const boardItem: ComponentRef<any> = this.fieldView.createComponent(componentFactory);

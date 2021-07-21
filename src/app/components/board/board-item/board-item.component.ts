@@ -14,7 +14,7 @@ import {
 import { BoardSettingsService } from '@services/board-settings.service';
 
 import { IDragMetadata } from '@models/board.model';
-import { ILibComponentConfig } from '@models/config-panel.model';
+import { IConfigPanelProperty } from '@models/config-panel.model';
 
 @Component({
     selector: 'sui-board-item',
@@ -28,7 +28,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     @ViewChild('holder')
     holder: ElementRef;
 
-    private config: ILibComponentConfig;
+    private properties: IConfigPanelProperty[];
     private innerLibComponent: ComponentRef<any>;
     private toUnlisten: Array<() => void> = [];
 
@@ -52,8 +52,8 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
         });
     }
 
-    public appendLibComponent(libraryComponent: any, config: ILibComponentConfig): void {
-        this.config = config;
+    public appendLibComponent(libraryComponent: any, properties: IConfigPanelProperty[]): void {
+        this.properties = properties;
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(libraryComponent);
 
         setTimeout(() => {
@@ -62,8 +62,8 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
         }, 0);
     }
 
-    public updateLibComponent(config: ILibComponentConfig): void {
-        this.config = config;
+    public updateLibComponent(config: IConfigPanelProperty[]): void {
+        this.properties = config;
         this.setLibComponentProps();
     }
 
@@ -77,7 +77,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     }
 
     private setLibComponentProps(): void {
-        this.config.properties.forEach(property => {
+        this.properties.forEach(property => {
             this.innerLibComponent.instance[property.name] = property.value;
         });
     }

@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
+import { ConfigDataService } from '@services/config-data.service';
+
 import { IPoint } from '@models/board.model';
-import { ILibComponentConfig } from '@models/config-panel.model';
+import { IConfigPanelProperty } from '@models/config-panel.model';
 
 @Injectable({
     providedIn: 'root',
 })
 export class BoardSettingsService {
+    constructor(public configDataService: ConfigDataService) {}
+
     private scaleState: number = 1;
     private minScale: number = 0.3;
     private translateState: IPoint = {
@@ -49,8 +53,8 @@ export class BoardSettingsService {
     public selectedBoardItem: any;
 
     // Listener contsins computed transform style.
-    public transformStyle$: Subject<string> = new Subject<string>();
-    public addLibraryComponent$: Subject<[any, ILibComponentConfig]> = new Subject<[any, ILibComponentConfig]>();
+    public transformStyle$ = new Subject<string>();
+    public addLibraryComponent$ = new Subject<[any, IConfigPanelProperty[]]>();
 
     // Displays if board's 'smooth transition' enabled right now.
     get isTransition(): boolean {
@@ -85,8 +89,19 @@ export class BoardSettingsService {
         this.updateTransformStyle();
     }
 
-    public addLibraryComponent(libraryComponent: any, config: ILibComponentConfig): void {
-        this.addLibraryComponent$.next([libraryComponent, config]);
+    public addLibraryComponent(libraryComponent: any, properties: IConfigPanelProperty[]): void {
+        this.addLibraryComponent$.next([libraryComponent, properties]);
+    }
+
+    private updateLibraryComponent(properties: IConfigPanelProperty[]): void {
+        if (!this.selectedBoardItem) return;
+        this.selectedBoardItem.updateLibComponent(properties);
+    }
+
+    private setConfigPanelListener(): void {
+        this.configDataService.saveConfigData$.subscribe((properties: IConfigPanelProperty[]) => {
+            this.updateLibraryComponent(properties);
+        });
     }
 
     public selectBoardItem(selectedBoardItem: any): void {
@@ -97,25 +112,14 @@ export class BoardSettingsService {
         }
         this.selectedBoardItem = selectedBoardItem;
 
-        // Just for updateLibComponent testing.
-        setTimeout(() => {
-            selectedBoardItem.updateLibComponent({
-                suiComponent: 'asd',
-                properties: [
-                    {
-                        name: 'placeholder',
-                        type: 'text',
-                        value: 'qqqq2222',
-                    },
-                    {
-                        name: 'size',
-                        type: 'select',
-                        options: ['default', 'small', 'large'],
-                        value: 'default',
-                    },
-                ],
-            });
-        }, 3000);
+        const suiComponentTag: string = (
+            this.selectedBoardItem.innerLibComponent.location.nativeElement.localName as string
+        ).toLowerCase();
+
+        this.configDataService.setConfigData({
+            suiComponent: suiComponentTag,
+            properties: this.selectedBoardItem.properties,
+        });
     }
 
     /**
@@ -125,6 +129,8 @@ export class BoardSettingsService {
      */
     public setBoardElement(board: HTMLElement): void {
         this.boardElement = board;
+
+        this.setConfigPanelListener();
     }
 
     /**
