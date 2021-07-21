@@ -2,17 +2,15 @@
 
 :host {
     position: relative;
-    display: block;
+    display: flex;
 
     //TODO: delete height from :host when a main layout inside the app.component will be done.
-    height: 45em;
+    height: calc(~'100vh - 18px');
 }
 
 .sui-wrapper {
-    &__component-panel,
     &__config-panel {
         position: absolute;
-
         // Just hide this components for board development.
         top: 1em;
         left: 1em;
@@ -24,7 +22,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
         height: 100%;
 
         background-color: @sui-gray-3;
