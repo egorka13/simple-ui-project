@@ -3,18 +3,18 @@ import {
     ComponentFactoryResolver,
     ViewChild,
     ElementRef,
-    AfterViewInit,
     ViewContainerRef,
-    ChangeDetectorRef,
+    ComponentRef,
     Renderer2,
-    OnDestroy,
     NgZone,
+    OnDestroy,
+    AfterViewInit,
 } from '@angular/core';
 
 import { BoardSettingsService } from '@services/board-settings.service';
-import { IDragMetadata } from '@components/board/board.model';
 
-import { InputComponent } from '@library-components/input/input.component'; // TODO: remove this and add logic.
+import { IDragMetadata } from '@models/board.model';
+import { ILibComponentConfig } from '@models/config-panel.model';
 
 @Component({
     selector: 'sui-board-item',
@@ -22,17 +22,20 @@ import { InputComponent } from '@library-components/input/input.component'; // T
     styleUrls: ['./board-item.component.less'],
 })
 export class BoardItemComponent implements AfterViewInit, OnDestroy {
-    @ViewChild('place', { read: ViewContainerRef })
-    place: ViewContainerRef;
+    @ViewChild('viewContainerTarget', { read: ViewContainerRef })
+    viewContainerTarget: ViewContainerRef;
 
     @ViewChild('holder')
     holder: ElementRef;
 
+    private config: ILibComponentConfig;
+    private innerLibComponent: ComponentRef<any>;
     private toUnlisten: Array<() => void> = [];
+
+    public _selected: boolean = false;
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
-        private cd: ChangeDetectorRef,
         private boardItem: ElementRef,
         private r2: Renderer2,
         private ngZone: NgZone,
@@ -40,8 +43,6 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     ) {}
 
     ngAfterViewInit(): void {
-        this.addComponent();
-        this.cd.detectChanges();
         this.setMoveListener();
     }
 
@@ -51,10 +52,34 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
         });
     }
 
-    // TODO: rework this and add logic here.
-    private addComponent(): void {
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(InputComponent);
-        this.place.createComponent(componentFactory);
+    public appendLibComponent(libraryComponent: any, config: ILibComponentConfig): void {
+        this.config = config;
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(libraryComponent);
+
+        setTimeout(() => {
+            this.innerLibComponent = this.viewContainerTarget.createComponent(componentFactory);
+            this.setLibComponentProps();
+        }, 0);
+    }
+
+    public updateLibComponent(config: ILibComponentConfig): void {
+        this.config = config;
+        this.setLibComponentProps();
+    }
+
+    public _selectLibComponent(): void {
+        this._selected = true;
+        this.boardSettingsService.selectBoardItem(this);
+    }
+
+    public deselect(): void {
+        this._selected = false;
+    }
+
+    private setLibComponentProps(): void {
+        this.config.properties.forEach(property => {
+            this.innerLibComponent.instance[property.name] = property.value;
+        });
     }
 
     /**
@@ -73,7 +98,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
         let newY: number = y;
 
         if (nativeEl.offsetLeft + x < 0) {
-            newX = nativeEl.offsetLeft;
+            newX = -nativeEl.offsetLeft;
         }
         if (nativeEl.offsetLeft + nativeEl.offsetWidth + x > this.boardSettingsService.width) {
             newX = this.boardSettingsService.width - nativeEl.offsetLeft - nativeEl.offsetWidth;

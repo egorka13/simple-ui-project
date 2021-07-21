@@ -1,3 +1,10 @@
-<div class="sui-board-item__holder" [ngClass]="{ _interactive: boardSettingsService.isInteractiveMode }" #holder>
-    <div class="sui-board-item__place" #place></div>
+<div
+    class="sui-board-item__holder"
+    (dblclick)="_selectLibComponent()"
+    [ngClass]="{ _interactive: boardSettingsService.isInteractiveMode, _selected: _selected }"
+    #holder
+>
+    <div class="sui-board-item__place">
+        <ng-container #viewContainerTarget></ng-container>
+    </div>
 </div>

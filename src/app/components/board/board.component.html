@@ -7,6 +7,8 @@
     [style.width]="boardSettingsService.width + 'px'"
     #field
 >
+    <ng-container #viewContainerTarget></ng-container>
+
     <!-- Showcases -->
     <h1>Scale {{ boardSettingsService.scale }}</h1>
     <input type="number" [(ngModel)]="boardSettingsService.height" />
@@ -22,6 +24,14 @@
         [style.outline]="'1px solid gray'"
     >
         Toggle Infinite Mode
+    </button>
+
+    <br />
+    <button (click)="_addComponentDemo1()" [style.outline]="'1px solid gray'">
+        Add Component (demo) (large input)
+    </button>
+    <button (click)="_addComponentDemo2()" [style.outline]="'1px solid gray'">
+        Add Component (demo) (small input)
     </button>
 
     <br />

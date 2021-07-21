@@ -1,9 +1,13 @@
 import {
     Component,
+    ComponentFactoryResolver,
+    ComponentFactory,
     Renderer2,
     NgZone,
     ViewChild,
     ElementRef,
+    ViewContainerRef,
+    ComponentRef,
     OnDestroy,
     AfterViewInit,
     HostBinding,
@@ -11,8 +15,13 @@ import {
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
-import { IDragMetadata } from './board.model';
 import { BoardSettingsService } from '@services/board-settings.service';
+
+import { InputComponent } from '@library-components/input/input.component'; // TODO: remove this and add logic.
+import { BoardItemComponent } from './board-item/board-item.component';
+
+import { IDragMetadata } from '@models/board.model';
+import { ILibComponentConfig } from '@models/config-panel.model';
 
 @Component({
     selector: 'sui-board',
@@ -23,6 +32,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     public _showDragPanel: boolean = false;
     public _dragging: boolean = false;
 
+    private boardItems: Array<any> = [];
     private toUnsubscribe: Array<Subscription> = [];
     private toUnlisten: Array<() => void> = [];
 
@@ -40,6 +50,9 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     @ViewChild('field')
     field: ElementRef;
 
+    @ViewChild('viewContainerTarget', { read: ViewContainerRef })
+    fieldView: ViewContainerRef;
+
     @ViewChild('fieldMovePlug')
     fieldMovePlug: ElementRef;
 
@@ -49,6 +62,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     }
 
     constructor(
+        private componentFactoryResolver: ComponentFactoryResolver,
         private r2: Renderer2,
         private ngZone: NgZone,
         public boardSettingsService: BoardSettingsService,
@@ -60,6 +74,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         this.setSpaceHoldListener();
         this.setMoveListener();
         this.setZoomListener();
+        this.setAddComponentListener();
 
         // Setting up a starting board size.
         setTimeout(() => {
@@ -76,6 +91,57 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         this.toUnlisten.forEach(unlistener => {
             unlistener();
         });
+    }
+
+    public _addComponentDemo1(): void {
+        this.boardSettingsService.addLibraryComponent(InputComponent, {
+            suiComponent: 'asd',
+            properties: [
+                {
+                    name: 'placeholder',
+                    type: 'text',
+                    value: 'asdsdsda11',
+                },
+                {
+                    name: 'size',
+                    type: 'select',
+                    options: ['default', 'small', 'large'],
+                    value: 'large',
+                },
+            ],
+        });
+    }
+    public _addComponentDemo2(): void {
+        this.boardSettingsService.addLibraryComponent(InputComponent, {
+            suiComponent: 'asd',
+            properties: [
+                {
+                    name: 'placeholder',
+                    type: 'text',
+                    value: 'asdsdsda11',
+                },
+                {
+                    name: 'size',
+                    type: 'select',
+                    options: ['default', 'small', 'large'],
+                    value: 'small',
+                },
+            ],
+        });
+    }
+
+    private setAddComponentListener(): void {
+        const addLibComponent: ([comp, conf]: [any, ILibComponentConfig]) => void = ([libraryComponent, config]) => {
+            const componentFactory: ComponentFactory<any> =
+                this.componentFactoryResolver.resolveComponentFactory(BoardItemComponent);
+            const boardItem: ComponentRef<any> = this.fieldView.createComponent(componentFactory);
+
+            boardItem.instance.appendLibComponent(libraryComponent, config);
+
+            this.boardItems.push(boardItem);
+        };
+
+        this.toUnsubscribe.push(this.boardSettingsService.addLibraryComponent$.subscribe(addLibComponent));
     }
 
     /**

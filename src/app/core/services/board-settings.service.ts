@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { IPoint } from '@components/board/board.model';
 import { Subject } from 'rxjs';
+
+import { IPoint } from '@models/board.model';
+import { ILibComponentConfig } from '@models/config-panel.model';
 
 @Injectable({
     providedIn: 'root',
@@ -17,7 +19,7 @@ export class BoardSettingsService {
     private heightState: number = 650;
     private widthState: number = 1080;
     private boardElement: HTMLElement;
-    private boardMargin = 400;
+    private boardMargin: number = 400;
 
     // Current board scale.
     get scale(): number {
@@ -40,13 +42,15 @@ export class BoardSettingsService {
         this.updateTransformStyle();
     }
 
-    // Listener contsins computed transform style.
-    public transformStyle$: Subject<string> = new Subject<string>();
-
     // Mode that allows user activates library components on the board.
     public isInteractiveMode: boolean = false;
     // Mode that allows to use all visible space as a board.
     public isInfiniteBoardMode: boolean = false;
+    public selectedBoardItem: any;
+
+    // Listener contsins computed transform style.
+    public transformStyle$: Subject<string> = new Subject<string>();
+    public addLibraryComponent$: Subject<[any, ILibComponentConfig]> = new Subject<[any, ILibComponentConfig]>();
 
     // Displays if board's 'smooth transition' enabled right now.
     get isTransition(): boolean {
@@ -79,6 +83,39 @@ export class BoardSettingsService {
 
         this.enableSmoothTransition();
         this.updateTransformStyle();
+    }
+
+    public addLibraryComponent(libraryComponent: any, config: ILibComponentConfig): void {
+        this.addLibraryComponent$.next([libraryComponent, config]);
+    }
+
+    public selectBoardItem(selectedBoardItem: any): void {
+        if (this.selectedBoardItem === selectedBoardItem) return;
+
+        if (this.selectedBoardItem) {
+            this.selectedBoardItem.deselect();
+        }
+        this.selectedBoardItem = selectedBoardItem;
+
+        // Just for updateLibComponent testing.
+        setTimeout(() => {
+            selectedBoardItem.updateLibComponent({
+                suiComponent: 'asd',
+                properties: [
+                    {
+                        name: 'placeholder',
+                        type: 'text',
+                        value: 'qqqq2222',
+                    },
+                    {
+                        name: 'size',
+                        type: 'select',
+                        options: ['default', 'small', 'large'],
+                        value: 'default',
+                    },
+                ],
+            });
+        }, 3000);
     }
 
     /**
