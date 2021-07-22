@@ -24,13 +24,18 @@ export class BoardConverseService {
         this.addLibraryComponent$.next([libraryComponent, properties]);
     }
 
-    public selectBoardItem(selectedBoardItem: BoardItemComponent): void {
+    public selectBoardItem(selectedBoardItem: BoardItemComponent | null): void {
         if (this.selectedBoardItem === selectedBoardItem) return;
 
         if (this.selectedBoardItem) {
             this.selectedBoardItem.deselect();
         }
         this.selectedBoardItem = selectedBoardItem;
+
+        if (this.selectedBoardItem === null) {
+            this.configDataService.setConfigData(null);
+            return;
+        }
 
         const suiComponentTag: string = this.selectedBoardItem.libComponentName;
 

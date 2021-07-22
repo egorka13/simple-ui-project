@@ -7,6 +7,7 @@ import {
     ElementRef,
     ViewContainerRef,
     ComponentRef,
+    HostListener,
     Renderer2,
     NgZone,
     OnDestroy,
@@ -37,6 +38,13 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
 
     private innerLibComponent: ComponentRef<any>;
     private toUnlisten: Array<() => void> = [];
+
+    @HostListener('dblclick')
+    _selectLibComponent(): void {
+        if (this.boardSettingsService.isInteractiveMode) return;
+        this._selected = true;
+        this.boardConverseService.selectBoardItem(this);
+    }
 
     constructor(
         public boardSettingsService: BoardSettingsService,
@@ -76,11 +84,6 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     public updateLibComponent(config: IConfigPanelProperty[]): void {
         this.properties = config;
         this.setLibComponentProps();
-    }
-
-    public _selectLibComponent(): void {
-        this._selected = true;
-        this.boardConverseService.selectBoardItem(this);
     }
 
     public deselect(): void {

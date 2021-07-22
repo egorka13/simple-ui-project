@@ -11,7 +11,7 @@ export class ConfigDataService {
 
     public saveConfigData$ = new Subject<IConfigPanelProperty[]>();
 
-    public setConfigData(configData: ILibComponentConfig): void {
+    public setConfigData(configData: ILibComponentConfig | null): void {
         this.setConfigData$.next(configData);
 
         console.log('Received:', configData); // TODO: delete this. Just for showcase.

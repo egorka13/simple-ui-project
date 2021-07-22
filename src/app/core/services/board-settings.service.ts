@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
+import { BoardConverseService } from './board-converse.service';
+
 import { IPoint } from '@models/board.model';
 
 @Injectable({
@@ -19,11 +21,13 @@ export class BoardSettingsService {
     private widthState: number = 1080;
     private boardElement: HTMLElement;
     private boardMargin: number = 400;
+    private isInteractiveModeState: boolean = false;
 
-    public isInteractiveMode: boolean = false; // Mode that allows user activates library components on the board.
     public isInfiniteBoardMode: boolean = false; // Mode that allows to use all visible space as a board.
 
     public transformStyle$ = new Subject<string>(); // Listener contsins computed transform style.
+
+    constructor(public boardConverseService: BoardConverseService) {}
 
     // Current board scale.
     get scale(): number {
@@ -77,6 +81,15 @@ export class BoardSettingsService {
 
         this.enableSmoothTransition();
         this.updateTransformStyle();
+    }
+
+    // Mode that allows user activates library components on the board.
+    get isInteractiveMode(): boolean {
+        return this.isInteractiveModeState;
+    }
+    set isInteractiveMode(value: boolean) {
+        this.isInteractiveModeState = value;
+        this.boardConverseService.selectBoardItem(null);
     }
 
     /**

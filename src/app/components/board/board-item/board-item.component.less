@@ -1,3 +1,5 @@
+@import '/src/assets/styles/variables/colors.less';
+
 :host {
     display: inline-block;
     position: absolute;
@@ -25,7 +27,7 @@
 
         //.sui-board-item__holder._selected
         &._selected {
-            outline: 2px solid blue;
+            box-shadow: 0 0 0 4px @sui-white, 0 0 2px 6px @sui-blue-1;
         }
     }
 }
