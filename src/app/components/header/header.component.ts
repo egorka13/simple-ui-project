@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardSettingsService } from 'src/app/core/services/board-settings.service';
+import { GridSettingsService } from 'src/app/core/services/grid-settings.service';
 
 @Component({
     selector: 'sui-header',
@@ -8,22 +9,23 @@ import { BoardSettingsService } from 'src/app/core/services/board-settings.servi
 })
 export class HeaderComponent implements OnInit{
 
-    public gridState:boolean = false;
+    public gridState:boolean = this.gridSettingsService.gridStatus;
 
     public getGridPath():string{
-        return !this.gridState ? "../../../assets/icons/header-grid-btn.svg" : "../../../assets/icons/header-grid-none.svg";
+        return this.gridState ? "../../../assets/icons/header/header-grid-btn.svg" : "../../../assets/icons/header/header-grid-none.svg";
     }
 
 
     public onClickSetGridState(){
         this.gridState = !this.gridState;
+        this.gridSettingsService.setGridStatus(this.gridState);
     }
 
     public getRounderScale():number{
         return Math.round(this.boardSettingsService.scale * 100);
     }
 
-    constructor(public boardSettingsService: BoardSettingsService){}
+    constructor(public boardSettingsService: BoardSettingsService, public gridSettingsService: GridSettingsService){}
     ngOnInit():void{
     }
 
@@ -51,7 +53,7 @@ export class HeaderComponent implements OnInit{
 
     onKeyUpInput(event: Event):void{
         const targetInput: HTMLInputElement = <HTMLInputElement>event.target;
-        targetInput.value = targetInput.value.replace(/[a-zа-яё]/gi, '');
+        targetInput.value = targetInput.value.replace(/[^0-9%]/gi, '');
     }
 
     onClickZoomIn():void{
