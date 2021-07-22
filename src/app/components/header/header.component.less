@@ -1,15 +1,23 @@
 @import "../../../assets/styles/variables/colors";
 
+
+:host{
+    position:fixed;
+    top:0;
+    width:100%;
+    height:52px;
+    z-index: 999999999;
+}
 .sui-header {
     &__wrapper {
         background: @sui-blue-deep-2;
         box-sizing: border-box;
+        box-shadow: 0px 5px 5px hsla(0, 0%, 0%, 0.25);
     }
 
     &__content {
         display: flex;
-        padding: 5px 0px 5px 30px;
-
+        padding: 5px 10px 5px 30px;
         &-logotype {
             width: 45px;
             height: 45px;
@@ -22,6 +30,24 @@
         animation: rainbowLoad .5s ease-in-out;
     }
 
+    &__navlink{
+        margin:0;
+        display: flex;
+        align-items:center;
+        &:hover{
+            .sui-header__navlink-ico{
+                fill:@sui-blue-1;
+            }
+        }
+        &-ico{
+            fill:@sui-white;
+            margin-top: 5px;
+            width: 30px;
+            height: 16px;
+            transition:.2s;
+        }
+    }
+
     &__navigation {
         width: 100%;
         display: flex;
@@ -29,11 +55,15 @@
 
         &-wrapper {
             display: flex;
+            margin-left: 5%;
             justify-content: center;
             align-items: center;
             max-width: 500px;
             height: 45px;
             gap: 10px;
+            @media (max-width: 1920px){
+                margin-left: 10%;
+            }
         }
 
         &-zoomInput {
@@ -78,6 +108,32 @@
 
         &-actions {
             display: flex;
+        }
+    }
+
+    &__boardSettings{
+        display: flex;
+        justify-content:center;
+        align-items:center;
+        gap:5px;
+        &-setting{
+            width: 100px;
+            height: 25px;
+            text-align: center;
+            border-radius: 5px;
+            border:none;
+            background: @sui-blue-deep-3;
+            color: @sui-white;
+            font-size: 14px;
+
+            &::placeholder {
+                color: @sui-white;
+                font-size: 12px;
+                opacity: .8;
+            }
+        }
+        &-marker{
+            color:white;
         }
     }
 }

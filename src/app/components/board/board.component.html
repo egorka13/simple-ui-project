@@ -8,14 +8,30 @@
     #field
 >
     <!-- Showcases -->
-    <h1>Scale {{ boardSettingsService.scale }}</h1>
-    <input type="number" [(ngModel)]="boardSettingsService.height" />
-    <input type="number" [(ngModel)]="boardSettingsService.width" />
+    <div class="sui-board__field-showcases">
+        <h1>Scale {{ boardSettingsService.scale }}</h1>
+        <input type="number" [(ngModel)]="boardSettingsService.height" />
+        <input type="number" [(ngModel)]="boardSettingsService.width" />
+        <button
+            (click)="boardSettingsService.isInteractiveMode = !boardSettingsService.isInteractiveMode"
+            [style.outline]="'1px solid gray'"
+        >
+            Toggle Interactive Mode
+        </button>
+        <button
+            (click)="boardSettingsService.isInfiniteBoardMde = !boardSettingsService.isInfiniteBoardMde"
+            [style.outline]="'1px solid gray'"
+        >
+            Toggle Infinite Mode
+        </button>
+        <br />
+        <sui-board-item></sui-board-item>
+    </div>
+    <sui-grid></sui-grid>
 </section>
-
 <div
     class="sui-board__move-plug"
     draggable="false"
-    [ngClass]="{ _active: _showDragPannel, _dragging: _dragging }"
+    [ngClass]="{ _active: _showDragPanel, _dragging: _dragging }"
     #fieldMovePlug
 ></div>
