@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IGridSettings } from '../../components/grid/grid.model';
 import { BoardSettingsService } from './board-settings.service';
-import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +9,7 @@ export class GridSettingsService {
 
   private gridSetting: IGridSettings = {
     activeStatus: true,
-    scale: 10,
+    scale: 20,
     strokeWidth: .1,
   };
 
