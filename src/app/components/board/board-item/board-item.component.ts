@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 
 import { BoardSettingsService } from '@services/board-settings.service';
+import { BoardConverseService } from '@services/board-converse.service';
 
 import { IDragMetadata } from '@models/board.model';
 import { IConfigPanelProperty } from '@models/config-panel.model';
@@ -39,6 +40,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
 
     constructor(
         public boardSettingsService: BoardSettingsService,
+        public boardConverseService: BoardConverseService,
         private componentFactoryResolver: ComponentFactoryResolver,
         private boardItem: ElementRef,
         private r2: Renderer2,
@@ -78,7 +80,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
 
     public _selectLibComponent(): void {
         this._selected = true;
-        this.boardSettingsService.selectBoardItem(this);
+        this.boardConverseService.selectBoardItem(this);
     }
 
     public deselect(): void {

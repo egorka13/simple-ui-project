@@ -1,19 +1,12 @@
-import { Injectable, Type } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { ConfigDataService } from '@services/config-data.service';
-
-import { BoardItemComponent } from '@components/board/board-item/board-item.component';
-
 import { IPoint } from '@models/board.model';
-import { IConfigPanelProperty } from '@models/config-panel.model';
 
 @Injectable({
     providedIn: 'root',
 })
 export class BoardSettingsService {
-    constructor(public configDataService: ConfigDataService) {}
-
     private scaleState: number = 1;
     private minScale: number = 0.3;
     private translateState: IPoint = {
@@ -29,10 +22,8 @@ export class BoardSettingsService {
 
     public isInteractiveMode: boolean = false; // Mode that allows user activates library components on the board.
     public isInfiniteBoardMode: boolean = false; // Mode that allows to use all visible space as a board.
-    public selectedBoardItem: BoardItemComponent | null = null;
 
     public transformStyle$ = new Subject<string>(); // Listener contsins computed transform style.
-    public addLibraryComponent$ = new Subject<[Type<any>, IConfigPanelProperty[]]>();
 
     // Current board scale.
     get scale(): number {
@@ -88,41 +79,6 @@ export class BoardSettingsService {
         this.updateTransformStyle();
     }
 
-    public addLibraryComponent<LibraryComponent>(
-        libraryComponent: Type<LibraryComponent>,
-        properties: IConfigPanelProperty[]
-    ): void {
-        this.addLibraryComponent$.next([libraryComponent, properties]);
-    }
-
-    private updateLibraryComponent(properties: IConfigPanelProperty[]): void {
-        if (!this.selectedBoardItem) return;
-        this.selectedBoardItem.updateLibComponent(properties);
-    }
-
-    private setConfigPanelListener(): void {
-        this.configDataService.saveConfigData$.subscribe((properties: IConfigPanelProperty[]) => {
-            this.updateLibraryComponent(properties);
-        });
-    }
-
-    public selectBoardItem(selectedBoardItem: BoardItemComponent): void {
-        if (this.selectedBoardItem === selectedBoardItem) return;
-
-        if (this.selectedBoardItem) {
-            this.selectedBoardItem.deselect();
-        }
-        this.selectedBoardItem = selectedBoardItem;
-
-        const suiComponentTag: string = this.selectedBoardItem.libComponentName;
-        //this.selectedBoardItem.innerLibComponent.location.nativeElement.localName as string
-
-        this.configDataService.setConfigData({
-            suiComponent: suiComponentTag,
-            properties: this.selectedBoardItem.properties,
-        });
-    }
-
     /**
      * This method binds the board HTMLElement to boardSettingsService.
      * @param {HTMLElement} board - sui-board (host) element.
@@ -130,8 +86,6 @@ export class BoardSettingsService {
      */
     public setBoardElement(board: HTMLElement): void {
         this.boardElement = board;
-
-        this.setConfigPanelListener();
     }
 
     /**

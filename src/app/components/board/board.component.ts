@@ -17,6 +17,7 @@ import { fromEvent, Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
 import { BoardSettingsService } from '@services/board-settings.service';
+import { BoardConverseService } from '@services/board-converse.service';
 
 import { InputComponent } from '@library-components/input/input.component'; // TODO: remove this and add logic.
 import { BoardItemComponent } from './board-item/board-item.component';
@@ -64,6 +65,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
 
     constructor(
         public boardSettingsService: BoardSettingsService,
+        public boardConverseService: BoardConverseService,
         public boardElement: ElementRef,
         private componentFactoryResolver: ComponentFactoryResolver,
         private r2: Renderer2,
@@ -72,6 +74,8 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
 
     ngAfterViewInit(): void {
         this.boardSettingsService.setBoardElement(this.boardElement.nativeElement);
+        this.toUnsubscribe.push(this.boardConverseService.setConfigPanelListener());
+
         this.setSpaceHoldListener();
         this.setMoveListener();
         this.setZoomListener();
@@ -94,12 +98,13 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         });
     }
 
+    // ---------- Showcase of adding new component to the board. ----------
     public _addComponentDemo1(): void {
-        this.boardSettingsService.addLibraryComponent(InputComponent, [
+        this.boardConverseService.addLibraryComponent(InputComponent, [
             {
                 name: 'placeholder',
                 type: 'text',
-                value: 'asdsdsda11',
+                value: 'Some default placeholder',
             },
             {
                 name: 'size',
@@ -110,11 +115,11 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         ]);
     }
     public _addComponentDemo2(): void {
-        this.boardSettingsService.addLibraryComponent(InputComponent, [
+        this.boardConverseService.addLibraryComponent(InputComponent, [
             {
                 name: 'placeholder',
                 type: 'text',
-                value: 'asdsdsda11',
+                value: 'Some default placeholder',
             },
             {
                 name: 'size',
@@ -124,6 +129,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             },
         ]);
     }
+    // --------------------------------------------------------------------
 
     private setAddComponentListener(): void {
         const addLibComponent = <LibraryComponent>([libraryComponent, config]: [
@@ -139,7 +145,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             this.boardItems.push(boardItem);
         };
 
-        this.toUnsubscribe.push(this.boardSettingsService.addLibraryComponent$.subscribe(addLibComponent));
+        this.toUnsubscribe.push(this.boardConverseService.addLibraryComponent$.subscribe(addLibComponent));
     }
 
     /**
