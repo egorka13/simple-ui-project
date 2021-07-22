@@ -1,6 +1,8 @@
 import {
     Component,
     ComponentFactoryResolver,
+    ComponentFactory,
+    Type,
     ViewChild,
     ElementRef,
     ViewContainerRef,
@@ -28,18 +30,19 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     @ViewChild('holder')
     holder: ElementRef;
 
-    private properties: IConfigPanelProperty[];
+    public _selected: boolean = false;
+    public properties: IConfigPanelProperty[];
+    public libComponentName: string;
+
     private innerLibComponent: ComponentRef<any>;
     private toUnlisten: Array<() => void> = [];
 
-    public _selected: boolean = false;
-
     constructor(
+        public boardSettingsService: BoardSettingsService,
         private componentFactoryResolver: ComponentFactoryResolver,
         private boardItem: ElementRef,
         private r2: Renderer2,
-        private ngZone: NgZone,
-        public boardSettingsService: BoardSettingsService
+        private ngZone: NgZone
     ) {}
 
     ngAfterViewInit(): void {
@@ -52,12 +55,18 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
         });
     }
 
-    public appendLibComponent(libraryComponent: any, properties: IConfigPanelProperty[]): void {
+    public appendLibComponent<LibraryComponent>(
+        libraryComponent: Type<LibraryComponent>,
+        properties: IConfigPanelProperty[]
+    ): void {
         this.properties = properties;
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(libraryComponent);
+        const componentFactory: ComponentFactory<LibraryComponent> =
+            this.componentFactoryResolver.resolveComponentFactory<LibraryComponent>(libraryComponent);
 
         setTimeout(() => {
-            this.innerLibComponent = this.viewContainerTarget.createComponent(componentFactory);
+            this.innerLibComponent = this.viewContainerTarget.createComponent<LibraryComponent>(componentFactory);
+            this.libComponentName = this.innerLibComponent.componentType.name;
+            //this.tagName = this.innerLibComponent.location.nativeElement.localName as string;
             this.setLibComponentProps();
         }, 0);
     }
@@ -77,6 +86,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     }
 
     private setLibComponentProps(): void {
+        console.log(this.innerLibComponent); // TODO: delete this.
         this.properties.forEach(property => {
             this.innerLibComponent.instance[property.name] = property.value;
         });

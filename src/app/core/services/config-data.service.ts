@@ -7,7 +7,7 @@ import { ILibComponentConfig, IConfigPanelProperty } from '@models/config-panel.
     providedIn: 'root',
 })
 export class ConfigDataService {
-    public setConfigData$ = new Subject<ILibComponentConfig>();
+    public setConfigData$ = new Subject<ILibComponentConfig | null>();
 
     public saveConfigData$ = new Subject<IConfigPanelProperty[]>();
 

@@ -2,6 +2,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ComponentFactory,
+    Type,
     Renderer2,
     NgZone,
     ViewChild,
@@ -29,6 +30,20 @@ import { IConfigPanelProperty } from '@models/config-panel.model';
     styleUrls: ['./board.component.less'],
 })
 export class BoardComponent implements AfterViewInit, OnDestroy {
+    @ViewChild('field')
+    field: ElementRef;
+
+    @ViewChild('viewContainerTarget', { read: ViewContainerRef })
+    fieldView: ViewContainerRef;
+
+    @ViewChild('fieldMovePlug')
+    fieldMovePlug: ElementRef;
+
+    @HostBinding('class._infinite')
+    get infinite(): boolean {
+        return this.boardSettingsService.isInfiniteBoardMode;
+    }
+
     public _showDragPanel: boolean = false;
     public _dragging: boolean = false;
 
@@ -47,26 +62,12 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         },
     };
 
-    @ViewChild('field')
-    field: ElementRef;
-
-    @ViewChild('viewContainerTarget', { read: ViewContainerRef })
-    fieldView: ViewContainerRef;
-
-    @ViewChild('fieldMovePlug')
-    fieldMovePlug: ElementRef;
-
-    @HostBinding('class._infinite')
-    get infinite(): boolean {
-        return this.boardSettingsService.isInfiniteBoardMode;
-    }
-
     constructor(
+        public boardSettingsService: BoardSettingsService,
+        public boardElement: ElementRef,
         private componentFactoryResolver: ComponentFactoryResolver,
         private r2: Renderer2,
-        private ngZone: NgZone,
-        public boardSettingsService: BoardSettingsService,
-        public boardElement: ElementRef
+        private ngZone: NgZone
     ) {}
 
     ngAfterViewInit(): void {
@@ -125,10 +126,13 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     }
 
     private setAddComponentListener(): void {
-        const addLibComponent: ([comp, conf]: [any, IConfigPanelProperty[]]) => void = ([libraryComponent, config]) => {
-            const componentFactory: ComponentFactory<any> =
+        const addLibComponent = <LibraryComponent>([libraryComponent, config]: [
+            Type<LibraryComponent>,
+            IConfigPanelProperty[]
+        ]) => {
+            const componentFactory: ComponentFactory<BoardItemComponent> =
                 this.componentFactoryResolver.resolveComponentFactory(BoardItemComponent);
-            const boardItem: ComponentRef<any> = this.fieldView.createComponent(componentFactory);
+            const boardItem: ComponentRef<BoardItemComponent> = this.fieldView.createComponent(componentFactory);
 
             boardItem.instance.appendLibComponent(libraryComponent, config);
 

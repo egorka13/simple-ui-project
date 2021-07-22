@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { ConfigDataService } from '@services/config-data.service';
+
+import { BoardItemComponent } from '@components/board/board-item/board-item.component';
 
 import { IPoint } from '@models/board.model';
 import { IConfigPanelProperty } from '@models/config-panel.model';
@@ -25,6 +27,13 @@ export class BoardSettingsService {
     private boardElement: HTMLElement;
     private boardMargin: number = 400;
 
+    public isInteractiveMode: boolean = false; // Mode that allows user activates library components on the board.
+    public isInfiniteBoardMode: boolean = false; // Mode that allows to use all visible space as a board.
+    public selectedBoardItem: BoardItemComponent | null = null;
+
+    public transformStyle$ = new Subject<string>(); // Listener contsins computed transform style.
+    public addLibraryComponent$ = new Subject<[Type<any>, IConfigPanelProperty[]]>();
+
     // Current board scale.
     get scale(): number {
         return this.scaleState;
@@ -45,16 +54,6 @@ export class BoardSettingsService {
         this.translateState.y = y;
         this.updateTransformStyle();
     }
-
-    // Mode that allows user activates library components on the board.
-    public isInteractiveMode: boolean = false;
-    // Mode that allows to use all visible space as a board.
-    public isInfiniteBoardMode: boolean = false;
-    public selectedBoardItem: any;
-
-    // Listener contsins computed transform style.
-    public transformStyle$ = new Subject<string>();
-    public addLibraryComponent$ = new Subject<[any, IConfigPanelProperty[]]>();
 
     // Displays if board's 'smooth transition' enabled right now.
     get isTransition(): boolean {
@@ -89,7 +88,10 @@ export class BoardSettingsService {
         this.updateTransformStyle();
     }
 
-    public addLibraryComponent(libraryComponent: any, properties: IConfigPanelProperty[]): void {
+    public addLibraryComponent<LibraryComponent>(
+        libraryComponent: Type<LibraryComponent>,
+        properties: IConfigPanelProperty[]
+    ): void {
         this.addLibraryComponent$.next([libraryComponent, properties]);
     }
 
@@ -104,7 +106,7 @@ export class BoardSettingsService {
         });
     }
 
-    public selectBoardItem(selectedBoardItem: any): void {
+    public selectBoardItem(selectedBoardItem: BoardItemComponent): void {
         if (this.selectedBoardItem === selectedBoardItem) return;
 
         if (this.selectedBoardItem) {
@@ -112,9 +114,8 @@ export class BoardSettingsService {
         }
         this.selectedBoardItem = selectedBoardItem;
 
-        const suiComponentTag: string = (
-            this.selectedBoardItem.innerLibComponent.location.nativeElement.localName as string
-        ).toLowerCase();
+        const suiComponentTag: string = this.selectedBoardItem.libComponentName;
+        //this.selectedBoardItem.innerLibComponent.location.nativeElement.localName as string
 
         this.configDataService.setConfigData({
             suiComponent: suiComponentTag,
