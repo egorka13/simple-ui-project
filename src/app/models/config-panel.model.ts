@@ -8,7 +8,7 @@ export interface ILibComponentConfig {
 
 export interface IConfigPanelProperty {
     name: string;
-    value: string | number;
+    value: string | number | boolean;
     type?: propertyType;
     min?: number;
     max?: number;

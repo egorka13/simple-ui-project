@@ -20,6 +20,7 @@ import { BoardSettingsService } from '@services/board-settings.service';
 import { BoardConverseService } from '@services/board-converse.service';
 
 import { InputComponent } from '@library-components/input/input.component'; // TODO: remove this and add logic.
+import { CheckboxComponent } from '@library-components/checkbox/checkbox.component'; // TODO: remove this and add logic.
 import { BoardItemComponent } from './board-item/board-item.component';
 
 import { IDragMetadata } from '@models/board.model';
@@ -103,14 +104,14 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         this.boardConverseService.addLibraryComponent(InputComponent, [
             {
                 name: 'placeholder',
-                type: 'text',
                 value: 'Some default placeholder',
+                type: 'text',
             },
             {
                 name: 'size',
+                value: 'large',
                 type: 'select',
                 options: ['default', 'small', 'large'],
-                value: 'large',
             },
         ]);
     }
@@ -118,14 +119,35 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         this.boardConverseService.addLibraryComponent(InputComponent, [
             {
                 name: 'placeholder',
-                type: 'text',
                 value: 'Some default placeholder',
+                type: 'text',
             },
             {
                 name: 'size',
+                value: 'small',
                 type: 'select',
                 options: ['default', 'small', 'large'],
-                value: 'small',
+            },
+        ]);
+    }
+    public _addComponentDemo3(): void {
+        this.boardConverseService.addLibraryComponent(CheckboxComponent, [
+            {
+                name: 'labelText',
+                value: 'Checkbox label',
+                type: 'text',
+            },
+            {
+                name: 'isDisabled',
+                value: false,
+                type: 'select',
+                options: ['false', 'true'],
+            },
+            {
+                name: 'isChecked',
+                value: false,
+                type: 'select',
+                options: ['false', 'true'],
             },
         ]);
     }
