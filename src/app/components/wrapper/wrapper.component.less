@@ -2,7 +2,12 @@
 
 :host {
     position: relative;
-    display: block;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
 
     //TODO: delete height from :host when a main layout inside the app.component will be done.
     height: 45em;
@@ -18,15 +23,5 @@
         left: 1em;
         z-index: -1;
         opacity: 0;
-    }
-
-    &__board {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        height: 100%;
-
-        background-color: @sui-gray-3;
     }
 }
