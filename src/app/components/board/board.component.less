@@ -12,11 +12,8 @@
 
     background-color: @sui-gray-3;
 
-    // .sui-board._infinite
     &._infinite {
         background-color: @sui-white;
-
-        // .sui-board._infinite .sui-board__field
         & .sui-board__field {
             overflow: initial;
         }
@@ -24,7 +21,6 @@
 }
 
 .sui-board {
-    //.sui-board__field
     &__field {
         position: absolute;
 
@@ -42,27 +38,23 @@
         }
     }
 
-    //.sui-board__move-plug
     &__move-plug {
         position: absolute;
         height: 0;
         width: 0;
-
         z-index: -1;
         opacity: 0;
 
-        cursor: grab;
-
-        //.sui-board__move-plug._active
         &._active {
             height: 100%;
             width: 100%;
             opacity: 1;
             z-index: 1000;
+
+            cursor: grab;
         }
 
-        //.sui-board__move-plug._dragging
-        &._dragging {
+        &._active._dragging {
             cursor: grabbing;
         }
     }

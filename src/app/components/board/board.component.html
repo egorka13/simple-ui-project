@@ -7,29 +7,31 @@
     [style.width]="boardSettingsService.width + 'px'"
     #field
 >
-    <ng-container #viewContainerTarget></ng-container>
 
     <!-- Showcases -->
-    <h1>Scale {{ boardSettingsService.scale }}</h1>
-    <input type="number" [(ngModel)]="boardSettingsService.height" />
-    <input type="number" [(ngModel)]="boardSettingsService.width" />
-    <button
-        (click)="boardSettingsService.isInteractiveMode = !boardSettingsService.isInteractiveMode"
-        [style.outline]="'1px solid gray'"
-    >
-        Toggle Interactive Mode
-    </button>
-    <button
-        (click)="boardSettingsService.isInfiniteBoardMode = !boardSettingsService.isInfiniteBoardMode"
-        [style.outline]="'1px solid gray'"
-    >
-        Toggle Infinite Mode
-    </button>
-
-    <br />
-    <button (click)="_addComponentDemo1()" [style.outline]="'1px solid gray'">Add Component (large input)</button>
-    <button (click)="_addComponentDemo2()" [style.outline]="'1px solid gray'">Add Component (small input)</button>
-    <button (click)="_addComponentDemo3()" [style.outline]="'1px solid gray'">Add Component (checkbox)</button>
+    <div class="sui-board__field-showcases">
+        <h1>Scale {{ boardSettingsService.scale }}</h1>
+        <input type="number" [(ngModel)]="boardSettingsService.height" />
+        <input type="number" [(ngModel)]="boardSettingsService.width" />
+        <button
+            (click)="boardSettingsService.isInteractiveMode = !boardSettingsService.isInteractiveMode"
+            [style.outline]="'1px solid gray'"
+        >
+            Toggle Interactive Mode
+        </button>
+        <button
+            (click)="boardSettingsService.isInfiniteBoardMode = !boardSettingsService.isInfiniteBoardMode"
+            [style.outline]="'1px solid gray'"
+        >
+            Toggle Infinite Mode
+        </button>
+        <br />
+        <button (click)="_addComponentDemo1()" [style.outline]="'1px solid gray'">Add Component (large input)</button>
+        <button (click)="_addComponentDemo2()" [style.outline]="'1px solid gray'">Add Component (small input)</button>
+        <button (click)="_addComponentDemo3()" [style.outline]="'1px solid gray'">Add Component (checkbox)</button>
+        <ng-container #viewContainerTarget></ng-container>
+    </div>
+    <sui-grid></sui-grid>
 </section>
 <div
     class="sui-board__move-plug"

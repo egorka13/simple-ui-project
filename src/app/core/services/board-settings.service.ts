@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 import { BoardConverseService } from './board-converse.service';
 
@@ -27,6 +27,8 @@ export class BoardSettingsService {
 
     public transformStyle$ = new Subject<string>(); // Listener contsins computed transform style.
 
+    public boardParametres$ = new BehaviorSubject<Array<number>>([this.widthState, this.heightState]);
+
     constructor(public boardConverseService: BoardConverseService) {}
 
     // Current board scale.
@@ -36,6 +38,7 @@ export class BoardSettingsService {
 
     public setScale(value:number){
         this.scaleState = value;
+        this.updateTransformStyle();
     }
 
     // Current board shift relatve to start position.
@@ -70,6 +73,8 @@ export class BoardSettingsService {
         this.heightState = height;
         this.normalizeScale();
 
+        this.boardParametres$.next([this.width, height]);
+
         this.enableSmoothTransition();
         this.updateTransformStyle();
     }
@@ -83,6 +88,8 @@ export class BoardSettingsService {
         this.widthState = width;
         this.normalizeScale();
 
+        this.boardParametres$.next([width, this.height]);
+        
         this.enableSmoothTransition();
         this.updateTransformStyle();
     }
