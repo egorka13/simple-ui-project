@@ -101,62 +101,55 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
 
     // ---------- Showcase of adding new component to the board. ----------
     public _addComponentDemo1(): void {
-        this.boardConverseService.addLibraryComponent(InputComponent, [
-            {
-                name: 'placeholder',
+        this.boardConverseService.addLibraryComponent(InputComponent, {
+            placeholder: {
                 value: 'Some default placeholder',
                 type: 'text',
             },
-            {
-                name: 'size',
+            size: {
                 value: 'large',
                 type: 'select',
                 options: ['default', 'small', 'large'],
             },
-        ]);
+        });
     }
     public _addComponentDemo2(): void {
-        this.boardConverseService.addLibraryComponent(InputComponent, [
-            {
-                name: 'placeholder',
+        this.boardConverseService.addLibraryComponent(InputComponent, {
+            placeholder: {
                 value: 'Some default placeholder',
                 type: 'text',
             },
-            {
-                name: 'size',
+            size: {
                 value: 'small',
                 type: 'select',
                 options: ['default', 'small', 'large'],
             },
-        ]);
+        });
     }
     public _addComponentDemo3(): void {
-        this.boardConverseService.addLibraryComponent(CheckboxComponent, [
-            {
-                name: 'labelText',
+        this.boardConverseService.addLibraryComponent(CheckboxComponent, {
+            labelText: {
                 value: 'Checkbox label',
                 type: 'text',
             },
-            {
-                name: 'isDisabled',
+            isDisabled: {
                 value: false,
                 type: 'select',
                 options: ['false', 'true'],
             },
-            {
-                name: 'isChecked',
+            isChecked: {
                 value: false,
                 type: 'select',
                 options: ['false', 'true'],
             },
-        ]);
+        });
     }
     // --------------------------------------------------------------------
 
     private setAddComponentListener(): void {
         const addLibComponent = <LibraryComponent>([libraryComponent, config]: [
             Type<LibraryComponent>,
-            IConfigPanelProperty[]
+            IConfigPanelProperty
         ]) => {
             const componentFactory: ComponentFactory<BoardItemComponent> =
                 this.componentFactoryResolver.resolveComponentFactory(BoardItemComponent);

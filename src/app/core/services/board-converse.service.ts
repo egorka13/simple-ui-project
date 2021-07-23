@@ -15,11 +15,12 @@ export class BoardConverseService {
 
     public selectedBoardItem: BoardItemComponent | null = null;
 
-    public addLibraryComponent$ = new Subject<[Type<any>, IConfigPanelProperty[]]>();
+    // TODO: Consider an asObserver here.
+    public addLibraryComponent$ = new Subject<[Type<any>, IConfigPanelProperty]>();
 
     public addLibraryComponent<LibraryComponent>(
         libraryComponent: Type<LibraryComponent>,
-        properties: IConfigPanelProperty[]
+        properties: IConfigPanelProperty
     ): void {
         this.addLibraryComponent$.next([libraryComponent, properties]);
     }
@@ -46,7 +47,7 @@ export class BoardConverseService {
     }
 
     public setConfigPanelListener(): Subscription {
-        return this.configDataService.saveConfigData$.subscribe((properties: IConfigPanelProperty[]) => {
+        return this.configDataService.saveConfigData$.subscribe((properties: IConfigPanelProperty) => {
             if (!this.selectedBoardItem) return;
             this.selectedBoardItem.updateLibComponent(properties);
         });

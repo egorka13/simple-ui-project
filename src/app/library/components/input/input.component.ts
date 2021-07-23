@@ -7,13 +7,13 @@ import { SizeModifierType } from './input.model';
     styleUrls: ['./input.component.less'],
 })
 export class InputComponent {
-    public sizeModifier: string = '';
+    public _sizeModifier: string = '';
 
     @Input()
     placeholder: string = 'input text';
 
     @Input()
     set size(value: SizeModifierType) {
-        this.sizeModifier = `_size_${value}` || '';
+        this._sizeModifier = `_size_${value}` || '';
     }
 }

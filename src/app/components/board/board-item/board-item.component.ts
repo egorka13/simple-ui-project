@@ -33,7 +33,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     holder: ElementRef;
 
     public _selected: boolean = false;
-    public properties: IConfigPanelProperty[];
+    public properties: IConfigPanelProperty;
     public libComponentName: string;
 
     private innerLibComponent: ComponentRef<any>;
@@ -67,7 +67,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
 
     public appendLibComponent<LibraryComponent>(
         libraryComponent: Type<LibraryComponent>,
-        properties: IConfigPanelProperty[]
+        properties: IConfigPanelProperty
     ): void {
         this.properties = properties;
         const componentFactory: ComponentFactory<LibraryComponent> =
@@ -75,14 +75,17 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
 
         setTimeout(() => {
             this.innerLibComponent = this.viewContainerTarget.createComponent<LibraryComponent>(componentFactory);
-            this.libComponentName = this.innerLibComponent.componentType.name;
-            //this.tagName = this.innerLibComponent.location.nativeElement.localName as string;
+            //this.libComponentName = this.innerLibComponent.componentType.name;
+            // TODO: Fix types here
+            this.libComponentName = (this.innerLibComponent.location.nativeElement.localName as string).toLowerCase();
             this.setLibComponentProps();
         }, 0);
     }
 
-    public updateLibComponent(config: IConfigPanelProperty[]): void {
-        this.properties = config;
+    public updateLibComponent(config: IConfigPanelProperty): void {
+        for (const key in config) {
+            this.properties[key] = config[key];
+        }
         this.setLibComponentProps();
     }
 
@@ -91,10 +94,10 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     }
 
     private setLibComponentProps(): void {
-        console.log(this.innerLibComponent); // TODO: delete this.
-        this.properties.forEach(property => {
-            this.innerLibComponent.instance[property.name] = property.value;
-        });
+        for (const key in this.properties) {
+            // TODO: Fix types here
+            this.innerLibComponent.instance[key] = this.properties[key].value;
+        }
     }
 
     /**
