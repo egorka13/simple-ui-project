@@ -32,7 +32,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     @ViewChild('holder')
     holder: ElementRef;
 
-    public _selected: boolean = false;
+    public _isSelected: boolean = false;
     public properties: IConfigPanelProperty;
     public libComponentName: string;
 
@@ -42,7 +42,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     @HostListener('dblclick')
     _selectLibComponent(): void {
         if (this.boardSettingsService.isInteractiveMode) return;
-        this._selected = true;
+        this._isSelected = true;
         this.boardConverseService.selectBoardItem(this);
     }
 
@@ -83,7 +83,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     }
 
     public deselect(): void {
-        this._selected = false;
+        this._isSelected = false;
     }
 
     public setLibComponentProps(properties: IConfigPanelProperty): void {

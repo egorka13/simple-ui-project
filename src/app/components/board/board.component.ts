@@ -46,8 +46,8 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         return this.boardSettingsService.isInfiniteBoardMode;
     }
 
-    public _showDragPanel: boolean = false;
-    public _dragging: boolean = false;
+    public _isDragPanelShown: boolean = false;
+    public _isDragging: boolean = false;
 
     private boardItems: Array<any> = [];
     private toUnsubscribe: Array<Subscription> = [];
@@ -197,15 +197,15 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
      */
     private setSpaceHoldListener(): void {
         const unlistenSpaceDown = this.r2.listen('document', 'keydown.space', () => {
-            if (this._showDragPanel) return;
+            if (this._isDragPanelShown) return;
 
-            this._showDragPanel = true;
+            this._isDragPanelShown = true;
 
             const unlistenSpaceUp: () => void = this.r2.listen('document', 'keyup.space', () => {
                 unlistenSpaceUp();
 
-                this._dragging = false;
-                this._showDragPanel = false;
+                this._isDragging = false;
+                this._isDragPanelShown = false;
             });
         });
 
@@ -221,7 +221,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
      */
     private setMoveListener(): void {
         const setMetadata: (e: MouseEvent) => void = e => {
-            this._dragging = true;
+            this._isDragging = true;
 
             this.dragMetadata.startPosition.x = e.clientX;
             this.dragMetadata.startPosition.y = e.clientY;
@@ -247,7 +247,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         };
 
         const onMouseUp: () => void = () => {
-            this._dragging = false;
+            this._isDragging = false;
         };
 
         const onMouseDown: (e: MouseEvent) => void = e => {
