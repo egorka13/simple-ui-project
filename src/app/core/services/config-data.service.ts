@@ -9,21 +9,17 @@ export class ConfigDataService {
     constructor() { }
 
     public currentItemConfig = new Subject<{
-        key: number,
         suiComponent: string,
-        properties: configPanelProperty[]
+        properties: configPanelProperty
     }>();
     
-    public changedItemProperty = new Subject<{
-        key: number,
-        property: configPanelProperty
-    }>();
+    public changedItemProperty = new Subject<configPanelProperty>();
 
-    sendConfigData (configData: {key: number, suiComponent: string, properties: configPanelProperty[]}): void {
+    sendConfigData (configData: {suiComponent: string, properties: configPanelProperty}): void {
         this.currentItemConfig.next(configData);
     }
 
-    sendChangeConfigData (configData: {key: number, property: configPanelProperty}): void {
+    sendChangeConfigData (configData: configPanelProperty): void {
         this.changedItemProperty.next(configData);
     }
 }
