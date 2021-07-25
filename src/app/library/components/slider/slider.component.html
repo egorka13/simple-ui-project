@@ -33,27 +33,25 @@
     <div [ngClass]="{ _disabled: disabled }" class="sui-slider__progress" id="progress-common">
         <div #suiProgressBar [ngStyle]="{ width: getCurrentProgressWidth() }" class="sui-slider__progress-bar"></div>
     </div>
-    <div *ngIf="customParams" class="sui-slider__information">
-        <span
-            [ngStyle]="setCustomProperty('color', customParams.setValuesColor)"
-            *ngIf="customParams.showMinimalValue"
-            class="sui-slider__information-text"
-            title="minimal value"
-            >{{ minValue }}</span
-        >
-        <h1
-            [ngStyle]="setCustomProperty('color', customParams.setLegendColor)"
-            *ngIf="customParams.setLegend"
-            class="sui-slider__information-title"
-        >
-            {{ customParams.setLegend }}
-        </h1>
-        <span
-            [ngStyle]="setCustomProperty('color', customParams.setValuesColor)"
-            *ngIf="customParams.showMaximumValue"
-            class="sui-slider__information-text _max"
-            title="maximum value"
-            >{{ maxValue }}</span
-        >
-    </div>
+    <span
+        [ngStyle]="setCustomProperty('color', valuesColor)"
+        *ngIf="showMinimalValue"
+        class="sui-slider__information-text"
+        title="minimal value"
+        >{{ minValue }}</span
+    >
+    <h1
+        [ngStyle]="setCustomProperty('color', legendColor)"
+        *ngIf="legend"
+        class="sui-slider__information-title"
+    >
+        {{ legend }}
+    </h1>
+    <span
+        [ngStyle]="setCustomProperty('color', valuesColor)"
+        *ngIf="showMaximumValue"
+        class="sui-slider__information-text _max"
+        title="maximum value"
+        >{{ maxValue }}</span
+    >
 </div>

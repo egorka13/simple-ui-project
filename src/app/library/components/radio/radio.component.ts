@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RadioItem } from './radio.model';
+import { RadioItem, radioType } from './radio.model';
 
 @Component({
     selector: 'sui-radio',
@@ -11,23 +11,22 @@ export class RadioComponent implements OnInit {
     typeModifier: string = '';
 
     @Input()
-    name: string = 'radio' + Math.random().toFixed(5);
+    name: string = 'radio' + Date.now().toFixed(6);
 
     @Input()
-    labels: string = 'Radio';
+    label: string[] = ['Radio'];
 
     @Input()
-    type: undefined | 'button';
+    set type(value: radioType) {
+        this.typeModifier =  value ? '_type_' + value : '';
+    }
 
     ngOnInit(): void {
-        const labelsArr: string[] = this.labels.split(' ');
-        for (let i: number = 0; i < labelsArr.length; i++) {
+        for (let i: number = 0; i < this.label.length; i++) {
             this.items.push({
                 id: [this.name, i].join('_'),
-                text: labelsArr[i],
+                text: this.label[i],
             });
         }
-
-        this.typeModifier = this.type ? '_type_button' : '';
     }
 }
