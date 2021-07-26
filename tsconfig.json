@@ -24,7 +24,8 @@
         "paths": {
             "@services/*": ["src/app/core/services/*"],
             "@components/*": ["src/app/components/*"],
-            "@library-components/*": ["src/app/library/components/*"]
+            "@library-components/*": ["src/app/library/components/*"],
+            "@models/*": ["src/app/models/*"]
         }
     },
     "angularCompilerOptions": {

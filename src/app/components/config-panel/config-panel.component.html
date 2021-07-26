@@ -1,5 +1,5 @@
-<div class="sui-config-panel__wrapper" tabindex="0"
-    (focusout)="handlePropertyChange($event)">
+<div class="sui-config-panel__wrapper"
+    (change)="handlePropertyChange($event)">
     <header 
         class="sui-config-panel__header"
         (click)="selectTab($event)">
@@ -57,7 +57,8 @@
     </div>
 
     <ng-template #code>
-        <div class="sui-config-panel__code">
+        <div *ngIf="suiComponentName"
+            class="sui-config-panel__code">
             &lt;{{ suiComponentName }}<br/>
             <span class="sui-config-panel__text-tab">
                 <ng-container *ngFor="let entry of properties | keyvalue">

@@ -1,5 +1,5 @@
+import { IConfigPanelProperty, ILibComponentConfig, IPropertyObjevtValue, valueType } from '@models/config-panel.model';
 import { ConfigDataService } from './../../core/services/config-data.service';
-import { configPanelProperty, propertyObjevtValue, valueType } from './config-panel.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -13,15 +13,17 @@ export class ConfigPanelComponent implements OnInit {
     public isDesign: boolean = true;
 
     public countProperties: number;
-    public properties: configPanelProperty = {}; // properties which recieved from service without parsedProperties
-    public newProperties: configPanelProperty = {}; // properties which recieved from parsedProperties and divided to separate items
-    public parsedProperties: configPanelProperty = {}; // properties with a value in the form of an array and deleted from recieved properties
+    public properties: IConfigPanelProperty = {}; // properties which recieved from service without parsedProperties
+    public newProperties: IConfigPanelProperty = {}; // properties which recieved from parsedProperties and divided to separate items
+    public parsedProperties: IConfigPanelProperty = {}; // properties with a value in the form of an array and deleted from recieved properties
 
     constructor(private ConfigDataService: ConfigDataService) { }
 
     ngOnInit() {
-        this.ConfigDataService.currentItemConfig.subscribe((config: {suiComponent: string, properties: configPanelProperty}) => {
-            this.properties = config.properties;
+        this.ConfigDataService.setConfigData$.subscribe((config: ILibComponentConfig | null) => {
+            if (!config) return;
+
+            this.properties = JSON.parse(JSON.stringify(config.properties));
             [this.parsedProperties, this.newProperties] = this.parseProperties(this.properties);
             this.countProperties = Object.keys(this.properties).length;
 
@@ -41,38 +43,47 @@ export class ConfigPanelComponent implements OnInit {
     }
 
     public handlePropertyChange(event: Event): void {
-        const elem: Element = <Element>event.target;
+        const propertyName: string = (<HTMLTextAreaElement>event.target).name; 
+        const [parseNameArr, parseName]: [string[], string] = this.parsePropertyName(propertyName);
+        
+        if (this.properties[propertyName]) {
+            this.properties[propertyName].value = this.convertToInitialType(this.properties[propertyName].value)
+            this.sendDataChange(propertyName, this.properties[propertyName]);
+        }
 
-        if (elem.tagName == 'INPUT' || elem.tagName == 'SELECT') {
-            let propertyValue: string | number | string[] = (<HTMLTextAreaElement>event.target).value;
-            if (propertyValue == 'default') {
-                propertyValue = '';
+        if (this.parsedProperties[parseName]) {
+            const propertyOfParseName: IPropertyObjevtValue = this.parsedProperties[parseName];
+
+            let numberOfValue: number = +parseNameArr[parseNameArr.length - 1] - 1;
+            if (propertyOfParseName.labels) {
+                numberOfValue = propertyOfParseName.labels.indexOf((parseNameArr[parseNameArr.length - 1]));
             }
+            (propertyOfParseName.value as string[])[numberOfValue] = this.newProperties[parseName].value.toString();
 
-            const propertyName: string = (<HTMLTextAreaElement>event.target).name; 
-            const [parseNameArr, parseName]: [string[], string] = this.parsePropertyName(propertyName);
-            
-            if (this.parsedProperties[parseName]) {
-                const propertyOfParseName: propertyObjevtValue = this.parsedProperties[parseName];
+            this.sendDataChange(parseName, propertyOfParseName);
+        } 
+    }
 
-                let numberOfValue: number = +parseNameArr[parseNameArr.length - 1] - 1;
-                if (propertyOfParseName.labels) {
-                    numberOfValue = propertyOfParseName.labels.indexOf((parseNameArr[parseNameArr.length - 1]));
-                }
-                (propertyOfParseName.value as string[])[numberOfValue] = propertyValue;
-
-                this.sendDataChange(parseName, propertyOfParseName.value);
-
-                return;
-            } 
-
-            this.sendDataChange(propertyName, propertyValue);
+    private convertToInitialType(value: valueType): valueType {
+        if (!isNaN(+value)) {
+            return +value;
+        }
+        
+        switch (value) {
+            case 'false':
+                return false;
+            case 'true':
+                return true;
+            case 'default':
+                return '';
+            default:
+                return value;
         }
     }
 
-    private sendDataChange(propertyName: string, propertyValue: valueType): void {
-        this.ConfigDataService.sendChangeConfigData({
-            [propertyName]: {value: propertyValue}
+    private sendDataChange(propertyName: string, property: IPropertyObjevtValue): void {
+        this.ConfigDataService.saveConfigData({
+            [propertyName]: property
         });
     }
 
@@ -83,9 +94,9 @@ export class ConfigPanelComponent implements OnInit {
         return [parseNameArr, parseName];
     }
 
-    private parseProperties(properties: configPanelProperty): [configPanelProperty, configPanelProperty] {
-        const parsedProperties: configPanelProperty = {};
-        const newProperties: configPanelProperty = {};
+    private parseProperties(properties: IConfigPanelProperty): [IConfigPanelProperty, IConfigPanelProperty] {
+        const parsedProperties: IConfigPanelProperty = {};
+        const newProperties: IConfigPanelProperty = {};
 
         for (let [name, prop] of Object.entries(properties)) {
             if (Array.isArray(prop.value)) {
@@ -123,7 +134,8 @@ export class ConfigPanelComponent implements OnInit {
             const propertyName: string = (<HTMLTextAreaElement>event.target).dataset.name as string;
             const [parseNameArr, parseName]: [string[], string] = this.parsePropertyName(propertyName);
 
-            const propertyValue: string[] = this.parsedProperties[parseName].value as string[];
+            const property: IPropertyObjevtValue = this.parsedProperties[parseName];
+            const propertyValue: string[] = property.value as string[];
             const valueLength: number = (propertyValue).length;
             const numberOfProperty: number = +parseNameArr[parseNameArr.length - 1];
 
@@ -137,7 +149,7 @@ export class ConfigPanelComponent implements OnInit {
             propertyValue.splice(numberOfProperty - 1, 1);
             this.newProperties[[parseName, valueLength - 1].join(' ')].isEndOfGroup = true;
 
-            this.sendDataChange(parseName, propertyValue);
+            this.sendDataChange(parseName, property);
         }
     }
 
@@ -154,10 +166,11 @@ export class ConfigPanelComponent implements OnInit {
             isEndOfGroup: true,
         };
 
-        const propertyValue: string[] = this.parsedProperties[parseName].value as string[];
+        const property: IPropertyObjevtValue = this.parsedProperties[parseName];
+        const propertyValue: string[] = property.value as string[];
         (propertyValue).push('text');
 
-        this.sendDataChange(parseName, propertyValue);
+        this.sendDataChange(parseName, property);
     }
 
     public formatArraytoString(array: valueType): string {

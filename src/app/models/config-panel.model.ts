@@ -1,8 +1,12 @@
-export interface configPanelProperty {
-    [name: string]: propertyObjevtValue
+type propertyType = 'text' | 'number' | 'select' | 'color';
+export type valueType = string | string[] | number | boolean;
+
+export interface ILibComponentConfig {
+    suiComponent: string;
+    properties: IConfigPanelProperty;
 }
 
-export interface propertyObjevtValue {
+export interface IPropertyObjevtValue {
     value: valueType,
     type?: propertyType | propertyType[],
     options?: string[],
@@ -11,14 +15,15 @@ export interface propertyObjevtValue {
     labels?: string[],
 }
 
-type propertyType = 'text' | 'number' | 'select' | 'color';
-export type valueType = string | string[] | number | boolean;
-
-export interface componentPrototype {
-    [componentName: string]: configPanelProperty,
+export interface IConfigPanelProperty {
+    [name: string]: IPropertyObjevtValue
 }
 
-export const componentModels: componentPrototype = {
+export interface IComponentPrototype {
+    [componentName: string]: IConfigPanelProperty,
+}
+
+export const componentModels: IComponentPrototype = {
     'sui-button': {
         type: {type: 'select', options: ['default', 'primary', 'dashed', 'text', 'link'], value: ''},
         size: {type: 'select', options: ['default', 'small', 'large'], value: ''},
