@@ -12,6 +12,7 @@ import {
     OnDestroy,
     AfterViewInit,
     HostBinding,
+    HostListener,
 } from '@angular/core';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -63,6 +64,13 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             y: 0,
         },
     };
+
+    @HostListener('dblclick', ['$event'])
+    _onDeselect(e: MouseEvent): void {
+        if (e.target === this.field.nativeElement) {
+            this.boardConverseService.selectBoardItem(null);
+        }
+    }
 
     constructor(
         public boardSettingsService: BoardSettingsService,
