@@ -146,6 +146,12 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     }
     // --------------------------------------------------------------------
 
+    /**
+     * This function sets up a listener of the board converse service that waiting for
+     * a board-item create event.
+     * @private
+     * @memberof BoardComponent
+     */
     private setAddComponentListener(): void {
         const addLibComponent = <LibraryComponent>([libraryComponent, config]: [
             Type<LibraryComponent>,

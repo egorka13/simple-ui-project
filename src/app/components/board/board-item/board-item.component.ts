@@ -65,6 +65,13 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
         });
     }
 
+    /**
+     * This function adds a library component inside the boardItem.
+     * @template LibraryComponent
+     * @param {Type<LibraryComponent>} libraryComponent - Library component.
+     * @param {IConfigPanelProperty} properties - Default config.
+     * @memberof BoardItemComponent
+     */
     public appendLibComponent<LibraryComponent>(
         libraryComponent: Type<LibraryComponent>,
         properties: IConfigPanelProperty
@@ -78,19 +85,33 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
             //this.libComponentName = this.innerLibComponent.componentType.name;
             // TODO: Fix types here
             this.libComponentName = (this.innerLibComponent.location.nativeElement.localName as string).toLowerCase();
-            this.setLibComponentProps(this.properties);
+
+            for (const key in this.properties) {
+                // TODO: Fix types here
+                this.innerLibComponent.instance[key] = this.properties[key].value;
+            }
         }, 0);
     }
 
-    public deselect(): void {
-        this._isSelected = false;
+    /**
+     * This function updates properties of the current boardItem.
+     * @param {IConfigPanelProperty} config - Updated property.
+     * @memberof BoardItemComponent
+     */
+    public updateLibComponent(config: IConfigPanelProperty): void {
+        for (const key in config) {
+            this.properties[key] = config[key];
+            // TODO: Fix types here
+            this.innerLibComponent.instance[key] = config[key].value;
+        }
     }
 
-    public setLibComponentProps(properties: IConfigPanelProperty): void {
-        for (const key in properties) {
-            // TODO: Fix types here
-            this.innerLibComponent.instance[key] = properties[key].value;
-        }
+    /**
+     * This function deselect current boardItem.
+     * @memberof BoardItemComponent
+     */
+    public deselect(): void {
+        this._isSelected = false;
     }
 
     /**
