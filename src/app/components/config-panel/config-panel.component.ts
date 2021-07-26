@@ -56,7 +56,7 @@ export class ConfigPanelComponent implements OnInit {
             if (propertyOfParseName.labels) {
                 numberOfValue = propertyOfParseName.labels.indexOf(parseNameArr[parseNameArr.length - 1]);
             }
-            (propertyOfParseName.value as string[])[numberOfValue] = this.newProperties[parseName].value.toString();
+            (propertyOfParseName.value as string[])[numberOfValue] = this.newProperties[propertyName].value.toString();
 
             this.sendDataChange(parseName, propertyOfParseName);
         }
