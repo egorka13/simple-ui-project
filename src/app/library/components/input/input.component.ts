@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SizeModifierType } from './input.model';
 
 @Component({
@@ -6,16 +6,14 @@ import { SizeModifierType } from './input.model';
     templateUrl: './input.component.html',
     styleUrls: ['./input.component.less'],
 })
-export class InputComponent implements OnInit {
+export class InputComponent {
+    public _sizeModifier: string = '';
+
     @Input()
     placeholder: string = 'input text';
 
     @Input()
-    size: SizeModifierType = '';
-
-    sizeModifier: string = '';
-
-    ngOnInit(): void {
-        this.sizeModifier = this.size ? `_size_${this.size}` : '';
+    set size(value: SizeModifierType) {
+        this._sizeModifier = `_size_${value}` || '';
     }
 }

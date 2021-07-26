@@ -1,8 +1,30 @@
-import { Component, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
+import {
+    Component,
+    ComponentFactoryResolver,
+    ComponentFactory,
+    Type,
+    Renderer2,
+    NgZone,
+    ViewChild,
+    ElementRef,
+    ViewContainerRef,
+    ComponentRef,
+    OnDestroy,
+    AfterViewInit,
+    HostBinding,
+} from '@angular/core';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { IDragMetadata } from './board.model';
+
 import { BoardSettingsService } from '@services/board-settings.service';
+import { BoardConverseService } from '@services/board-converse.service';
+
+import { InputComponent } from '@library-components/input/input.component'; // TODO: remove this and add logic.
+import { CheckboxComponent } from '@library-components/checkbox/checkbox.component'; // TODO: remove this and add logic.
+import { BoardItemComponent } from './board-item/board-item.component';
+
+import { IDragMetadata } from '@models/board.model';
+import { IConfigPanelProperty } from '@models/config-panel.model';
 
 @Component({
     selector: 'sui-board',
@@ -10,29 +32,135 @@ import { BoardSettingsService } from '@services/board-settings.service';
     styleUrls: ['./board.component.less'],
 })
 export class BoardComponent implements AfterViewInit, OnDestroy {
-    public _showDragPanel: boolean = false;
-    public _dragging: boolean = false;
-
-    private toUnsubscribe: Array<Subscription> = [];
-
     @ViewChild('field')
     field: ElementRef;
+
+    @ViewChild('viewContainerTarget', { read: ViewContainerRef })
+    fieldView: ViewContainerRef;
 
     @ViewChild('fieldMovePlug')
     fieldMovePlug: ElementRef;
 
-    constructor(public boardSettingsService: BoardSettingsService) {}
+    @HostBinding('class._infinite')
+    get infinite(): boolean {
+        return this.boardSettingsService.isInfiniteBoardMode;
+    }
+
+    public _showDragPanel: boolean = false;
+    public _dragging: boolean = false;
+
+    private boardItems: Array<any> = [];
+    private toUnsubscribe: Array<Subscription> = [];
+    private toUnlisten: Array<() => void> = [];
+
+    private dragMetadata: IDragMetadata = {
+        startPosition: {
+            x: 0,
+            y: 0,
+        },
+        prevShift: {
+            x: 0,
+            y: 0,
+        },
+    };
+
+    constructor(
+        public boardSettingsService: BoardSettingsService,
+        public boardConverseService: BoardConverseService,
+        public boardElement: ElementRef,
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private r2: Renderer2,
+        private ngZone: NgZone
+    ) {}
 
     ngAfterViewInit(): void {
+        this.boardSettingsService.setBoardElement(this.boardElement.nativeElement);
+        this.toUnsubscribe.push(this.boardConverseService.setConfigPanelListener());
+
         this.setSpaceHoldListener();
         this.setMoveListener();
         this.setZoomListener();
+        this.setAddComponentListener();
+
+        // Setting up a starting board size.
+        setTimeout(() => {
+            this.boardSettingsService.height = 650;
+            this.boardSettingsService.width = 1080;
+        }, 0);
     }
 
     ngOnDestroy(): void {
         this.toUnsubscribe.forEach(sub => {
             sub.unsubscribe();
         });
+
+        this.toUnlisten.forEach(unlistener => {
+            unlistener();
+        });
+    }
+
+    // ---------- Showcase of adding new component to the board. ----------
+    public _addComponentDemo1(): void {
+        this.boardConverseService.addLibraryComponent(InputComponent, {
+            placeholder: {
+                value: 'Some default placeholder',
+                type: 'text',
+            },
+            size: {
+                value: 'large',
+                type: 'select',
+                options: ['default', 'small', 'large'],
+            },
+        });
+    }
+    public _addComponentDemo2(): void {
+        this.boardConverseService.addLibraryComponent(InputComponent, {
+            placeholder: {
+                value: 'Some default placeholder',
+                type: 'text',
+            },
+            size: {
+                value: 'small',
+                type: 'select',
+                options: ['default', 'small', 'large'],
+            },
+        });
+    }
+    public _addComponentDemo3(): void {
+        this.boardConverseService.addLibraryComponent(CheckboxComponent, {
+            labelText: {
+                value: 'Checkbox label',
+                type: 'text',
+            },
+            isDisabled: {
+                value: false,
+                type: 'select',
+                options: ['false', 'true'],
+            },
+            isChecked: {
+                value: false,
+                type: 'select',
+                options: ['false', 'true'],
+            },
+        });
+    }
+    // --------------------------------------------------------------------
+
+    private setAddComponentListener(): void {
+        const addLibComponent = <LibraryComponent>([libraryComponent, config]: [
+            Type<LibraryComponent>,
+            IConfigPanelProperty
+        ]) => {
+            const componentFactory: ComponentFactory<BoardItemComponent> =
+                this.componentFactoryResolver.resolveComponentFactory(BoardItemComponent);
+            const boardItem: ComponentRef<BoardItemComponent> = this.fieldView.createComponent(componentFactory);
+
+            boardItem.instance.appendLibComponent(libraryComponent, config);
+
+            this.boardItems.push(boardItem);
+        };
+
+        this.toUnsubscribe.push(this.boardConverseService.addLibraryComponent$.subscribe(addLibComponent));
     }
 
     /**
@@ -68,28 +196,20 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
      * @memberof BoardComponent
      */
     private setSpaceHoldListener(): void {
-        const spacePressed: () => void = () => {
-            if (!this._showDragPanel) {
-                this._showDragPanel = true;
-            }
-        };
+        const unlistenSpaceDown = this.r2.listen('document', 'keydown.space', () => {
+            if (this._showDragPanel) return;
 
-        const spaceReleased: () => void = () => {
-            if (this._showDragPanel) {
+            this._showDragPanel = true;
+
+            const unlistenSpaceUp: () => void = this.r2.listen('document', 'keyup.space', () => {
+                unlistenSpaceUp();
+
                 this._dragging = false;
                 this._showDragPanel = false;
-            }
-        };
+            });
+        });
 
-        const spaceDown$: Observable<KeyboardEvent> = fromEvent<KeyboardEvent>(document, 'keydown').pipe(
-            filter(e => e.code === 'Space')
-        );
-        const spaceUp$: Observable<KeyboardEvent> = fromEvent<KeyboardEvent>(document, 'keyup').pipe(
-            filter(e => e.code === 'Space')
-        );
-
-        this.toUnsubscribe.push(spaceDown$.subscribe({ next: spacePressed }));
-        this.toUnsubscribe.push(spaceUp$.subscribe({ next: spaceReleased }));
+        this.toUnlisten.push(unlistenSpaceDown);
     }
 
     // TODO: Maybe move this logic to a separate class because it will be the same for board-item.
@@ -100,72 +220,63 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
      * @memberof BoardComponent
      */
     private setMoveListener(): void {
-        const mouseDown$: Observable<MouseEvent> = fromEvent<MouseEvent>(this.fieldMovePlug.nativeElement, 'mousedown');
-        const mouseUp$: Observable<MouseEvent> = fromEvent<MouseEvent>(this.fieldMovePlug.nativeElement, 'mouseup');
-        const mouseMove$: Observable<MouseEvent> = fromEvent<MouseEvent>(this.fieldMovePlug.nativeElement, 'mousemove');
-        const dblclick$: Observable<MouseEvent> = fromEvent<MouseEvent>(this.fieldMovePlug.nativeElement, 'dblclick');
-
-        // prevent default drag event.
-        this.fieldMovePlug.nativeElement.ondragstart = () => {
-            return false;
-        };
-
-        const dragMetadata: IDragMetadata = {
-            startPosition: {
-                x: 0,
-                y: 0,
-            },
-            prevShift: {
-                x: 0,
-                y: 0,
-            },
-        };
-
-        // Function is called on mousedown. Provoking the move listener to emits events.
-        // Save a starting mouse position and a current shift of the board if it exists.
-        const dragStart: (e: MouseEvent) => void = e => {
+        const setMetadata: (e: MouseEvent) => void = e => {
             this._dragging = true;
 
-            dragMetadata.startPosition.x = e.clientX;
-            dragMetadata.startPosition.y = e.clientY;
+            this.dragMetadata.startPosition.x = e.clientX;
+            this.dragMetadata.startPosition.y = e.clientY;
 
             const styles: CSSStyleDeclaration = getComputedStyle(this.field.nativeElement);
             // prettier-ignore
             const transformMatrix: Array<string> = styles.transform.match(/-?\d+(\.\d+)?/g) ||
-                                                   [ '1', '0', '0', '1', '0', '0'];
+                                                   ['1', '0', '0', '1', '0', '0'];
 
-            dragMetadata.prevShift.x = +transformMatrix[4];
-            dragMetadata.prevShift.y = +transformMatrix[5];
+            this.dragMetadata.prevShift.x = +transformMatrix[4];
+            this.dragMetadata.prevShift.y = +transformMatrix[5];
         };
 
         // Function is called on mousemove. Changing the board's shift to a new value.
-        const move: (e: MouseEvent) => void = e => {
-            const shiftX: number = e.clientX - dragMetadata.startPosition.x;
-            const shiftY: number = e.clientY - dragMetadata.startPosition.y;
+        const onMove: (e: MouseEvent) => void = e => {
+            const shiftX: number = e.clientX - this.dragMetadata.startPosition.x;
+            const shiftY: number = e.clientY - this.dragMetadata.startPosition.y;
 
             this.boardSettingsService.translateX =
-                (dragMetadata.prevShift.x + shiftX) / this.boardSettingsService.scale;
+                (this.dragMetadata.prevShift.x + shiftX) / this.boardSettingsService.scale;
             this.boardSettingsService.translateY =
-                (dragMetadata.prevShift.y + shiftY) / this.boardSettingsService.scale;
+                (this.dragMetadata.prevShift.y + shiftY) / this.boardSettingsService.scale;
         };
 
-        // Function is called on mouseup. Provoking the move listener to ignore mouse events.
-        const dragEnd: () => void = () => {
+        const onMouseUp: () => void = () => {
             this._dragging = false;
         };
 
-        // Function is called on dblclick. Restoring the board's shift to 0.
-        const resetPosition: () => void = () => {
+        const onMouseDown: (e: MouseEvent) => void = e => {
+            if (this.boardSettingsService.isTransition) return;
+
+            e.preventDefault();
+
+            setMetadata(e);
+
+            let unlistenMouseMove: () => void;
+            this.ngZone.runOutsideAngular(() => {
+                unlistenMouseMove = this.r2.listen('document', 'mousemove', onMove);
+            });
+
+            const unlistenMouseUp: () => void = this.r2.listen('document', 'mouseup', () => {
+                onMouseUp();
+                unlistenMouseMove();
+                unlistenMouseUp();
+            });
+        };
+
+        // Restoring the board's shift to 0.
+        const onDblClick: () => void = () => {
             this.boardSettingsService.enableSmoothTransition();
             this.boardSettingsService.translateX = 0;
             this.boardSettingsService.translateY = 0;
         };
 
-        this.toUnsubscribe.push(
-            mouseDown$.pipe(filter(() => !this.boardSettingsService.isTransition)).subscribe({ next: dragStart })
-        );
-        this.toUnsubscribe.push(mouseMove$.pipe(filter(() => this._dragging)).subscribe({ next: move }));
-        this.toUnsubscribe.push(mouseUp$.subscribe({ next: dragEnd }));
-        this.toUnsubscribe.push(dblclick$.subscribe({ next: resetPosition }));
+        this.toUnlisten.push(this.r2.listen(this.fieldMovePlug.nativeElement, 'mousedown', onMouseDown));
+        this.toUnlisten.push(this.r2.listen(this.fieldMovePlug.nativeElement, 'dblclick', onDblClick));
     }
 }
