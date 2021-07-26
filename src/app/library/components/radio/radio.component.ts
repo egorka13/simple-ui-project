@@ -9,8 +9,6 @@ import { RadioItem, radioType } from './radio.model';
 export class RadioComponent implements OnInit {
     items: RadioItem[] = [];
     typeModifier: string = '';
-
-    @Input()
     name: string = 'radio' + Date.now().toFixed(6);
 
     @Input()
