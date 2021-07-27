@@ -7,60 +7,101 @@ import { GridSettingsService } from 'src/app/core/services/grid-settings.service
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.less'],
 })
-export class HeaderComponent implements OnInit{
+/**
+ * @class - A controller class that describes the operation of the site header component
+ */
+export class HeaderComponent implements OnInit {
+    //Property showing the state of the main screen grid
+    public gridState: boolean = this.gridSettingsService.gridStatus;
 
-    public gridState:boolean = this.gridSettingsService.gridStatus;
-
-    public getGridPath():string{
-        return this.gridState ? "../../../assets/icons/header/header-grid-btn.svg" : "../../../assets/icons/header/header-grid-none.svg";
+    /**
+     * Method that returns the path to the grid icon
+     * @see HeaderComponent.gridState
+     * @returns Method that returns the path to the grid icon depending on whether the option is enabled
+     */
+    public getGridPath(): string {
+        const iconPath = '../../../assets/icons/header/';
+        return this.gridState
+            ? iconPath + 'header-grid-btn.svg'
+            : iconPath + 'header-grid-none.svg';
     }
 
-
-    public onClickSetGridState(){
+    /**
+     * The method switches the state of the grid through a special service
+     * @see BoardSettingsService
+     * @see GridSettingsService
+     */
+    public onClickSetGridState() {
         this.gridState = !this.gridState;
         this.gridSettingsService.setGridStatus(this.gridState);
     }
 
-    public getRounderScale():number{
+    /**
+     * A method that rounds the approximation parameter to the correct integer value. This is done due to the fact that when changing the scale,
+     * a decimal number is returned, varying in the range from 1 to 2
+     * @returns Returns the updated value of the scale exponent
+     */
+    public getRounderScale(): number {
         return Math.round(this.boardSettingsService.scale * 100);
     }
 
-    constructor(public boardSettingsService: BoardSettingsService, public gridSettingsService: GridSettingsService){}
-    ngOnInit():void{
-    }
+    constructor(public boardSettingsService: BoardSettingsService, public gridSettingsService: GridSettingsService) {}
+    ngOnInit(): void {}
 
-
-    private checkValidValue(value:number):number{
-        if(value > 2){
+    /**
+     * Auxiliary element responsible for the exit of the scale indicator beyond the boundaries of 0.3 and 2
+     * @param value - scale input parameter
+     * @returns - returns the correct value (if the value is more than 2, it will return 2, for values less than 0.3 - 0.3, respectively
+     */
+    private checkValidValue(value: number): number {
+        if (value > 2) {
             return 2;
         }
-        if(value < .3){
-            return .3;
+        if (value < 0.3) {
+            return 0.3;
         }
         return value;
     }
 
-    onChangeInput(event: Event):void{
+    /**
+     * The method responsible for changing the scale when entering a value in the corresponding header field
+     * @param event Parameter required to identify the element
+     */
+    onChangeInput(event: Event): void {
         const targetInput: HTMLInputElement = <HTMLInputElement>event.target;
-        let currentValue:number = Number(targetInput.value) / 100;
+        let currentValue: number = Number(targetInput.value) / 100;
         this.boardSettingsService.setScale(this.checkValidValue(currentValue));
     }
 
-    onClickInput(event: Event):void{
+    /**
+     * Method responsible for clearing the input field on click
+     * @param event Parameter required to identify the element
+     */
+    onClickInput(event: Event): void {
         const targetInput: HTMLInputElement = <HTMLInputElement>event.target;
-        targetInput.value = "";
+        targetInput.value = '';
     }
 
-    onKeyUpInput(event: Event):void{
+    /**
+     * The method responsible for adding and clearing incorrect values in the input field of the scale value
+     * @param event Parameter required to identify the element
+     */
+    onKeyUpInput(event: Event): void {
         const targetInput: HTMLInputElement = <HTMLInputElement>event.target;
         targetInput.value = targetInput.value.replace(/[^0-9%]/gi, '');
     }
 
-    onClickZoomIn():void{
+    /**
+     * Changes the zoom value by 10% towards the positive side (enlargement)
+     */
+    onClickZoomIn(): void {
         this.boardSettingsService.changeScale(1);
     }
 
-    onClickZoomOut():void{
+    /**
+     * Changes the zoom value by 10% towards the negative side (farther)
+     */
+    onClickZoomOut(): void {
         this.boardSettingsService.changeScale(-1);
     }
 }

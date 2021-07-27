@@ -19,7 +19,12 @@
                 </div>
                 <div class="component-group__wrapper">
                     <ng-container *ngFor="let item of dataComponents | filter: value">
-                        <div #componentItem class="component-group__item" *ngIf="item.group === itemGroup.group">
+                        <div
+                            class="component-group__item"
+                            (mouseenter)="showPopup(item.component, $event)"
+                            (click)="_addComponent(item.component)"
+                            *ngIf="item.group === itemGroup.group"
+                        >
                             <svg-icon class="component-group__item-svg" src="{{ item.svgUrl }}"></svg-icon>
                         </div>
                     </ng-container>
@@ -27,4 +32,5 @@
             </div>
         </ng-container>
     </div>
+    <ng-template #popupContainer></ng-template>
 </div>
