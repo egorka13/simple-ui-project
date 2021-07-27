@@ -25,7 +25,6 @@ import { IConfigPanelProperty } from '@models/config-panel.model';
     templateUrl: './board-item.component.html',
     styleUrls: ['./board-item.component.less'],
 })
-
 export class BoardItemComponent implements AfterViewInit, OnDestroy {
     @ViewChild('viewContainerTarget', { read: ViewContainerRef })
     viewContainerTarget: ViewContainerRef;
@@ -79,25 +78,18 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
             //this.libComponentName = this.innerLibComponent.componentType.name;
             // TODO: Fix types here
             this.libComponentName = (this.innerLibComponent.location.nativeElement.localName as string).toLowerCase();
-            this.setLibComponentProps();
+            this.setLibComponentProps(this.properties);
         }, 0);
-    }
-
-    public updateLibComponent(config: IConfigPanelProperty): void {
-        for (const key in config) {
-            this.properties[key] = config[key];
-        }
-        this.setLibComponentProps();
     }
 
     public deselect(): void {
         this._selected = false;
     }
 
-    private setLibComponentProps(): void {
-        for (const key in this.properties) {
+    public setLibComponentProps(properties: IConfigPanelProperty): void {
+        for (const key in properties) {
             // TODO: Fix types here
-            this.innerLibComponent.instance[key] = this.properties[key].value;
+            this.innerLibComponent.instance[key] = properties[key].value;
         }
     }
 
