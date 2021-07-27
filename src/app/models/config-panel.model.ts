@@ -56,14 +56,26 @@ export const componentModels: IComponentPrototype = {
         type: { type: 'select', options: ['defualt', 'button'], value: '' },
     },
     'sui-result': {
-        title: { type: 'text', labels: ['text', 'fontFamily', 'fontColor', 'fontSize'], value: ['Successfully Purchased Cloud Server ECS!', '', '', ''] },
-        subtitle: { type: 'text', labels: ['text', 'fontFamily', 'fontColor', 'fontSize'], value: [
-            'Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait.',
-            '',
-            '',
-            '',
-        ] },
-        type: { type: 'select', options: ['success', 'info', 'warning', '403', '404', '500', 'error'], value: 'success' },
+        title: {
+            type: 'text',
+            labels: ['text', 'fontFamily', 'fontColor', 'fontSize'],
+            value: ['Successfully Purchased Cloud Server ECS!', '', '', ''],
+        },
+        subtitle: {
+            type: 'text',
+            labels: ['text', 'fontFamily', 'fontColor', 'fontSize'],
+            value: [
+                'Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait.',
+                '',
+                '',
+                '',
+            ],
+        },
+        type: {
+            type: 'select',
+            options: ['success', 'info', 'warning', '403', '404', '500', 'error'],
+            value: 'success',
+        },
         hrefGeneral: {
             type: ['text', 'text', 'color', 'color', 'color'],
             labels: ['link', 'text', 'backgroundColor', 'borderColor', 'textColor'],

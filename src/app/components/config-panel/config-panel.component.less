@@ -1,4 +1,4 @@
-@import "../../../assets/styles/base.less";
+@import '../../../assets/styles/base.less';
 
 @config-panel-header-blue: hsla(212, 100%, 17%, 1);
 @config-panel-scrollbar-thumb-color: hsla(0, 0%, 65%, 1);
@@ -10,7 +10,7 @@
     &__wrapper {
         height: 100%;
         padding-bottom: 10px;
-        
+
         background-color: @sui-blue-deep-1;
 
         color: @sui-white;
@@ -23,17 +23,17 @@
             width: 8px;
             height: 16px;
         }
-        
+
         &::-webkit-scrollbar-thumb {
             background: @config-panel-scrollbar-thumb-color;
         }
-        
+
         &::-webkit-scrollbar-track {
             background: @config-panel-scrollbar-track-color;
         }
     }
 
-    &__header, 
+    &__header,
     &__property {
         display: grid;
         grid-template-columns: 60% 40%;
@@ -92,7 +92,7 @@
         }
 
         &-input {
-            &[type="color"] {
+            &[type='color'] {
                 padding: 0;
                 height: 100%;
                 width: 100%;
@@ -112,7 +112,7 @@
                 }
             }
 
-            &[type="number"] {
+            &[type='number'] {
                 &::-webkit-outer-spin-button,
                 &::-webkit-inner-spin-button {
                     -webkit-appearance: none;
@@ -124,12 +124,12 @@
         &-select {
             padding: 0 5px;
             text-align-last: center;
-            text-align: center; 
+            text-align: center;
             cursor: pointer;
             appearance: none;
 
             &:active,
-            &:focus{
+            &:focus {
                 outline: none;
                 border: 0;
             }
