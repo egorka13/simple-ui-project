@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IGridSettings } from '../../components/header/grid/grid.model';
-import { BoardSettingsService } from './board-settings.service';
+import { IGridSettings } from '@models/grid.model';
+import { BoardSettingsService } from '@services/board-settings.service';
 
 @Injectable({
     providedIn: 'root',

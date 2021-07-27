@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { BoardSettingsService } from 'src/app/core/services/board-settings.service';
-import { GridSettingsService } from 'src/app/core/services/grid-settings.service';
+import { Component } from '@angular/core';
+import { BoardSettingsService } from '@services/board-settings.service';
+import { GridSettingsService } from '@services/grid-settings.service';
 
 @Component({
     selector: 'sui-header',
@@ -10,7 +10,7 @@ import { GridSettingsService } from 'src/app/core/services/grid-settings.service
 /**
  * @class - A controller class that describes the operation of the site header component
  */
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
     //Property showing the state of the main screen grid
     public gridState: boolean = this.gridSettingsService.gridStatus;
 
@@ -46,7 +46,6 @@ export class HeaderComponent implements OnInit {
     }
 
     constructor(public boardSettingsService: BoardSettingsService, public gridSettingsService: GridSettingsService) {}
-    ngOnInit(): void {}
 
     /**
      * Auxiliary element responsible for the exit of the scale indicator beyond the boundaries of 0.3 and 2

@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import { IDataComponent } from './panel.model';
 import { IGroupItems } from './panel.model';
-import { LibraryGetterService } from '../../core/services/library-getter.service';
-import { ILibraryInformation, IlibraryCurrentInformation } from '../../core/services/library-getter.model';
+import { LibraryGetterService } from '@services/library-getter.service';
+import { ILibraryInformation, IlibraryCurrentInformation } from '@models/library-getter.model';
 import { PopupComponent } from './popup/popup.component';
 import { BoardConverseService } from '@services/board-converse.service';
 
@@ -109,8 +109,6 @@ export class ComponentPanelComponent {
 
     @Input()
     value: string;
-
-    public test:string = "1";
 
     public popupComponent: IlibraryCurrentInformation = this.libraryGetterService.getLibraryComponentsInfo.card;
 

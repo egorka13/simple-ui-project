@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { GridSettingsService } from '@services/grid-settings.service';
 import { BoardSettingsService } from '@services/board-settings.service';
 
@@ -10,13 +10,11 @@ import { BoardSettingsService } from '@services/board-settings.service';
 /**
  * @class The controller class responsible for rendering the grid
  */
-export class GridComponent implements OnInit, AfterViewInit {
+export class GridComponent implements AfterViewInit {
     constructor(public gridSettingsService: GridSettingsService, public boardSettingsService: BoardSettingsService) {}
 
     @ViewChild('suiGrid')
     suiGrid: ElementRef;
-
-    ngOnInit(): void {}
 
     ngAfterViewInit(): void {
         this.initGrid();

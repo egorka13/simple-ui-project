@@ -7,8 +7,8 @@ import {
     ComponentFactoryResolver,
     AfterViewInit,
 } from '@angular/core';
-import { LibraryGetterService } from '../../../core/services/library-getter.service';
-import { ILibraryInformation, IlibraryCurrentInformation } from '../../../core/services/library-getter.model';
+import { LibraryGetterService } from '@services/library-getter.service';
+import { ILibraryInformation, IlibraryCurrentInformation } from '@models/library-getter.model';
 
 @Component({
     selector: 'sui-popup',

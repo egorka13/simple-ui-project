@@ -36,7 +36,7 @@ export class BoardSettingsService {
         return this.scaleState;
     }
 
-    public setScale(value:number){
+    public setScale(value:number):void{
         this.scaleState = value;
         this.updateTransformStyle();
     }
