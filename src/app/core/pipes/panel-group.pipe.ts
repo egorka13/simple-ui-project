@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IGroupItems } from '@models/panel.model';
+import { IGroupItems } from '@models/component-panel.model';
 
 @Pipe({ name: 'group' })
 export class PanelGroupPipe implements PipeTransform {

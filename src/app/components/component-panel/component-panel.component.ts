@@ -1,26 +1,9 @@
-import {
-    Component,
-    ViewChild,
-    ElementRef,
-    Input,
-    ViewContainerRef,
-    ComponentFactoryResolver,
-    Type,
-} from '@angular/core';
+import { Component, ViewChild, Input, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { IDataComponent, IGroupItems } from '@models/component-panel.model';
+import { IlibraryCurrentInformation } from '@models/library-getter.model';
 import { LibraryGetterService } from '@services/library-getter.service';
-import { ILibraryInformation, IlibraryCurrentInformation } from '@models/library-getter.model';
-import { PopupComponent } from './popup/popup.component';
 import { BoardConverseService } from '@services/board-converse.service';
-
-import { InputComponent } from '@library-components/input/input.component';
-import { InputNumberComponent } from '@library-components/input-number/input-number.component';
-import { CheckboxComponent } from '@library-components/checkbox/checkbox.component';
-import { CardComponent } from '@library-components/card/card.component';
-import { ButtonComponent } from '@library-components/button/button.component';
-import { ResultComponent } from '@library-components/result/result.component';
-import { RadioComponent } from '@library-components/radio/radio.component';
-import { SliderComponent } from '@library-components/slider/slider.component';
+import { PopupComponent } from './popup/popup.component';
 
 @Component({
     selector: 'sui-component-panel',
