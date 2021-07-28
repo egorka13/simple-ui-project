@@ -1,6 +1,6 @@
 <div
     class="sui-board-item__holder"
-    [ngClass]="{ _interactive: boardSettingsService.isInteractiveMode, _selected: _selected }"
+    [ngClass]="{ _interactive: boardSettingsService.isInteractiveMode, _selected: _isSelected }"
     #holder
 >
     <div class="sui-board-item__place">

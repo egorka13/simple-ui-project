@@ -1,18 +1,22 @@
 @import '/src/assets/styles/variables/colors.less';
 
 :host {
-    position: relative;
+    flex: 1;
+
     display: flex;
-    margin-top: 60px; //Compensise header height
-    //TODO: delete height from :host when a main layout inside the app.component will be done.
-    height: calc(~'100vh - 18px');
+    position: relative;
+
     overflow: hidden;
 }
 
 .sui-wrapper {
+    &__board {
+        flex: 1;
+    }
+
     &__config-panel {
         width: 300px;
-        height: 100vh;        
+        height: 100vh;
 
         position: absolute;
         right: 0;
