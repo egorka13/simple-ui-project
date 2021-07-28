@@ -21,6 +21,7 @@
                     <ng-container *ngFor="let item of dataComponents | filter: value">
                         <div
                             class="component-group__item"
+                            (mouseenter)="showPopup(item.component, $event)"
                             (click)="_addComponent(item.component)"
                             *ngIf="item.group === itemGroup.group"
                         >
@@ -31,4 +32,5 @@
             </div>
         </ng-container>
     </div>
+    <ng-template #popupContainer></ng-template>
 </div>

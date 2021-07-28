@@ -17,6 +17,8 @@ import { WrapperComponent } from '@components/wrapper/wrapper.component';
 import { LibraryShowcaseComponent } from '@components/library-showcase/library-showcase.component';
 import { PanelFilterPipe } from '@pipes/panel-filter.pipe';
 import { PanelGroupPipe } from '@pipes/panel-group.pipe';
+import { GridComponent } from '@components/header/grid/grid.component';
+import { PopupComponent } from '@components/component-panel/popup/popup.component';
 
 @NgModule({
     declarations: [
@@ -30,6 +32,8 @@ import { PanelGroupPipe } from '@pipes/panel-group.pipe';
         LibraryShowcaseComponent,
         PanelFilterPipe,
         PanelGroupPipe,
+        GridComponent,
+        PopupComponent,
     ],
     imports: [
         LibraryModule,

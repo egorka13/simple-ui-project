@@ -32,8 +32,17 @@
 
         background-color: @sui-white;
 
+        animation: displayField 0.3s ease-out forwards;
+
         &._smooth {
             transition: transform 0.3s ease-out, height 0.3s ease-out, width 0.3s ease-out;
+        }
+
+        //.sui-board__field-showcases
+        //Need this to interact with elements
+        &-showcases{
+            position: relative;
+            z-index: 5;
         }
     }
 
@@ -60,5 +69,17 @@
         &._dragging {
             cursor: grabbing;
         }
+    }
+}
+
+@keyframes displayField {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }

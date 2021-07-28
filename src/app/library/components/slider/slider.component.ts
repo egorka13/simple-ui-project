@@ -23,16 +23,40 @@ export class SliderComponent implements OnInit {
     disabled: boolean | string = false;
 
     /**
-     * this property is responsible for accepting the settings of the current slider component
-     * @param firstParam @see suiSliderParams.showMinimalValue
-     * @param secondParam @see suiSliderParams.showMaximumValue
-     * @param thirdParam @see suiSliderParams.setLegend
-     * @param fourthParam @see suiSliderParams.setLegendColor
-     * @param fifthParam @see suiSliderParams.setSliderColor
-     * @param sixthParam @see suiSliderParams.setValuesColor
+     * This property responsible for showing minimal value
      */
     @Input()
-    customParams?: suiSliderParams;
+    showMinimalValue?: boolean = false;
+
+     /**
+     * This property responsible for showing maximum value
+     */
+    @Input()
+    showMaximumValue?: boolean = false;
+
+    /**
+     * The current input parameter sets the legend
+     */
+    @Input()
+    legend?: string = '';
+
+    /**
+     * The current input parameter sets the legend color
+     */
+    @Input()
+    legendColor?: string = '';
+
+    /**
+     * The current input parameter sets the slider color
+     */
+    @Input()
+    sliderColor?: string = '';
+
+    /**
+     * The current input parameter sets the values color
+     */
+    @Input()
+    valuesColor?: string = '';
 
     /**
      * The current input parameter sets the slider width

@@ -1,3 +1,3 @@
-export type buttonSize = undefined | 'small' | 'large';
+export type buttonSize = '' | 'small' | 'large';
 
-export type buttonType = undefined | 'primary' | 'dashed' | 'text' | 'link';
+export type buttonType = '' | 'primary' | 'dashed' | 'text' | 'link';
