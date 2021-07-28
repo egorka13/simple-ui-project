@@ -1,21 +1,34 @@
+@import '/src/assets/styles/variables/colors.less';
+
+@component-panel-scrollbar-thumb-color: hsl(223deg, 11%, 63%);
+@component-panel-scrollbar-track-color: hsl(219deg, 100%, 14%);
+@component-panel-box-shadow-color: hsla(0, 0%, 0%, 0.25);
+@component-panel-box-shadow-input-color: hsla(0, 0%, 0%, 0.5);
+@component-panel-input-placeholder-color: hsl(0, 0%, 67%);
+@component-panel-wrapper-color: hsl(220deg, 15%, 43%);
+
 .panel{
     &__wrapper{
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        left: 0;
         width: 258px;
         height: 100%;
-        background: #5C677D;
+        background: @component-panel-wrapper-color;
     }
     &__search{
         height: 50px;
         padding: 8px 6px 6px 6px;
-        background: #001845;
-        box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.25);
+        background: @sui-blue-deep-2;
+        box-shadow: 2px 0px 4px @component-panel-box-shadow-color;
         &-input{
             height: 100%;
             width: 100%;
             border-radius: 6px;
             text-indent: 30px;
             font-size: 14px;
-            box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.5);
+            box-shadow: inset 0px 1px 4px @component-panel-box-shadow-input-color;
             background-image: url(/assets/icons/panel/search-icon.svg);
             background-size: 20px;
             background-position: 10px 9px;
@@ -24,28 +37,29 @@
                 background-image: none;
                 &::placeholder{
                     font-size: 14px;
-                    color: white;
+                    color: @sui-white;
                 }
             }
             &::placeholder{
                 position: relative;
                 font-size: 14px;
-                color: #AAAAAA;
+                color: @component-panel-input-placeholder-color;
             }
         }
     }
     &__content{
-        height: calc(~'100% - 50px');
+        height: 100%;
         margin-top: 2px;
         overflow-y: auto;
-        box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.25);
+        box-shadow: 2px 0px 4px @component-panel-box-shadow-color;
         &::-webkit-scrollbar {
             width: 6px;
         }
         &::-webkit-scrollbar-track {
-            background: #001845;        }
+            background: @component-panel-scrollbar-track-color;        
+        }
         &::-webkit-scrollbar-thumb {
-            background-color: #979DAC;;
+            background-color: @component-panel-scrollbar-thumb-color;
         }
     }
     &__component-group{
@@ -55,14 +69,13 @@
 }
 .component-group{
     &__header{
-        margin-top: 3px;
         width: 115px;
         height: 30px;
+        margin-top: 3px;
         margin-left: 6px;
         padding: 6px 0 7px 10px;
-        background: linear-gradient(174.71deg, rgba(0, 0, 0, 0.2) 15.64%, rgba(255, 255, 255, 0) 95.76%), #373737;
+        background: @sui-category-grad;
         border-radius: 4px;
-        color: #F4F4F4;
         &-text{
             font-family: Verdana;
             font-style: normal;
@@ -71,6 +84,7 @@
             line-height: 18px;
             letter-spacing: 0.01em;
             text-align: left;
+            color: darken(@sui-white, 4%);
         }
     }
     &__wrapper{
@@ -86,23 +100,15 @@
         justify-content: center;
         width: 200px;
         height: 70px;
-        background: #33415C;
+        background: @sui-gray-4;
         border-radius: 5px;
         &:hover{
-            background: #0085FF;
-            // .component-group__item-svg svg path{
-            //     fill: white;
-            // }
+            background-color: @sui-blue-1;
         }
         &-svg{
             svg{
                 width: 25px;
                 height: 25px;
-                // path{
-                //     &:hover{
-                //         fill: white
-                //     }
-                // }
             }
         }
     }
