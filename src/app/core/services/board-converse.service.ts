@@ -61,7 +61,7 @@ export class BoardConverseService {
     public setConfigPanelListener(): Subscription {
         return this.configDataService.saveConfigData$.subscribe((properties: IConfigPanelProperty) => {
             if (!this.selectedBoardItem) return;
-            this.selectedBoardItem.setLibComponentProps(properties);
+            this.selectedBoardItem.updateLibComponent(properties);
         });
     }
 }
