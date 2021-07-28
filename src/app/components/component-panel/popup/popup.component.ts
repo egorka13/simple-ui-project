@@ -6,35 +6,31 @@ import {
     ViewContainerRef,
     ComponentFactoryResolver,
     AfterViewInit,
+    OnDestroy,
 } from '@angular/core';
-import { LibraryGetterService } from '@services/library-getter.service';
-import { ILibraryInformation, IlibraryCurrentInformation } from '@models/library-getter.model';
+import { ILibraryCurrentInformation } from '@models/library-getter.model';
 
 @Component({
     selector: 'sui-popup',
     templateUrl: './popup.component.html',
     styleUrls: ['./popup.component.less'],
 })
-export class PopupComponent implements OnInit, AfterViewInit {
-
+export class PopupComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input()
-    bottomFlaf:boolean = false;
+    bottomFlaf: boolean = false;
 
     @ViewChild('popupContainer', { read: ViewContainerRef })
     popupContainer: ViewContainerRef;
 
     @Input()
-    component: IlibraryCurrentInformation;
+    component: ILibraryCurrentInformation;
 
     @Input()
     position: Array<string> = ['0px', '0px'];
 
     private componentGeneratorTimer: ReturnType<typeof setTimeout>;
 
-    constructor(
-        private componentFactoryResolver: ComponentFactoryResolver,
-        public viewContainerRef: ViewContainerRef
-    ) {}
+    constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
     ngOnInit(): void {
         console.log(this.component);

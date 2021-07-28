@@ -1,59 +1,61 @@
 @import '/src/assets/styles/variables/colors.less';
 
-.sui-popup{
-    &__wrapper{
+.sui-popup {
+    &__wrapper {
         position: absolute;
         z-index: 99;
         margin: 0;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        gap:25px;
-        padding:10px 10px 25px 10px;
+        gap: 25px;
+        padding: 10px 10px 25px 10px;
         min-height: 250px;
         min-width: 280px;
-        background:@sui-white;
+        background: @sui-white;
         border-radius: 2%;
         animation: 1s popup;
         box-sizing: border-box;
         box-shadow: 0px 5px 5px hsla(0, 0%, 0%, 0.25);
-        &::before{
-            content:"";
+
+        &::before {
+            content: "";
             position: absolute;
             margin-left: -24px;
             width: 15px;
             height: 15px;
             clip-path: polygon(3% 49%, 99% 1%, 98% 51%, 98% 100%);
-            background:@sui-white;
+            background: @sui-white;
         }
-        &._bottom{
-            &::before{
-                content:"";
+
+        &._bottom {
+            &::before {
+                content: "";
                 position: absolute;
                 margin-left: -24px;
-                bottom:5px;
+                bottom: 5px;
                 width: 15px;
                 height: 15px;
                 clip-path: polygon(3% 49%, 99% 1%, 98% 51%, 98% 100%);
-                background:@sui-white;
+                background: @sui-white;
             }
         }
     }
 
-    &__title{
+    &__title {
         font-size: 14px;
     }
 
-    &__item{
+    &__item {
         align-self: center;
     }
 }
 
-@keyframes popup{
-    0%{
+@keyframes popup {
+    0% {
         opacity: 0;
     }
-    100%{
+    100% {
         opacity: 1;
     }
 }

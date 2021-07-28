@@ -4,7 +4,7 @@
  * @see suiSliderParams.showMinimalValue - parameter showing the minimum value of the slider
  * @see suiSliderParams.showMaximumValue - parameter showing the maximum value of the slider
  * @see suiSliderParams.setLegend - parameter showing the legend (title) value of the slider
- * @see suiSliderParams.setLegendColor - parameter sets the slider's legen color
+ * @see suiSliderParams.setLegendColor - parameter sets the slider's legend color
  * @see suiSliderParams.setSliderColor - parameter sets the slider's track color
  * @see suiSliderParams.setValuesColor - parameter sets the slider's current track value
  */

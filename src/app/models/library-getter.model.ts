@@ -1,9 +1,9 @@
-export interface ILibraryInformation{
-  [name: string]:IlibraryCurrentInformation
+export interface ILibraryInformation {
+    [name: string]: ILibraryCurrentInformation;
 }
 
-export  interface IlibraryCurrentInformation{
-    component:any;
-    title:string;
-    desciption:string;
+export interface ILibraryCurrentInformation {
+    component: any;
+    title: string;
+    description: string;
 }

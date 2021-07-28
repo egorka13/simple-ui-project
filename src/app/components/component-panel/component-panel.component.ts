@@ -1,27 +1,9 @@
-import {
-    Component,
-    ViewChild,
-    ElementRef,
-    Input,
-    ViewContainerRef,
-    ComponentFactoryResolver,
-    Type,
-} from '@angular/core';
-import { IDataComponent } from './panel.model';
-import { IGroupItems } from './panel.model';
+import { Component, ViewChild, Input, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { IDataComponent, IGroupItems } from '@models/component-panel.model';
+import { ILibraryCurrentInformation } from '@models/library-getter.model';
 import { LibraryGetterService } from '@services/library-getter.service';
-import { ILibraryInformation, IlibraryCurrentInformation } from '@models/library-getter.model';
-import { PopupComponent } from './popup/popup.component';
 import { BoardConverseService } from '@services/board-converse.service';
-
-import { InputComponent } from '@library-components/input/input.component';
-import { InputNumberComponent } from '@library-components/input-number/input-number.component';
-import { CheckboxComponent } from '@library-components/checkbox/checkbox.component';
-import { CardComponent } from '@library-components/card/card.component';
-import { ButtonComponent } from '@library-components/button/button.component';
-import { ResultComponent } from '@library-components/result/result.component';
-import { RadioComponent } from '@library-components/radio/radio.component';
-import { SliderComponent } from '@library-components/slider/slider.component';
+import { PopupComponent } from './popup/popup.component';
 
 @Component({
     selector: 'sui-component-panel',
@@ -32,12 +14,14 @@ export class ComponentPanelComponent {
     constructor(
         private libraryGetterService: LibraryGetterService,
         private componentFactoryResolver: ComponentFactoryResolver,
-        public viewContainerRef: ViewContainerRef,
         public boardConverseService: BoardConverseService
     ) {}
 
     @ViewChild('popupContainer', { read: ViewContainerRef })
     popupContainer: ViewContainerRef;
+
+    @Input()
+    value: string;
 
     groupItems: IGroupItems[] = [{ group: 'Base' }, { group: 'Logical' }, { group: 'Multimedia' }];
 
@@ -85,75 +69,16 @@ export class ComponentPanelComponent {
             component: this.libraryGetterService.getLibraryComponentsInfo.input,
         },
         {
-            group: 'Multimedia',
-            nameComponent: 'Result',
-            svgUrl: '/assets/icons/panel/result-icon.svg',
-            component: this.libraryGetterService.getLibraryComponentsInfo.result,
+            group: 'Base',
+            nameComponent: 'Input Number',
+            svgUrl: '/assets/icons/panel/input-number-icon.svg',
+            component: this.libraryGetterService.getLibraryComponentsInfo.inputNumber,
         },
     ];
-    // dataComponents: IDataComponent[] = [
-    //     {
-    //         group: 'Multimedia',
-    //         nameComponent: 'Card',
-    //         svgUrl: '/assets/icons/panel/card-icon.svg',
-    //         component: CardComponent,
-    //     },
-    //     {
-    //         group: 'Multimedia',
-    //         nameComponent: 'Result',
-    //         svgUrl: '/assets/icons/panel/result-icon.svg',
-    //         component: ResultComponent,
-    //     },
-    //     {
-    //         group: 'Base',
-    //         nameComponent: 'Button',
-    //         svgUrl: '/assets/icons/panel/button-icon.svg',
-    //         component: ButtonComponent,
-    //     },
-    //     {
-    //         group: 'Logical',
-    //         nameComponent: 'Checkbox',
-    //         svgUrl: '/assets/icons/panel/checkbox-icon.svg',
-    //         component: CheckboxComponent,
-    //     },
-    //     {
-    //         group: 'Logical',
-    //         nameComponent: 'Radio',
-    //         svgUrl: '/assets/icons/panel/radio-icon.svg',
-    //         component: RadioComponent,
-    //     },
-    //     {
-    //         group: 'Logical',
-    //         nameComponent: 'Slider',
-    //         svgUrl: '/assets/icons/panel/slider-icon.svg',
-    //         component: SliderComponent,
-    //     },
-    //     {
-    //         group: 'Base',
-    //         nameComponent: 'Input',
-    //         svgUrl: '/assets/icons/panel/input-icon.svg',
-    //         component: InputComponent,
-    //     },
-    //     {
-    //         group: 'Base',
-    //         nameComponent: 'Input Number',
-    //         svgUrl: '/assets/icons/panel/input-number-icon.svg',
-    //         component: InputNumberComponent,
-    //     },
-    // ];
 
-    @ViewChild('inputSearch')
-    inputSearch: ElementRef;
-
-    @ViewChild('componentItem')
-    componentItem: ElementRef;
-
-    @Input()
-    value: string;
-
-    public showPopup(item: IlibraryCurrentInformation, event: Event): void {
+    public showPopup(item: ILibraryCurrentInformation, event: Event): void {
         this.popupContainer.clear();
-        const targetElement: HTMLElement = <HTMLElement>event.currentTarget;
+        const targetElement: HTMLElement = event.currentTarget as HTMLElement;
         const targetElementCoords: DOMRect = targetElement.getBoundingClientRect();
         const popupLeft: number = 2 * targetElementCoords.left + targetElementCoords.right;
         let populTop: number = targetElementCoords.y + targetElementCoords.x - targetElementCoords.height;

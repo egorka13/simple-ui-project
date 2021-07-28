@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
 import { SizeModifierType } from './input-number.model';
 
 @Component({
@@ -6,23 +6,20 @@ import { SizeModifierType } from './input-number.model';
     templateUrl: './input-number.component.html',
     styleUrls: ['./input-number.component.less'],
 })
-export class InputNumberComponent implements OnInit {
+export class InputNumberComponent {
     @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
-    @Input() value: string = '';
-    @Input() min: string;
-    @Input() max: string;
     valueToNumber: number;
+    sizeModifier: string = '';
 
     @ViewChild('inputNumber')
     inputElement: ElementRef;
 
+    @Input() value: string = '';
+    @Input() min: string;
+    @Input() max: string;
     @Input()
-    size: SizeModifierType = '';
-
-    sizeModifier: string = '';
-
-    ngOnInit(): void {
-        this.sizeModifier = this.size ? `_${this.size}` : '';
+    set size(value: SizeModifierType) {
+        this.sizeModifier = `_size_${value}` || '';
     }
 
     onChange(): void {

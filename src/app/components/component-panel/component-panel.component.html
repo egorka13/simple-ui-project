@@ -1,17 +1,17 @@
-<div class="panel__wrapper">
-    <div class="panel__search">
+<div class="sui-component-panel__wrapper">
+    <div class="sui-component-panel__search">
         <input
             #inputSearch
-            class="panel__search-input"
+            class="sui-component-panel__search-input"
             type="text"
             placeholder="Search Component"
             [(ngModel)]="value"
         />
     </div>
-    <div class="panel__content">
+    <div class="sui-component-panel__content">
         <ng-container *ngFor="let itemGroup of groupItems">
             <div
-                class="panel__component-group component-group"
+                class="sui-component-panel__component-group component-group"
                 *ngIf="dataComponents | filter: value | group: itemGroup"
             >
                 <div class="component-group__header">

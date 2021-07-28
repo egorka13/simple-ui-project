@@ -1,8 +1,8 @@
 @import 'colors.less';
 @import 'mixins.less';
 
-.sui-input-number{
-    &__inner{
+.sui-input-number {
+    &__inner {
         display: inline-block;
         position: relative;
         width: 90px;
@@ -14,51 +14,63 @@
         background-color: #fff;
         background-image: none;
         transition: all .3s;
-        &:hover .sui-input-number__handler-wrap{
+
+        &:hover .sui-input-number__handler-wrap {
             opacity: 1;
         }
-        &:hover{
+
+        &:hover {
             border-color: #40a9ff;
         }
+
         &:focus {
             box-shadow: 0 0 0 2px fade(@lib-active-blue, 20%);
         }
     }
-    &__handler{
+
+    &__handler {
         transition: all .1s linear;
-        &:hover{
-            .handler__up-inner, .handler__down-inner{
+
+        &:hover {
+            .handler__up-inner, .handler__down-inner {
                 color: #40a9ff;
             }
         }
-        &:active{
+
+        &:active {
             background: #f4f4f4;
         }
     }
-    &__handler-wrap:hover &__handler{
+
+    &__handler-wrap:hover &__handler {
         height: 40%;
     }
-    &__input{
+
+    &__input {
         width: 100%;
         height: 30px;
         padding: 0 11px;
         border: 0;
         outline: 0;
         transition: all .3s linear;
+
         &:focus {
             box-shadow: 0 0 0 2px fade(@lib-active-blue, 20%);
-        }  
-        &._large{
+        }
+
+        &._size_large {
             height: 38px;
             font-size: 16px;
         }
-        &._small {
+
+        &._size_small {
             height: 22px;
             padding: 0 7px;
         }
     }
 }
-.handler{
+
+.handler {
     position: absolute;
     top: 0;
     right: 0;
@@ -69,39 +81,47 @@
     border-radius: 0 2px 2px 0;
     background: #fff;
     transition: opacity .24s linear .1s;
-    &__up{
+
+    &__up {
         display: block;
         position: relative;
         height: 50%;
         border-top-right-radius: 2px;
-        &:hover{
+
+        &:hover {
             height: 60% !important;
         }
-        &-inner{
+
+        &-inner {
             top: 50%;
             margin-top: -5px;
             text-align: center;
         }
     }
-    &__down{
+
+    &__down {
         display: block;
         position: relative;
         height: 50%;
         border-top: 1px solid #d9d9d9;
         border-bottom-right-radius: 2px;
-        &:hover{
-            .handler__up{
+
+        &:hover {
+            .handler__up {
                 height: 40%;
             }
+
             height: 60% !important;
         }
-        &-inner{
+
+        &-inner {
             top: 50%;
             text-align: center;
             transform: translateY(-50%);
         }
     }
-    &__up-inner, &__down-inner{
+
+    &__up-inner, &__down-inner {
         position: absolute;
         right: 4px;
         width: 12px;
@@ -110,7 +130,7 @@
         font-size: 7px;
         color: #00000073;
         transition: all .1s linear;
-        
+
     }
 
 }

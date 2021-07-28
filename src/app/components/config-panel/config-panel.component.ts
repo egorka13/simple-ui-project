@@ -13,9 +13,9 @@ export class ConfigPanelComponent implements OnInit, OnDestroy {
     public isDesign: boolean = true;
 
     public countProperties: number;
-    public properties: IConfigPanelProperty = {}; // properties which recieved from service without parsedProperties
-    public newProperties: IConfigPanelProperty = {}; // properties which recieved from parsedProperties and divided to separate items
-    public parsedProperties: IConfigPanelProperty = {}; // properties with a value in the form of an array and deleted from recieved properties
+    public properties: IConfigPanelProperty = {}; // properties which received from service without parsedProperties
+    public newProperties: IConfigPanelProperty = {}; // properties which received from parsedProperties and divided to separate items
+    public parsedProperties: IConfigPanelProperty = {}; // properties with a value in the form of an array and deleted from received properties
 
     private configDataSubscription: Subscription;
 
