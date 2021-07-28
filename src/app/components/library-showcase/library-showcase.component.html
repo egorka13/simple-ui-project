@@ -1,23 +1,33 @@
-<sui-button></sui-button>
-<br />
-<sui-input size="small" placeholder="custom placeholder"></sui-input>
-<sui-input></sui-input>
-<sui-input size="large"></sui-input>
-<br />
-<sui-checkbox labelText="Checkbox1"></sui-checkbox>
-<sui-checkbox labelText="Checkbox2" [isChecked]="true"></sui-checkbox>
-<sui-checkbox labelText="Checkbox3" [isDisabled]="true"></sui-checkbox>
-<sui-checkbox labelText="Checkbox4" [isDisabled]="true" [isChecked]="true"></sui-checkbox>
-<br />
-<sui-result></sui-result>
-<br />
-<sui-input-number min="1" max="99" size="large"></sui-input-number>
-<sui-input-number min="1" max="99"></sui-input-number>
-<sui-input-number min="1" max="99" size="small"></sui-input-number>
-<br />
-<sui-slider></sui-slider>
-<!-- <sui-slider [customParams]="sliderComponentParams[0]"></sui-slider> -->
-<!-- <sui-slider [disabled]="true" [customParams]="sliderComponentParams[1]"></sui-slider> -->
-<br />
-<sui-card></sui-card>
-<sui-card size="small"></sui-card>
+<div class="sui-library">
+    <div class="sui-library__item">
+        <sui-button></sui-button>
+    </div>
+    <div class="sui-library__item">
+        <sui-input size="small" placeholder="custom placeholder"></sui-input>
+        <sui-input></sui-input>
+        <sui-input size="large"></sui-input>
+    </div>
+    <div class="sui-library__item">
+        <sui-checkbox labelText="Checkbox1"></sui-checkbox>
+        <sui-checkbox labelText="Checkbox2" [isChecked]="true"></sui-checkbox>
+        <sui-checkbox labelText="Checkbox3" [isDisabled]="true"></sui-checkbox>
+        <sui-checkbox labelText="Checkbox4" [isDisabled]="true" [isChecked]="true"></sui-checkbox>
+    </div>
+    <div class="sui-library__item">
+        <sui-result></sui-result>
+    </div>
+    <div class="sui-library__item">
+        <sui-input-number min="1" max="99" size="large"></sui-input-number>
+        <sui-input-number min="1" max="99"></sui-input-number>
+        <sui-input-number min="1" max="99" size="small"></sui-input-number>
+    </div>
+    <div class="sui-library__item">
+        <sui-slider></sui-slider>
+        <!-- <sui-slider [customParams]="sliderComponentParams[0]"></sui-slider> -->
+        <!-- <sui-slider [disabled]="true" [customParams]="sliderComponentParams[1]"></sui-slider> -->
+    </div>
+    <div class="sui-library__item">
+        <sui-card></sui-card>
+        <sui-card size="small"></sui-card>
+    </div>
+</div>

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +15,10 @@ import { BoardComponent } from '@components/board/board.component';
 import { BoardItemComponent } from '@components/board/board-item/board-item.component';
 import { WrapperComponent } from '@components/wrapper/wrapper.component';
 import { LibraryShowcaseComponent } from '@components/library-showcase/library-showcase.component';
+import { PanelFilterPipe } from '@pipes/panel-filter.pipe';
+import { PanelGroupPipe } from '@pipes/panel-group.pipe';
+import { GridComponent } from '@components/header/grid/grid.component';
+import { PopupComponent } from '@components/component-panel/popup/popup.component';
 
 @NgModule({
     declarations: [
@@ -24,8 +30,19 @@ import { LibraryShowcaseComponent } from '@components/library-showcase/library-s
         ConfigPanelComponent,
         ComponentPanelComponent,
         LibraryShowcaseComponent,
+        PanelFilterPipe,
+        PanelGroupPipe,
+        GridComponent,
+        PopupComponent,
     ],
-    imports: [LibraryModule, BrowserModule, AppRoutingModule, FormsModule],
+    imports: [
+        LibraryModule,
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        AngularSvgIconModule.forRoot(),
+    ],
     providers: [],
     bootstrap: [AppComponent],
 })

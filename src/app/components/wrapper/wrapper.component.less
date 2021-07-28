@@ -2,28 +2,14 @@
 
 :host {
     position: relative;
-
     display: flex;
-    justify-content: center;
-    align-items: center;
-
-    overflow: hidden;
-
+    margin-top: 60px; //Compensise header height
     //TODO: delete height from :host when a main layout inside the app.component will be done.
-    height: 45em;
+    height: calc(~'100vh - 18px');
+    overflow: hidden;
 }
 
 .sui-wrapper {
-    &__component-panel {
-        position: absolute;
-
-        // Just hide this components for board development.
-        top: 1em;
-        left: 1em;
-        z-index: -1;
-        opacity: 0;
-    }
-
     &__config-panel {
         width: 300px;
         height: 100vh;        
