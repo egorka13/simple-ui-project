@@ -20,7 +20,6 @@ export class BoardSettingsService {
     private heightState: number = 650;
     private widthState: number = 1080;
     private boardElement: HTMLElement;
-    private boardMargin: number = 400;
     private isInteractiveModeState: boolean = false;
 
     public isInfiniteBoardMode: boolean = false; // Mode that allows to use all visible space as a board.
@@ -171,7 +170,7 @@ export class BoardSettingsService {
     private normalizeScale(): void {
         if (!this.boardElement) return;
 
-        const computedWidthMinScale: number = (this.boardElement.offsetWidth - this.boardMargin) / this.width;
+        const computedWidthMinScale: number = this.boardElement.offsetWidth / this.width;
         const computedHeightMinScale: number = this.boardElement.offsetHeight / this.height;
 
         const computedMinScale = Math.floor(Math.min(computedHeightMinScale, computedWidthMinScale) * 100) / 100;
