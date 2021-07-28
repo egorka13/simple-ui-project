@@ -1,0 +1,179 @@
+@import '../../../assets/styles/base.less';
+
+@config-panel-header-blue: hsla(212, 100%, 17%, 1);
+@config-panel-scrollbar-thumb-color: hsla(0, 0%, 65%, 1);
+@config-panel-scrollbar-track-color: hsla(220, 15%, 43%, 1);
+
+@transition: all 0.2s ease-out;
+
+.sui-config-panel {
+    &__wrapper {
+        height: 100%;
+        padding-bottom: 10px;
+
+        background-color: @sui-blue-deep-1;
+
+        color: @sui-white;
+        .font-regular();
+        font-size: 14px;
+
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+            width: 8px;
+            height: 16px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: @config-panel-scrollbar-thumb-color;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: @config-panel-scrollbar-track-color;
+        }
+    }
+
+    &__header,
+    &__property {
+        display: grid;
+        grid-template-columns: 60% 40%;
+    }
+
+    &__header {
+        background-color: @config-panel-header-blue;
+
+        font-size: 14px;
+        text-align: center;
+    }
+
+    &__title {
+        padding: 5px 0;
+        transition: @transition;
+
+        &:hover,
+        &._active {
+            background-color: lighten(@config-panel-header-blue, 20%);
+        }
+    }
+
+    &__declarations,
+    &__code {
+        padding: 5px 20px 5px 15px;
+    }
+
+    &__property {
+        position: relative;
+        font-size: 13px;
+
+        & + & {
+            margin-top: 8px;
+        }
+
+        &-name {
+            .font-bold();
+            text-transform: capitalize;
+        }
+
+        &-input,
+        &-select {
+            background-color: @sui-blue-2;
+            border-radius: 2px;
+            border: none;
+
+            text-align: center;
+
+            transition: @transition;
+
+            &:hover,
+            &:focus,
+            &:active {
+                background-color: lighten(@sui-blue-2, 20%);
+            }
+        }
+
+        &-input {
+            &[type='color'] {
+                padding: 0;
+                height: 100%;
+                width: 100%;
+
+                cursor: pointer;
+                border: none;
+                outline: 0;
+                -webkit-appearance: none;
+
+                &::-webkit-color-swatch-wrapper {
+                    padding: 0;
+                }
+
+                &::-webkit-color-swatch {
+                    border: none;
+                    border-radius: 2px;
+                }
+            }
+
+            &[type='number'] {
+                &::-webkit-outer-spin-button,
+                &::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+            }
+        }
+
+        &-select {
+            padding: 0 5px;
+            text-align-last: center;
+            text-align: center;
+            cursor: pointer;
+            appearance: none;
+
+            &:active,
+            &:focus {
+                outline: none;
+                border: 0;
+            }
+        }
+
+        &-cross {
+            width: 10px;
+            height: 10px;
+
+            position: absolute;
+            right: -15px;
+            top: 5px;
+
+            background: url('/assets/icons/cross-sign.svg');
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+
+        &-button {
+            grid-column: 1 / 3;
+            padding: 3px 12px;
+            margin-top: 5px;
+
+            background-color: @sui-blue-1;
+            border-radius: 2px;
+
+            transition: @transition;
+
+            &:hover {
+                background-color: darken(@sui-blue-1, 10%);
+            }
+        }
+
+        &._isEndOfGroup {
+            padding-bottom: 8px;
+            border-bottom: 2px solid @sui-gray-1;
+        }
+    }
+
+    &__text-tab {
+        display: inline-block;
+        margin-left: 1rem;
+    }
+}
