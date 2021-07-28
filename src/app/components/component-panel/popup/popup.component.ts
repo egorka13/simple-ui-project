@@ -36,12 +36,14 @@ export class PopupComponent implements OnInit, AfterViewInit {
         public viewContainerRef: ViewContainerRef
     ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        console.log(this.component);
+    }
 
     ngAfterViewInit(): void {
         this.componentGeneratorTimer = setTimeout(() => {
             this.generateComponent();
-        }, 100);
+        }, 0);
     }
 
     ngOnDestroy(): void {

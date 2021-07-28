@@ -36,7 +36,7 @@ export class BoardSettingsService {
         return this.scaleState;
     }
 
-    public setScale(value:number):void{
+    public setScale(value: number): void {
         this.scaleState = value;
         this.updateTransformStyle();
     }
@@ -89,7 +89,7 @@ export class BoardSettingsService {
         this.normalizeScale();
 
         this.boardParametres$.next([width, this.height]);
-        
+
         this.enableSmoothTransition();
         this.updateTransformStyle();
     }

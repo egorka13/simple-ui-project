@@ -1,5 +1,5 @@
 export interface IGridSettings {
     activeStatus: boolean;
-    scale:number;
-    strokeWidth:number;
+    scale: number;
+    strokeWidth: number;
 }

@@ -4,7 +4,8 @@ import {
     ElementRef,
     Input,
     ViewContainerRef,
-    ComponentFactoryResolver
+    ComponentFactoryResolver,
+    Type,
 } from '@angular/core';
 import { IDataComponent } from './panel.model';
 import { IGroupItems } from './panel.model';
@@ -29,7 +30,7 @@ import { SliderComponent } from '@library-components/slider/slider.component';
 })
 export class ComponentPanelComponent {
     constructor(
-        private libraryGetterService:LibraryGetterService,
+        private libraryGetterService: LibraryGetterService,
         private componentFactoryResolver: ComponentFactoryResolver,
         public viewContainerRef: ViewContainerRef,
         public boardConverseService: BoardConverseService
@@ -40,66 +41,106 @@ export class ComponentPanelComponent {
 
     groupItems: IGroupItems[] = [{ group: 'Base' }, { group: 'Logical' }, { group: 'Multimedia' }];
 
-    // dataComponents: IDataComponent[] = [
-    //     { group: 'Multimedia', nameComponent: 'Card', svgUrl: '/assets/icons/panel/card-icon.svg', component: this.libraryGetterService.getLibraryComponentsInfo.card  },
-    //     { group: 'Multimedia', nameComponent: 'Result', svgUrl: '/assets/icons/panel/result-icon.svg', component: this.libraryGetterService.getLibraryComponentsInfo.result },
-    //     { group: 'Base', nameComponent: 'Button', svgUrl: '/assets/icons/panel/button-icon.svg', component: this.libraryGetterService.getLibraryComponentsInfo.button },
-    //     { group: 'Logical', nameComponent: 'Checkbox', svgUrl: '/assets/icons/panel/checkbox-icon.svg', component: this.libraryGetterService.getLibraryComponentsInfo.checkbox },
-    //     { group: 'Logical', nameComponent: 'Radio', svgUrl: '/assets/icons/panel/radio-icon.svg', component: this.libraryGetterService.getLibraryComponentsInfo.radio },
-    //     { group: 'Logical', nameComponent: 'Slider', svgUrl: '/assets/icons/panel/slider-icon.svg', component: this.libraryGetterService.getLibraryComponentsInfo.slider },
-    //     { group: 'Base', nameComponent: 'Input', svgUrl: '/assets/icons/panel/input-icon.svg', component: this.libraryGetterService.getLibraryComponentsInfo.input },
-    //     { group: 'Multimedia', nameComponent: 'Result', svgUrl: '/assets/icons/panel/result-icon.svg', component: this.libraryGetterService.getLibraryComponentsInfo.result }
-    // ];
     dataComponents: IDataComponent[] = [
         {
             group: 'Multimedia',
             nameComponent: 'Card',
             svgUrl: '/assets/icons/panel/card-icon.svg',
-            component: CardComponent,
+            component: this.libraryGetterService.getLibraryComponentsInfo.card,
         },
         {
             group: 'Multimedia',
             nameComponent: 'Result',
             svgUrl: '/assets/icons/panel/result-icon.svg',
-            component: ResultComponent,
+            component: this.libraryGetterService.getLibraryComponentsInfo.result,
         },
         {
             group: 'Base',
             nameComponent: 'Button',
             svgUrl: '/assets/icons/panel/button-icon.svg',
-            component: ButtonComponent,
+            component: this.libraryGetterService.getLibraryComponentsInfo.button,
         },
         {
             group: 'Logical',
             nameComponent: 'Checkbox',
             svgUrl: '/assets/icons/panel/checkbox-icon.svg',
-            component: CheckboxComponent,
+            component: this.libraryGetterService.getLibraryComponentsInfo.checkbox,
         },
         {
             group: 'Logical',
             nameComponent: 'Radio',
             svgUrl: '/assets/icons/panel/radio-icon.svg',
-            component: RadioComponent,
+            component: this.libraryGetterService.getLibraryComponentsInfo.radio,
         },
         {
             group: 'Logical',
             nameComponent: 'Slider',
             svgUrl: '/assets/icons/panel/slider-icon.svg',
-            component: SliderComponent,
+            component: this.libraryGetterService.getLibraryComponentsInfo.slider,
         },
         {
             group: 'Base',
             nameComponent: 'Input',
             svgUrl: '/assets/icons/panel/input-icon.svg',
-            component: InputComponent,
+            component: this.libraryGetterService.getLibraryComponentsInfo.input,
         },
         {
-            group: 'Base',
-            nameComponent: 'Input Number',
-            svgUrl: '/assets/icons/panel/input-number-icon.svg',
-            component: InputNumberComponent,
+            group: 'Multimedia',
+            nameComponent: 'Result',
+            svgUrl: '/assets/icons/panel/result-icon.svg',
+            component: this.libraryGetterService.getLibraryComponentsInfo.result,
         },
     ];
+    // dataComponents: IDataComponent[] = [
+    //     {
+    //         group: 'Multimedia',
+    //         nameComponent: 'Card',
+    //         svgUrl: '/assets/icons/panel/card-icon.svg',
+    //         component: CardComponent,
+    //     },
+    //     {
+    //         group: 'Multimedia',
+    //         nameComponent: 'Result',
+    //         svgUrl: '/assets/icons/panel/result-icon.svg',
+    //         component: ResultComponent,
+    //     },
+    //     {
+    //         group: 'Base',
+    //         nameComponent: 'Button',
+    //         svgUrl: '/assets/icons/panel/button-icon.svg',
+    //         component: ButtonComponent,
+    //     },
+    //     {
+    //         group: 'Logical',
+    //         nameComponent: 'Checkbox',
+    //         svgUrl: '/assets/icons/panel/checkbox-icon.svg',
+    //         component: CheckboxComponent,
+    //     },
+    //     {
+    //         group: 'Logical',
+    //         nameComponent: 'Radio',
+    //         svgUrl: '/assets/icons/panel/radio-icon.svg',
+    //         component: RadioComponent,
+    //     },
+    //     {
+    //         group: 'Logical',
+    //         nameComponent: 'Slider',
+    //         svgUrl: '/assets/icons/panel/slider-icon.svg',
+    //         component: SliderComponent,
+    //     },
+    //     {
+    //         group: 'Base',
+    //         nameComponent: 'Input',
+    //         svgUrl: '/assets/icons/panel/input-icon.svg',
+    //         component: InputComponent,
+    //     },
+    //     {
+    //         group: 'Base',
+    //         nameComponent: 'Input Number',
+    //         svgUrl: '/assets/icons/panel/input-number-icon.svg',
+    //         component: InputNumberComponent,
+    //     },
+    // ];
 
     @ViewChild('inputSearch')
     inputSearch: ElementRef;
@@ -110,17 +151,14 @@ export class ComponentPanelComponent {
     @Input()
     value: string;
 
-    public popupComponent: IlibraryCurrentInformation = this.libraryGetterService.getLibraryComponentsInfo.card;
-
-    public showPopup(item: IlibraryCurrentInformation, event: Event):void{
+    public showPopup(item: IlibraryCurrentInformation, event: Event): void {
         this.popupContainer.clear();
-        const targetElement:HTMLElement = <HTMLElement>event.currentTarget;
-        const targetElementCoords:DOMRect = targetElement.getBoundingClientRect();
+        const targetElement: HTMLElement = <HTMLElement>event.currentTarget;
+        const targetElementCoords: DOMRect = targetElement.getBoundingClientRect();
         const popupLeft: number = 2 * targetElementCoords.left + targetElementCoords.right;
-        let populTop: number = targetElementCoords.y  + targetElementCoords.x
-        - targetElementCoords.height ;
+        let populTop: number = targetElementCoords.y + targetElementCoords.x - targetElementCoords.height;
         let bootomFlag = false;
-        if(document.documentElement.clientHeight - targetElementCoords.top <= 250){
+        if (document.documentElement.clientHeight - targetElementCoords.top <= 250) {
             populTop = targetElementCoords.y - 250 - targetElementCoords.height / 4;
             bootomFlag = true;
         }
@@ -132,6 +170,6 @@ export class ComponentPanelComponent {
     }
 
     public _addComponent(component: any): void {
-        this.boardConverseService.addLibraryComponent(component, {});
+        this.boardConverseService.addLibraryComponent(component.component, {});
     }
 }

@@ -13,7 +13,8 @@ import { SliderComponent } from '../../library/components/slider/slider.componen
     providedIn: 'root',
 })
 export class LibraryGetterService {
-    private libraryInformation: ILibraryInformation = {
+
+    private libraryInformation:ILibraryInformation = {
         button: {
             component: ButtonComponent,
             title: 'Button component',
@@ -59,6 +60,4 @@ export class LibraryGetterService {
     get getLibraryComponentsInfo(): ILibraryInformation {
         return this.libraryInformation;
     }
-
-    constructor() {}
 }

@@ -1,12 +1,12 @@
-<div [ngClass]="{ popup__wrapper: true, _bottom: bottomFlaf }" [ngStyle]="{ top: position[1], left: position[0] }">
-    <div class="popup__title">
-        <h1 class="popup__title-text">{{ component.title }}</h1>
+<div [ngClass]="{ 'sui-popup__wrapper': true, _bottom: bottomFlaf }" [ngStyle]="{ top: position[1], left: position[0] }">
+    <div class="sui-popup__title">
+        <h1 class="sui-popup__title-text">{{ component.title }}</h1>
         <hr />
     </div>
-    <div class="popup__item">
+    <div class="sui-popup__item">
         <ng-template #popupContainer></ng-template>
     </div>
-    <div class="popup__description">
-        <p class="popup__description-text">{{ component.desciption }}</p>
+    <div class="sui-popup__description">
+        <p class="sui-popup__description-text">{{ component.desciption }}</p>
     </div>
 </div>
