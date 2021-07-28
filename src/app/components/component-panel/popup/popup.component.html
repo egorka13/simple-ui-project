@@ -1,4 +1,9 @@
-<div [ngClass]="{ 'sui-popup__wrapper': true, _bottom: bottomFlaf }" [ngStyle]="{ top: position[1], left: position[0] }">
+<div 
+    [ngClass]="{ 'sui-popup__wrapper': true, _bottom: bottomFlaf, _fade: (isAlive$ | async) }" 
+    [ngStyle]="{ top: position[1], left: position[0] }"
+    (mousemove)="onMouseEnter()"
+    (mouseenter)="onMouseEnter()"
+    >
     <div class="sui-popup__title">
         <h1 class="sui-popup__title-text">{{ component.title }}</h1>
         <hr />

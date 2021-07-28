@@ -7,8 +7,9 @@ import {
     ComponentFactoryResolver,
     AfterViewInit,
 } from '@angular/core';
-import { LibraryGetterService } from '@services/library-getter.service';
-import { ILibraryInformation, IlibraryCurrentInformation } from '@models/library-getter.model';
+import { IlibraryCurrentInformation } from '@models/library-getter.model';
+import { BehaviorSubject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'sui-popup',
@@ -16,6 +17,8 @@ import { ILibraryInformation, IlibraryCurrentInformation } from '@models/library
     styleUrls: ['./popup.component.less'],
 })
 export class PopupComponent implements OnInit, AfterViewInit {
+
+    public isAlive$ = new BehaviorSubject<boolean>(false);
 
     @Input()
     bottomFlaf:boolean = false;
@@ -37,13 +40,18 @@ export class PopupComponent implements OnInit, AfterViewInit {
     ) {}
 
     ngOnInit(): void {
-        console.log(this.component);
     }
 
     ngAfterViewInit(): void {
         this.componentGeneratorTimer = setTimeout(() => {
             this.generateComponent();
         }, 0);
+        this.isAlive$.pipe(debounceTime(2000)).subscribe(()=>this.isAlive$.next(true));
+    }
+
+
+    public onMouseEnter(){
+        this.isAlive$.next(false);
     }
 
     ngOnDestroy(): void {
