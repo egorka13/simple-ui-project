@@ -70,9 +70,9 @@ export class GridSettingsService {
      * @param ctx - canvas (context) where the mesh is embedded.
      */
     public drawGrid(ctx: CanvasRenderingContext2D): void {
-        this.boardSettingsService.boardParametres$.subscribe(value => {
-            let canvasWidth: number = Number(value[0]);
-            let canvasHeight: number = Number(value[1]);
+        this.boardSettingsService.boardParameters$.subscribe(value => {
+            const canvasWidth: number = Number(value[0]);
+            const canvasHeight: number = Number(value[1]);
             ctx.canvas.width = canvasWidth;
             ctx.canvas.height = canvasHeight;
             ctx.beginPath();

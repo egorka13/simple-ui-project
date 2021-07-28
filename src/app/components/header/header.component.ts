@@ -21,9 +21,7 @@ export class HeaderComponent {
      */
     public getGridPath(): string {
         const iconPath = '../../../assets/icons/header/';
-        return this.gridState
-            ? iconPath + 'header-grid-btn.svg'
-            : iconPath + 'header-grid-none.svg';
+        return this.gridState ? iconPath + 'header-grid-btn.svg' : iconPath + 'header-grid-none.svg';
     }
 
     /**
@@ -67,8 +65,8 @@ export class HeaderComponent {
      * @param event Parameter required to identify the element
      */
     onChangeInput(event: Event): void {
-        const targetInput: HTMLInputElement = <HTMLInputElement>event.target;
-        let currentValue: number = Number(targetInput.value) / 100;
+        const targetInput: HTMLInputElement = event.target as HTMLInputElement;
+        const currentValue: number = Number(targetInput.value) / 100;
         this.boardSettingsService.setScale(this.checkValidValue(currentValue));
     }
 
@@ -86,7 +84,7 @@ export class HeaderComponent {
      * @param event Parameter required to identify the element
      */
     onKeyUpInput(event: Event): void {
-        const targetInput: HTMLInputElement = <HTMLInputElement>event.target;
+        const targetInput: HTMLInputElement = event.target as HTMLInputElement;
         targetInput.value = targetInput.value.replace(/[^0-9%]/gi, '');
     }
 

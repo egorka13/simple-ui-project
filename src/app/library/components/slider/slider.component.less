@@ -19,7 +19,7 @@
             cursor: pointer;
             background: @sui-sliderCprogressNewGrayHover;
 
-            &>div {
+            & > div {
                 background: @sui-sliderCstandartblueHover;
             }
         }
@@ -96,15 +96,15 @@
         position: absolute;
         display: flex;
         align-items: center;
-        justify-content:center;
+        justify-content: center;
         box-sizing: border-box;
         padding: 5px;
-        height:30px;
+        height: 30px;
         margin-top: -42px;
-        background:@sui-sliderCmarkerGradient;
+        background: @sui-sliderCmarkerGradient;
         margin-left: 163px;
-        color:@lib-white;
-        border-radius:10%;
+        color: @lib-white;
+        border-radius: 10%;
         transition: 1s opacity;
 
         //sui-slider__mark::after
@@ -130,7 +130,7 @@
 
         //sui-slider__progress _disabled - if progress disabled
         &._disabled {
-            &>div {
+            & > div {
                 background: @sui-sliderCprogressNewGrayDisabled;
             }
         }

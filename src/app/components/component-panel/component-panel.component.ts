@@ -1,6 +1,6 @@
 import { Component, ViewChild, Input, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { IDataComponent, IGroupItems } from '@models/component-panel.model';
-import { IlibraryCurrentInformation } from '@models/library-getter.model';
+import { ILibraryCurrentInformation } from '@models/library-getter.model';
 import { LibraryGetterService } from '@services/library-getter.service';
 import { BoardConverseService } from '@services/board-converse.service';
 import { PopupComponent } from './popup/popup.component';
@@ -14,7 +14,6 @@ export class ComponentPanelComponent {
     constructor(
         private libraryGetterService: LibraryGetterService,
         private componentFactoryResolver: ComponentFactoryResolver,
-        public viewContainerRef: ViewContainerRef,
         public boardConverseService: BoardConverseService
     ) {}
 
@@ -77,9 +76,9 @@ export class ComponentPanelComponent {
         },
     ];
 
-    public showPopup(item: IlibraryCurrentInformation, event: Event): void {
+    public showPopup(item: ILibraryCurrentInformation, event: Event): void {
         this.popupContainer.clear();
-        const targetElement: HTMLElement = <HTMLElement>event.currentTarget;
+        const targetElement: HTMLElement = event.currentTarget as HTMLElement;
         const targetElementCoords: DOMRect = targetElement.getBoundingClientRect();
         const popupLeft: number = 2 * targetElementCoords.left + targetElementCoords.right;
         let populTop: number = targetElementCoords.y + targetElementCoords.x - targetElementCoords.height;

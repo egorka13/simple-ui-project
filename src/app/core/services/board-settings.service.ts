@@ -24,9 +24,9 @@ export class BoardSettingsService {
 
     public isInfiniteBoardMode: boolean = false; // Mode that allows to use all visible space as a board.
 
-    public transformStyle$ = new Subject<string>(); // Listener contsins computed transform style.
+    public transformStyle$ = new Subject<string>(); // Listener contains computed transform style.
 
-    public boardParametres$ = new BehaviorSubject<Array<number>>([this.widthState, this.heightState]);
+    public boardParameters$ = new BehaviorSubject<Array<number>>([this.widthState, this.heightState]);
 
     constructor(public boardConverseService: BoardConverseService) {}
 
@@ -41,7 +41,7 @@ export class BoardSettingsService {
         this.updateTransformStyle();
     }
 
-    // Current board shift relatve to start position.
+    // Current board shift relative to start position.
     get translateX(): number {
         return this.translateState.x;
     }
@@ -73,7 +73,7 @@ export class BoardSettingsService {
         this.heightState = height;
         this.normalizeScale();
 
-        this.boardParametres$.next([this.width, height]);
+        this.boardParameters$.next([this.width, height]);
 
         this.enableSmoothTransition();
         this.updateTransformStyle();
@@ -88,7 +88,7 @@ export class BoardSettingsService {
         this.widthState = width;
         this.normalizeScale();
 
-        this.boardParametres$.next([width, this.height]);
+        this.boardParameters$.next([width, this.height]);
 
         this.enableSmoothTransition();
         this.updateTransformStyle();
