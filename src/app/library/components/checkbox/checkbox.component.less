@@ -1,0 +1,135 @@
+@import 'colors';
+
+@lib-disabled-checkbox-bg: lighten(saturate(@lib-disabled, 6%), 64%);
+
+:host {
+    display: inline-block;
+}
+
+.sui-checkbox {
+    //.sui-checkbox__input
+    &__input {
+        position: absolute;
+        opacity: 0;
+        z-index: -1;
+    }
+
+    //.sui-checkbox__label
+    &__label {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    &__label:hover > &__input:enabled + &__box {
+        border: 1px solid @lib-blue;
+    }
+
+    //.sui-checkbox__box
+    //.sui-checkbox__text
+    &__box,
+    &__text {
+        cursor: pointer;
+    }
+
+    //.sui-checkbox__box
+    &__box {
+        margin-right: 10px;
+        position: relative;
+
+        height: 18px;
+        width: 18px;
+
+        border: 1px solid @lib-ph-color;
+        border-radius: 2px;
+
+        transition: all 0.3s;
+
+        //.sui-checkbox__box::before
+        &::before {
+            content: ' ';
+
+            height: 60%;
+            width: 40%;
+
+            position: absolute;
+            top: 50%;
+            left: 21%;
+            opacity: 0;
+
+            border-bottom: 2px solid @lib-white;
+            border-right: 2px solid @lib-white;
+
+            transform: rotate(45deg) scale(0) translate(-50%, -50%);
+            transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+        }
+
+        //.sui-checkbox__box::after
+        &::after {
+            content: ' ';
+
+            height: 18px;
+            width: 18px;
+
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            opacity: 0;
+
+            border: 1px solid @lib-blue;
+            border-radius: inherit;
+        }
+    }
+
+    //.sui-checkbox__input:checked + .sui-checkbox__box
+    &__input:enabled:checked + &__box {
+        background-color: @lib-blue;
+        border: 1px solid @lib-blue;
+
+        //.sui-checkbox__input:checked + .sui-checkbox__box::before
+        &::before {
+            content: ' ';
+
+            opacity: 1;
+
+            transform: rotate(45deg) scale(1) translate(-50%, -50%);
+        }
+
+        //.sui-checkbox__input:checked + .sui-checkbox__box::after
+        &::after {
+            animation: vanishingBorder 0.36s ease-in-out;
+        }
+    }
+
+    //.sui-checkbox__input:disabled ~ *
+    &__input:disabled ~ * {
+        cursor: not-allowed;
+    }
+
+    //.sui-checkbox__input:disabled + .sui-checkbox__box
+    &__input:disabled + &__box {
+        background-color: @lib-disabled-checkbox-bg;
+    }
+
+    //.sui-checkbox__input:disabled:checked + .sui-checkbox__box::before
+    &__input:disabled:checked + &__box::before {
+        content: ' ';
+
+        opacity: 1;
+
+        transform: rotate(45deg) scale(1) translate(-50%, -50%);
+
+        border-bottom: 2px solid @lib-disabled;
+        border-right: 2px solid @lib-disabled;
+    }
+}
+
+@keyframes vanishingBorder {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.6);
+        opacity: 0;
+    }
+}

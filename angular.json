@@ -57,6 +57,11 @@
                             "src/assets/styles/base.less",
                             "src/app/library/assets/styles/index.less"
                         ],
+                        "stylePreprocessorOptions": {
+                            "includePaths": [
+                                "src/app/library/assets/styles"
+                            ]
+                        },
                         "scripts": []
                     },
                     "configurations": {

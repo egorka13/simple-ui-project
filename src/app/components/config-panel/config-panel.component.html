@@ -1,0 +1,79 @@
+<div class="sui-config-panel__wrapper" (change)="handlePropertyChange($event)">
+    <header class="sui-config-panel__header" (click)="selectTab($event)">
+        <button id="designSection" class="sui-config-panel__title _active">Element design</button>
+        <button id="codeSection" class="sui-config-panel__title">Code</button>
+    </header>
+
+    <div *ngIf="isDesign; else code" class="sui-config-panel__declarations" (click)="deleteProperty($event)">
+        <div
+            *ngFor="let entry of properties | keyvalue; let i = index"
+            class="sui-config-panel__property"
+            [class._isEndOfGroup]="i == countProperties - 1"
+        >
+            <span class="sui-config-panel__property-name">{{ entry.key }}</span>
+
+            <input
+                *ngIf="entry.value.type != 'select'"
+                class="sui-config-panel__property-input"
+                [(ngModel)]="entry.value.value"
+                [type]="entry.value.type"
+                [attr.name]="entry.key"
+            />
+
+            <select
+                *ngIf="entry.value.type == 'select'"
+                [(ngModel)]="entry.value.value"
+                class="sui-config-panel__property-select"
+                [attr.name]="entry.key"
+            >
+                <option *ngFor="let option of entry.value.options" [value]="option">{{ option }}</option>
+            </select>
+        </div>
+
+        <div
+            *ngFor="let entry of newProperties | keyvalue"
+            class="sui-config-panel__property"
+            [class._isEndOfGroup]="entry.value.isEndOfGroup"
+        >
+            <span class="sui-config-panel__property-name">{{ entry.key }}</span>
+
+            <input
+                *ngIf="entry.value.type != 'select'"
+                class="sui-config-panel__property-input"
+                [(ngModel)]="entry.value.value"
+                [type]="entry.value.type"
+                [attr.name]="entry.key"
+            />
+
+            <div
+                *ngIf="entry.value.isDeleted && !(entry.value.isEndOfGroup && entry.key.slice(-2) == ' 1')"
+                class="sui-config-panel__property-cross"
+                [attr.data-name]="entry.key"
+            ></div>
+
+            <button
+                *ngIf="entry.value.isEndOfGroup && entry.value.isDeleted"
+                class="sui-config-panel__property-button"
+                (click)="addProperty($event)"
+                [attr.name]="entry.key"
+            >
+                Add {{ entry.key.slice(0, -2) }}
+            </button>
+        </div>
+    </div>
+
+    <ng-template #code>
+        <div *ngIf="suiComponentName" class="sui-config-panel__code">
+            &lt;{{ suiComponentName }}<br />
+            <span class="sui-config-panel__text-tab">
+                <ng-container *ngFor="let entry of properties | keyvalue">
+                    {{ entry.key }}="{{ entry.value.value }}"<br />
+                </ng-container>
+                <ng-container *ngFor="let entry of parsedProperties | keyvalue">
+                    {{ entry.key }}="{{ formatArraytoString(entry.value.value) }}"<br />
+                </ng-container> </span
+            ><br />
+            &gt;&lt;/{{ suiComponentName }}&gt;
+        </div>
+    </ng-template>
+</div>
