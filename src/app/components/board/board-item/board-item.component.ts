@@ -84,10 +84,12 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
             this.innerLibComponent = this.viewContainerTarget.createComponent<LibraryComponent>(componentFactory);
             //this.libComponentName = this.innerLibComponent.componentType.name;
             // TODO: Fix types here
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             this.libComponentName = (this.innerLibComponent.location.nativeElement.localName as string).toLowerCase();
 
             for (const key in this.properties) {
                 // TODO: Fix types here
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                 this.innerLibComponent.instance[key] = this.properties[key].value;
             }
         }, 0);
@@ -102,6 +104,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
         for (const key in config) {
             this.properties[key] = config[key];
             // TODO: Fix types here
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             this.innerLibComponent.instance[key] = config[key].value;
         }
     }
