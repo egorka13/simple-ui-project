@@ -1,4 +1,4 @@
-@import '/src/assets/styles/variables/colors.less';
+@import '/src/assets/styles/base.less';
 
 @component-panel-scrollbar-thumb-color: hsl(223deg, 11%, 63%);
 @component-panel-scrollbar-track-color: hsl(219deg, 100%, 14%);
@@ -9,11 +9,6 @@
 
 .sui-component-panel {
     &__wrapper {
-        position: absolute;
-        z-index: 10;
-        top: 0;
-        left: 0;
-        width: 258px;
         height: 100%;
         background: @component-panel-wrapper-color;
     }
@@ -56,6 +51,7 @@
     &__content {
         height: calc(~'100% - 50px');
         margin-top: 2px;
+        padding-bottom: 10px;
         overflow-y: auto;
         box-shadow: 2px 0px 4px @component-panel-box-shadow-color;
 
@@ -116,6 +112,7 @@
         height: 70px;
         background: @sui-gray-4;
         border-radius: 5px;
+        .user-select();
 
         &:hover {
             background-color: @sui-blue-1;
