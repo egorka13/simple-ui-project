@@ -28,9 +28,10 @@
         <button (click)="_addComponentDemo1()" [style.outline]="'1px solid gray'">Add Component (large input)</button>
         <button (click)="_addComponentDemo2()" [style.outline]="'1px solid gray'">Add Component (small input)</button>
         <button (click)="_addComponentDemo3()" [style.outline]="'1px solid gray'">Add Component (checkbox)</button>
-        <ng-container #viewContainerTarget></ng-container>
     </div>
+
     <sui-grid></sui-grid>
+    <ng-container #viewContainerTarget></ng-container>
 </section>
 <div
     class="sui-board__move-plug"
@@ -38,3 +39,4 @@
     [ngClass]="{ _active: _isDragPanelShown, _dragging: _isDragging }"
     #fieldMovePlug
 ></div>
+
