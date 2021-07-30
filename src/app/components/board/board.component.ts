@@ -132,14 +132,14 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
      * @memberof BoardComponent
      */
     private setRemoveComponentListener(): void {
-        const removeLibComponent = (boardItemComponent: BoardItemComponent) => {
+        const removeLibComponent: (boardItemComponent: BoardItemComponent) => void = boardItemComponent => {
             const itemRef: ComponentRef<BoardItemComponent> = this.boardItems.filter(
                 (item: ComponentRef<BoardItemComponent>) => {
                     return item.instance === boardItemComponent;
                 }
             )[0];
 
-            const index = this.boardItems.indexOf(itemRef);
+            const index: number = this.boardItems.indexOf(itemRef);
             this.fieldView.remove(index);
             this.boardItems.splice(index, 1);
         };
