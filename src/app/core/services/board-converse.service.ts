@@ -17,9 +17,29 @@ export class BoardConverseService {
 
     // TODO: Consider an asObserver here.
     public addLibraryComponent$ = new Subject<Type<any>>();
+    // TODO: Consider an asObserver here.
+    public removeLibraryComponent$ = new Subject<BoardItemComponent>();
 
+    /**
+     * This function append library component to the board.
+     * @template LibraryComponent
+     * @param {Type<LibraryComponent>} libraryComponent - Library Component to append.
+     * @memberof BoardConverseService
+     */
     public addLibraryComponent<LibraryComponent>(libraryComponent: Type<LibraryComponent>): void {
         this.addLibraryComponent$.next(libraryComponent);
+    }
+
+    /**
+     * This function remove current selected component from the board.
+     * @memberof BoardConverseService
+     */
+    public removeLibraryComponent(): void {
+        if (this.selectedBoardItem) {
+            this.removeLibraryComponent$.next(this.selectedBoardItem);
+            this.selectedBoardItem = null;
+            this.configDataService.setConfigData(null);
+        }
     }
 
     /**

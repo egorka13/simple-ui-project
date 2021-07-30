@@ -24,6 +24,9 @@
         >
             Toggle Infinite Mode
         </button>
+        <button (click)="boardConverseService.removeLibraryComponent()" [style.outline]="'1px solid gray'">
+            Delete selected
+        </button>
     </div>
 
     <sui-grid></sui-grid>
@@ -35,4 +38,3 @@
     [ngClass]="{ _active: _isDragPanelShown, _dragging: _isDragging }"
     #fieldMovePlug
 ></div>
-

@@ -47,7 +47,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     public _isDragPanelShown: boolean = false;
     public _isDragging: boolean = false;
 
-    private boardItems: Array<any> = [];
+    private boardItems: Array<ComponentRef<BoardItemComponent>> = [];
     private toUnsubscribe: Array<Subscription> = [];
     private toUnlisten: Array<() => void> = [];
 
@@ -86,6 +86,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         this.setMoveListener();
         this.setZoomListener();
         this.setAddComponentListener();
+        this.setRemoveComponentListener();
 
         // Setting up a starting board size.
         setTimeout(() => {
@@ -122,6 +123,28 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         };
 
         this.toUnsubscribe.push(this.boardConverseService.addLibraryComponent$.subscribe(addLibComponent));
+    }
+
+    /**
+     * This function sets up a listener of the board converse service that waiting for
+     * a remove selected board-item event.
+     * @private
+     * @memberof BoardComponent
+     */
+    private setRemoveComponentListener(): void {
+        const removeLibComponent = (boardItemComponent: BoardItemComponent) => {
+            const itemRef: ComponentRef<BoardItemComponent> = this.boardItems.filter(
+                (item: ComponentRef<BoardItemComponent>) => {
+                    return item.instance === boardItemComponent;
+                }
+            )[0];
+
+            const index = this.boardItems.indexOf(itemRef);
+            this.fieldView.remove(index);
+            this.boardItems.splice(index, 1);
+        };
+
+        this.toUnsubscribe.push(this.boardConverseService.removeLibraryComponent$.subscribe(removeLibComponent));
     }
 
     /**
