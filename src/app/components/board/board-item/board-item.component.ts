@@ -70,7 +70,6 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
      * This function adds a library component inside the boardItem.
      * @template LibraryComponent
      * @param {Type<LibraryComponent>} libraryComponent - Library component.
-     * @param {IConfigPanelProperty} properties - Default config.
      * @memberof BoardItemComponent
      */
     public appendLibComponent<LibraryComponent>(libraryComponent: Type<LibraryComponent>): void {
@@ -98,7 +97,6 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
      */
     public updateLibComponent(config: IConfigPanelProperty): void {
         for (const key in config) {
-            this.properties[key] = config[key];
             // TODO: Fix types here
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             this.innerLibComponent.instance[key] = config[key].value;
