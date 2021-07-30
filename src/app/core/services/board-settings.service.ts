@@ -18,6 +18,7 @@ export class BoardSettingsService {
     private smoothTransition: boolean = false;
     private smoothTransitionTO: ReturnType<typeof setTimeout>;
     private heightState: number = 650;
+    private boardMargin: number = 600;
     private widthState: number = 1080;
     private boardElement: HTMLElement;
     private isInteractiveModeState: boolean = false;
@@ -171,7 +172,7 @@ export class BoardSettingsService {
     private normalizeScale(): void {
         if (!this.boardElement) return;
 
-        const computedWidthMinScale: number = this.boardElement.offsetWidth / this.width;
+        const computedWidthMinScale: number = (this.boardElement.offsetWidth - this.boardMargin) / this.width;
         const computedHeightMinScale: number = this.boardElement.offsetHeight / this.height;
 
         const computedMinScale = Math.floor(Math.min(computedHeightMinScale, computedWidthMinScale) * 100) / 100;
