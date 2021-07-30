@@ -95,6 +95,6 @@ export class ComponentPanelComponent {
     }
 
     public _addComponent(component: any): void {
-        this.boardConverseService.addLibraryComponent(component.component, {});
+        this.boardConverseService.addLibraryComponent(component.component);
     }
 }

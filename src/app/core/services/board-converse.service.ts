@@ -16,13 +16,10 @@ export class BoardConverseService {
     public selectedBoardItem: BoardItemComponent | null = null;
 
     // TODO: Consider an asObserver here.
-    public addLibraryComponent$ = new Subject<[Type<any>, IConfigPanelProperty]>();
+    public addLibraryComponent$ = new Subject<Type<any>>();
 
-    public addLibraryComponent<LibraryComponent>(
-        libraryComponent: Type<LibraryComponent>,
-        properties: IConfigPanelProperty
-    ): void {
-        this.addLibraryComponent$.next([libraryComponent, properties]);
+    public addLibraryComponent<LibraryComponent>(libraryComponent: Type<LibraryComponent>): void {
+        this.addLibraryComponent$.next(libraryComponent);
     }
 
     /**

@@ -17,6 +17,7 @@ import {
 import { BoardSettingsService } from '@services/board-settings.service';
 import { BoardConverseService } from '@services/board-converse.service';
 
+import { componentModels } from '@models/config-panel.model';
 import { IDragMetadata } from '@models/board.model';
 import { IConfigPanelProperty } from '@models/config-panel.model';
 
@@ -72,20 +73,15 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
      * @param {IConfigPanelProperty} properties - Default config.
      * @memberof BoardItemComponent
      */
-    public appendLibComponent<LibraryComponent>(
-        libraryComponent: Type<LibraryComponent>,
-        properties: IConfigPanelProperty
-    ): void {
-        this.properties = properties;
+    public appendLibComponent<LibraryComponent>(libraryComponent: Type<LibraryComponent>): void {
         const componentFactory: ComponentFactory<LibraryComponent> =
             this.componentFactoryResolver.resolveComponentFactory<LibraryComponent>(libraryComponent);
 
+        this.libComponentName = componentFactory.selector.toLowerCase();
+        this.properties = componentModels[this.libComponentName];
+
         setTimeout(() => {
             this.innerLibComponent = this.viewContainerTarget.createComponent<LibraryComponent>(componentFactory);
-            //this.libComponentName = this.innerLibComponent.componentType.name;
-            // TODO: Fix types here
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            this.libComponentName = (this.innerLibComponent.location.nativeElement.localName as string).toLowerCase();
 
             for (const key in this.properties) {
                 // TODO: Fix types here
