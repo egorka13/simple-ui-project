@@ -77,7 +77,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
             this.componentFactoryResolver.resolveComponentFactory<LibraryComponent>(libraryComponent);
 
         this.libComponentName = componentFactory.selector.toLowerCase();
-        this.properties = componentModels[this.libComponentName];
+        this.properties = this.objDeepCopy(componentModels[this.libComponentName]);
 
         setTimeout(() => {
             this.innerLibComponent = this.viewContainerTarget.createComponent<LibraryComponent>(componentFactory);
@@ -109,6 +109,19 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
      */
     public deselect(): void {
         this._isSelected = false;
+    }
+
+    /**
+     * This function do deep copy of an object.
+     * @private
+     * @template Obj
+     * @param {Obj} obj - An object to copy.
+     * @returns  {Obj} - A copy of the object.
+     * @memberof BoardItemComponent
+     */
+    private objDeepCopy<Obj>(obj: Obj): Obj {
+        // Later may be changed to lodash or any other implementation.
+        return JSON.parse(JSON.stringify(obj)) as Obj;
     }
 
     /**
