@@ -1,8 +1,10 @@
 <div
     class="sui-board-item__holder"
     [ngClass]="{ _interactive: boardSettingsService.isInteractiveMode, _selected: _isSelected }"
+    tabindex="-1"
     #holder
 >
+    <div class="sui-board-item__selection-border"></div>
     <div class="sui-board-item__place">
         <ng-container #viewContainerTarget></ng-container>
     </div>
