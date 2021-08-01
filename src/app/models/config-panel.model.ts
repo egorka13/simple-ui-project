@@ -101,4 +101,11 @@ export const componentModels: IComponentPrototype = {
         currentValue: { type: 'number', value: 0 },
         step: { type: 'number', value: 1 },
     },
+    'sui-rectangle': {
+        backgroundColor: { type: 'color', value: '#007bff' },
+        width: { type: 'number', value: '300' },
+        height: { type: 'number', value: '50' },
+        fullWidth: { type: 'select', options: ['false', 'true'], value: false },
+        fullHeight: { type: 'select', options: ['false', 'true'], value: false },
+    },
 };

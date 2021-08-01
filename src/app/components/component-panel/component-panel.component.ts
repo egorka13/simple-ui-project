@@ -74,6 +74,12 @@ export class ComponentPanelComponent {
             svgUrl: '/assets/icons/panel/input-number-icon.svg',
             component: this.libraryGetterService.getLibraryComponentsInfo.inputNumber,
         },
+        {
+            group: 'Base',
+            nameComponent: 'Rectangle',
+            svgUrl: '/assets/icons/panel/rectangle-icon.svg',
+            component: this.libraryGetterService.getLibraryComponentsInfo.rectangle,
+        },
     ];
 
     public showPopup(item: ILibraryCurrentInformation, event: Event): void {
