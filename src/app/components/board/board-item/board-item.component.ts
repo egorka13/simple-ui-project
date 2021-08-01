@@ -8,11 +8,13 @@ import {
     ViewContainerRef,
     ComponentRef,
     HostListener,
+    HostBinding,
     Renderer2,
     NgZone,
     OnDestroy,
     AfterViewInit,
 } from '@angular/core';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 import { BoardSettingsService } from '@services/board-settings.service';
 import { BoardConverseService } from '@services/board-converse.service';
@@ -40,11 +42,31 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     private innerLibComponent: ComponentRef<any>;
     private toUnlisten: Array<() => void> = [];
 
+    private zIndexBase: number = 100;
+    private zIndexShiftState: number = 0;
+    private zIndexString: string = `z-index: ${this.zIndexBase + this.zIndexShiftState}`;
+
+    @HostBinding('style')
+    get _zIndex(): SafeStyle {
+        return this.sanitizer.bypassSecurityTrustStyle(this.zIndexString);
+    }
+
     @HostListener('dblclick')
     _selectLibComponent(): void {
         if (this.boardSettingsService.isInteractiveMode) return;
         this._isSelected = true;
         this.boardConverseService.selectBoardItem(this);
+    }
+
+    @HostListener('contextmenu', ['$event'])
+    _showRightClickMenu(e: MouseEvent): void {
+        e.preventDefault();
+        console.log('context menu shown');
+
+        const unlistener: () => void = this.r2.listen('document', 'mousedown', () => {
+            console.log('context menu hidden');
+            unlistener();
+        });
     }
 
     constructor(
@@ -53,8 +75,17 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
         private componentFactoryResolver: ComponentFactoryResolver,
         private boardItem: ElementRef,
         private r2: Renderer2,
-        private ngZone: NgZone
+        private ngZone: NgZone,
+        private sanitizer: DomSanitizer
     ) {}
+
+    get zIndexShift(): number {
+        return this.zIndexShiftState;
+    }
+    set zIndexShift(zIndex: number) {
+        this.zIndexShiftState = zIndex;
+        this.zIndexString = `z-index: ${this.zIndexBase + this.zIndexShiftState}`;
+    }
 
     ngAfterViewInit(): void {
         this.setMoveListener();

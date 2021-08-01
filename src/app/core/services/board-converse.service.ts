@@ -42,6 +42,16 @@ export class BoardConverseService {
         }
     }
 
+    public increaseSelectedZIndex(): void {
+        if (!this.selectedBoardItem) return;
+        this.selectedBoardItem.zIndexShift += 1;
+    }
+
+    public decreaseSelectedZIndex(): void {
+        if (!this.selectedBoardItem) return;
+        this.selectedBoardItem.zIndexShift -= 1;
+    }
+
     /**
      * This function is used when user selects boardItem component.
      * It sends config of the current boardItem to the config-data service.
@@ -63,6 +73,8 @@ export class BoardConverseService {
         }
 
         const suiComponentTag: string = this.selectedBoardItem.libComponentName;
+
+        this.increaseSelectedZIndex();
 
         this.configDataService.setConfigData({
             suiComponent: suiComponentTag,
