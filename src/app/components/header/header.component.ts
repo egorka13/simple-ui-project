@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BoardSettingsService } from '@services/board-settings.service';
 import { GridSettingsService } from '@services/grid-settings.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'sui-header',
@@ -21,9 +22,7 @@ export class HeaderComponent {
      */
     public getGridPath(): string {
         const iconPath = '../../../assets/icons/header/';
-        return this.gridState
-            ? iconPath + 'header-grid-btn.svg'
-            : iconPath + 'header-grid-none.svg';
+        return this.gridState ? iconPath + 'header-grid-btn.svg' : iconPath + 'header-grid-none.svg';
     }
 
     /**
@@ -31,7 +30,7 @@ export class HeaderComponent {
      * @see BoardSettingsService
      * @see GridSettingsService
      */
-    public onClickSetGridState() {
+    public onClickSetGridState(): void {
         this.gridState = !this.gridState;
         this.gridSettingsService.setGridStatus(this.gridState);
     }
@@ -42,10 +41,17 @@ export class HeaderComponent {
      * @returns Returns the updated value of the scale exponent
      */
     public getRounderScale(): number {
+        if (this.router.url === '/lib') {
+            return 100;
+        }
         return Math.round(this.boardSettingsService.scale * 100);
     }
 
-    constructor(public boardSettingsService: BoardSettingsService, public gridSettingsService: GridSettingsService) {}
+    constructor(
+        public boardSettingsService: BoardSettingsService,
+        public gridSettingsService: GridSettingsService,
+        private router: Router
+    ) {}
 
     /**
      * Auxiliary element responsible for the exit of the scale indicator beyond the boundaries of 0.3 and 2
@@ -67,8 +73,8 @@ export class HeaderComponent {
      * @param event Parameter required to identify the element
      */
     onChangeInput(event: Event): void {
-        const targetInput: HTMLInputElement = <HTMLInputElement>event.target;
-        let currentValue: number = Number(targetInput.value) / 100;
+        const targetInput: HTMLInputElement = event.target as HTMLInputElement;
+        const currentValue: number = Number(targetInput.value) / 100;
         this.boardSettingsService.setScale(this.checkValidValue(currentValue));
     }
 
@@ -77,7 +83,7 @@ export class HeaderComponent {
      * @param event Parameter required to identify the element
      */
     onClickInput(event: Event): void {
-        const targetInput: HTMLInputElement = <HTMLInputElement>event.target;
+        const targetInput: HTMLInputElement = event.target as HTMLInputElement;
         targetInput.value = '';
     }
 
@@ -86,7 +92,7 @@ export class HeaderComponent {
      * @param event Parameter required to identify the element
      */
     onKeyUpInput(event: Event): void {
-        const targetInput: HTMLInputElement = <HTMLInputElement>event.target;
+        const targetInput: HTMLInputElement = event.target as HTMLInputElement;
         targetInput.value = targetInput.value.replace(/[^0-9%]/gi, '');
     }
 

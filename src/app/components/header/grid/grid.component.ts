@@ -25,7 +25,7 @@ export class GridComponent implements AfterViewInit {
      * @see GridSettingsService
      */
     public initGrid(): void {
-        const ctx: CanvasRenderingContext2D = this.suiGrid.nativeElement.getContext('2d');
+        const ctx: CanvasRenderingContext2D = this.suiGrid.nativeElement.getContext('2d') as CanvasRenderingContext2D;
         this.gridSettingsService.drawGrid(ctx);
     }
 }

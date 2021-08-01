@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IGridSettings } from '@models/grid.model';
 import { BoardSettingsService } from '@services/board-settings.service';
+import { Subscription } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -13,9 +14,11 @@ export class GridSettingsService {
     //Grid default settings
     private gridSetting: IGridSettings = {
         activeStatus: true,
-        scale: 10,
+        scale: 15,
         strokeWidth: 0.1,
     };
+
+    private subscriptions: Subscription = new Subscription();
 
     /**
      * @return Returns the activity of the grid running state
@@ -70,24 +73,38 @@ export class GridSettingsService {
      * @param ctx - canvas (context) where the mesh is embedded.
      */
     public drawGrid(ctx: CanvasRenderingContext2D): void {
-        this.boardSettingsService.boardParametres$.subscribe(value => {
-            let canvasWidth: number = Number(value[0]);
-            let canvasHeight: number = Number(value[1]);
-            ctx.canvas.width = canvasWidth;
-            ctx.canvas.height = canvasHeight;
-            ctx.beginPath();
-            ctx.lineWidth = this.gridStrokeWidth;
-            for (let position: number = 0; position <= canvasWidth; position = position + this.gridScale) {
-                ctx.moveTo(position, 0);
-                ctx.lineTo(position, canvasHeight);
-            }
-            for (let position: number = 0; position <= canvasHeight; position = position + this.gridScale) {
-                ctx.moveTo(0, position);
-                ctx.lineTo(canvasWidth, position);
-            }
-            ctx.stroke();
-            ctx.closePath();
-        });
+        if (!this.gridStatus) {
+            this.stopGridSubscribe();
+        } else {
+            this.subscriptions.add(
+                this.boardSettingsService.boardParametres$.subscribe(value => {
+                    const canvasWidth: number = value[0];
+                    const canvasHeight: number = value[1];
+                    ctx.canvas.width = canvasWidth;
+                    ctx.canvas.height = canvasHeight;
+                    ctx.beginPath();
+                    ctx.lineWidth = this.gridStrokeWidth;
+                    for (let position: number = 0; position <= canvasWidth; position = position + this.gridScale) {
+                        ctx.moveTo(position, 0);
+                        ctx.lineTo(position, canvasHeight);
+                    }
+                    for (let position: number = 0; position <= canvasHeight; position = position + this.gridScale) {
+                        ctx.moveTo(0, position);
+                        ctx.lineTo(canvasWidth, position);
+                    }
+                    ctx.stroke();
+                    ctx.closePath();
+                })
+            );
+        }
     }
+
+    /**
+     * Method for unsubscribe board's data changes
+     */
+    public stopGridSubscribe(): void {
+        this.subscriptions.unsubscribe();
+    }
+
     constructor(private boardSettingsService: BoardSettingsService) {}
 }

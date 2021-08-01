@@ -7,16 +7,12 @@
 @component-panel-input-placeholder-color: hsl(0, 0%, 67%);
 @component-panel-wrapper-color: hsl(220deg, 15%, 43%);
 
-
-:host{
-    position: fixed;
-    z-index: 10;
-    top: 60px;
-    left: 0;
-}
-
 .sui-component-panel{
     &__wrapper{
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        left: 0;
         width: 258px;
         height: 100%;
         background: @component-panel-wrapper-color;

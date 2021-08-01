@@ -1,27 +1,10 @@
-import {
-    Component,
-    ViewChild,
-    ElementRef,
-    Input,
-    ViewContainerRef,
-    ComponentFactoryResolver,
-    Type,
-} from '@angular/core';
-import { IDataComponent } from './panel.model';
-import { IGroupItems } from './panel.model';
+import { Component, ViewChild, ElementRef, Input, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { IDataComponent } from '@models/panel.model';
+import { IGroupItems } from '@models/panel.model';
 import { LibraryGetterService } from '@services/library-getter.service';
-import { ILibraryInformation, IlibraryCurrentInformation } from '@models/library-getter.model';
+import { IlibraryCurrentInformation } from '@models/library-getter.model';
 import { PopupComponent } from './popup/popup.component';
 import { BoardConverseService } from '@services/board-converse.service';
-
-import { InputComponent } from '@library-components/input/input.component';
-import { InputNumberComponent } from '@library-components/input-number/input-number.component';
-import { CheckboxComponent } from '@library-components/checkbox/checkbox.component';
-import { CardComponent } from '@library-components/card/card.component';
-import { ButtonComponent } from '@library-components/button/button.component';
-import { ResultComponent } from '@library-components/result/result.component';
-import { RadioComponent } from '@library-components/radio/radio.component';
-import { SliderComponent } from '@library-components/slider/slider.component';
 
 @Component({
     selector: 'sui-component-panel',
@@ -36,111 +19,28 @@ export class ComponentPanelComponent {
         public boardConverseService: BoardConverseService
     ) {}
 
+    //Main popup container for inserting the content of hover components
     @ViewChild('popupContainer', { read: ViewContainerRef })
     popupContainer: ViewContainerRef;
 
-    groupItems: IGroupItems[] = [{ group: 'Base' }, { group: 'Logical' }, { group: 'Multimedia' }];
-
-    dataComponents: IDataComponent[] = [
-        {
-            group: 'Multimedia',
-            nameComponent: 'Card',
-            svgUrl: '/assets/icons/panel/card-icon.svg',
-            component: this.libraryGetterService.getLibraryComponentsInfo.card,
-        },
-        {
-            group: 'Multimedia',
-            nameComponent: 'Result',
-            svgUrl: '/assets/icons/panel/result-icon.svg',
-            component: this.libraryGetterService.getLibraryComponentsInfo.result,
-        },
-        {
-            group: 'Base',
-            nameComponent: 'Button',
-            svgUrl: '/assets/icons/panel/button-icon.svg',
-            component: this.libraryGetterService.getLibraryComponentsInfo.button,
-        },
-        {
-            group: 'Logical',
-            nameComponent: 'Checkbox',
-            svgUrl: '/assets/icons/panel/checkbox-icon.svg',
-            component: this.libraryGetterService.getLibraryComponentsInfo.checkbox,
-        },
-        {
-            group: 'Logical',
-            nameComponent: 'Radio',
-            svgUrl: '/assets/icons/panel/radio-icon.svg',
-            component: this.libraryGetterService.getLibraryComponentsInfo.radio,
-        },
-        {
-            group: 'Logical',
-            nameComponent: 'Slider',
-            svgUrl: '/assets/icons/panel/slider-icon.svg',
-            component: this.libraryGetterService.getLibraryComponentsInfo.slider,
-        },
-        {
-            group: 'Base',
-            nameComponent: 'Input',
-            svgUrl: '/assets/icons/panel/input-icon.svg',
-            component: this.libraryGetterService.getLibraryComponentsInfo.input,
-        },
-        {
-            group: 'Multimedia',
-            nameComponent: 'Result',
-            svgUrl: '/assets/icons/panel/result-icon.svg',
-            component: this.libraryGetterService.getLibraryComponentsInfo.result,
-        },
+    public groupItems: IGroupItems[] = [
+        ...this.libraryGetterService.getLibraryDeferTypes.map(value => {
+            return { group: value };
+        }),
     ];
-    // dataComponents: IDataComponent[] = [
-    //     {
-    //         group: 'Multimedia',
-    //         nameComponent: 'Card',
-    //         svgUrl: '/assets/icons/panel/card-icon.svg',
-    //         component: CardComponent,
-    //     },
-    //     {
-    //         group: 'Multimedia',
-    //         nameComponent: 'Result',
-    //         svgUrl: '/assets/icons/panel/result-icon.svg',
-    //         component: ResultComponent,
-    //     },
-    //     {
-    //         group: 'Base',
-    //         nameComponent: 'Button',
-    //         svgUrl: '/assets/icons/panel/button-icon.svg',
-    //         component: ButtonComponent,
-    //     },
-    //     {
-    //         group: 'Logical',
-    //         nameComponent: 'Checkbox',
-    //         svgUrl: '/assets/icons/panel/checkbox-icon.svg',
-    //         component: CheckboxComponent,
-    //     },
-    //     {
-    //         group: 'Logical',
-    //         nameComponent: 'Radio',
-    //         svgUrl: '/assets/icons/panel/radio-icon.svg',
-    //         component: RadioComponent,
-    //     },
-    //     {
-    //         group: 'Logical',
-    //         nameComponent: 'Slider',
-    //         svgUrl: '/assets/icons/panel/slider-icon.svg',
-    //         component: SliderComponent,
-    //     },
-    //     {
-    //         group: 'Base',
-    //         nameComponent: 'Input',
-    //         svgUrl: '/assets/icons/panel/input-icon.svg',
-    //         component: InputComponent,
-    //     },
-    //     {
-    //         group: 'Base',
-    //         nameComponent: 'Input Number',
-    //         svgUrl: '/assets/icons/panel/input-number-icon.svg',
-    //         component: InputNumberComponent,
-    //     },
-    // ];
+
+    public dataComponents: IDataComponent[] = Object.values(this.libraryGetterService.getLibraryComponentsInfo).map(
+        (element: IlibraryCurrentInformation) => {
+            return this.filterLibraryObject(element, [
+                'group',
+                'nameComponent',
+                'svgUrl',
+                'component',
+                'title',
+                'description',
+            ]);
+        }
+    );
 
     @ViewChild('inputSearch')
     inputSearch: ElementRef;
@@ -151,25 +51,36 @@ export class ComponentPanelComponent {
     @Input()
     value: string;
 
-    public showPopup(item: IlibraryCurrentInformation, event: Event): void {
+    /**
+     * @see LibraryGetterService
+     * @see ILibraryInformation
+     * A method that transforms data from a library service for subsequent processing of components in the left pane
+     * @param targetObject - the original object retrieved from the service component
+     * @param keys An array of keys to sort by
+     * @returns Returns a new array sorted by fields
+     */
+    private filterLibraryObject(targetObject: any, keys: Array<string>): IDataComponent {
+        return keys.reduce((element: any, key: string) => ((element[key] = targetObject[key]), element), {});
+    }
+
+    /**
+     * @see PopupComponent
+     * Method responsible for displaying the popup container
+     * @param item - An object with the necessary information about the component, which must be passed into the popup container for further display
+     * @param event - Event to display popup
+     */
+    public showPopup(item: IDataComponent, event: Event): void {
         this.popupContainer.clear();
-        const targetElement: HTMLElement = <HTMLElement>event.currentTarget;
-        const targetElementCoords: DOMRect = targetElement.getBoundingClientRect();
-        const popupLeft: number = 2 * targetElementCoords.left + targetElementCoords.right;
-        let populTop: number = targetElementCoords.y + targetElementCoords.x - targetElementCoords.height;
-        let bootomFlag = false;
-        if (document.documentElement.clientHeight - targetElementCoords.top <= 250) {
-            populTop = targetElementCoords.y - 250 - targetElementCoords.height / 4;
-            bootomFlag = true;
-        }
+        const targetElement: HTMLElement = event.currentTarget as HTMLElement;
         const targetComponent = this.componentFactoryResolver.resolveComponentFactory(PopupComponent);
         const componentRef = this.popupContainer.createComponent(targetComponent);
-        componentRef.instance.component = item;
-        componentRef.instance.position = [`${popupLeft}px`, `${populTop}px`];
-        componentRef.instance.bottomFlaf = bootomFlag;
+        componentRef.instance.component = item.component;
+        componentRef.instance.popupTitle = item.title;
+        componentRef.instance.popupDescription = item.description;
+        componentRef.instance.parentElement = targetElement;
     }
 
     public _addComponent(component: any): void {
-        this.boardConverseService.addLibraryComponent(component.component, {});
+        this.boardConverseService.addLibraryComponent(component, {});
     }
 }

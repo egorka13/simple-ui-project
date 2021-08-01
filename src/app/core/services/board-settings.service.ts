@@ -37,6 +37,7 @@ export class BoardSettingsService {
     }
 
     public setScale(value: number): void {
+        if (typeof value != 'number' || isNaN(value)) return;
         this.scaleState = value;
         this.updateTransformStyle();
     }
