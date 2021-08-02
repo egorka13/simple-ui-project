@@ -53,8 +53,10 @@ export const componentModels: IComponentPrototype = {
         size: { type: 'select', options: ['default', 'small', 'large'], value: 'default' },
     },
     'sui-radio': {
-        label: { type: 'text', isDeleted: true, value: ['Radio'] },
+        label: { type: 'text', isDeleted: true, value: ['radio'] },
         type: { type: 'select', options: ['default', 'button'], value: 'default' },
+        view: { type: 'select', options: ['row', 'column'], value: 'row' },
+        size: { type: 'select', options: ['default', 'small', 'large'], value: 'default' },
     },
     'sui-result': {
         title: {

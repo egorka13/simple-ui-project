@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { RadioItem, radioType } from './radio.model';
+import { radioType, radioView, radioSize } from './radio.model';
 
 @Component({
     selector: 'sui-radio',
@@ -7,15 +7,26 @@ import { RadioItem, radioType } from './radio.model';
     styleUrls: ['./radio.component.less'],
 })
 export class RadioComponent {
-    items: RadioItem[] = [];
     typeModifier: string = '';
-    name: string = 'radio' + Date.now().toFixed(6);
+    viewModifier: string = '';
+    sizeModifier: string = '';
+    name: string = 'radio' + Date.now().toString();
 
     @Input()
-    label: string[] = ['Radio'];
+    label: string[] = ['radio'];
 
     @Input()
     set type(value: radioType) {
-        this.typeModifier = value ? '_type_' + value : '';
+        this.typeModifier = '_type_' + value;
+    }
+
+    @Input()
+    set view(value: radioView) {
+        this.viewModifier = '_view_' + value;
+    }
+
+    @Input()
+    set size(value: radioSize) {
+        this.sizeModifier = '_size_' + value;
     }
 }
