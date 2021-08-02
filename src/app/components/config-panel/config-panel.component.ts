@@ -1,7 +1,8 @@
 import { Subscription } from 'rxjs';
 import { IConfigPanelProperty, ILibComponentConfig, IPropertyObjevtValue, valueType } from '@models/config-panel.model';
 import { ConfigDataService } from '@services/config-data.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
+import { KeyValue } from '@angular/common';
 
 @Component({
     selector: 'sui-config-panel',
@@ -9,6 +10,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
     styleUrls: ['./config-panel.component.less'],
 })
 export class ConfigPanelComponent implements OnInit, OnDestroy {
+    @Output() isHidden = new EventEmitter<boolean>();
+
     public suiComponentName: string;
     public isDesign: boolean = true;
 
@@ -24,9 +27,13 @@ export class ConfigPanelComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.configDataSubscription = this.configDataService.setConfigData$.subscribe(
             (config: ILibComponentConfig | null) => {
-                if (!config) return;
+                if (!config) {
+                    this.isHidden.emit(true);
+                    return;
+                }
 
-                this.properties = config.properties;
+                this.isHidden.emit(false);
+                this.properties = Object.assign({}, config.properties);
                 [this.parsedProperties, this.newProperties] = this.parseProperties(this.properties);
                 this.countProperties = Object.keys(this.properties).length;
 
@@ -51,19 +58,16 @@ export class ConfigPanelComponent implements OnInit, OnDestroy {
 
     public handlePropertyChange(event: Event): void {
         const propertyName: string = (event.target as HTMLTextAreaElement).name;
-        const [parseNameArr, parseName]: [string[], string] = this.parsePropertyName(propertyName);
+        const parseName: string = this.parsePropertyName(propertyName);
         if (this.properties[propertyName]) {
             this.properties[propertyName].value = this.convertToInitialType(this.properties[propertyName].value);
             this.sendDataChange(propertyName, this.properties[propertyName]);
+            return;
         }
 
         if (this.parsedProperties[parseName]) {
             const propertyOfParseName: IPropertyObjevtValue = this.parsedProperties[parseName];
-
-            let numberOfValue: number = +parseNameArr[parseNameArr.length - 1] - 1;
-            if (propertyOfParseName.labels) {
-                numberOfValue = propertyOfParseName.labels.indexOf(parseNameArr[parseNameArr.length - 1]);
-            }
+            const numberOfValue: number = (this.newProperties[propertyName].numberOfProperty as number) - 1;
             (propertyOfParseName.value as string[])[numberOfValue] = this.newProperties[propertyName].value.toString();
 
             this.sendDataChange(parseName, propertyOfParseName);
@@ -79,8 +83,6 @@ export class ConfigPanelComponent implements OnInit, OnDestroy {
                 return false;
             case 'true':
                 return true;
-            case 'default':
-                return '';
             default:
                 return value;
         }
@@ -92,11 +94,8 @@ export class ConfigPanelComponent implements OnInit, OnDestroy {
         });
     }
 
-    private parsePropertyName(propertyName: string): [string[], string] {
-        const parseNameArr: string[] = propertyName.split(' ');
-        const parseName: string = parseNameArr[0];
-
-        return [parseNameArr, parseName];
+    private parsePropertyName(propertyName: string): string {
+        return propertyName.split(' ')[0];
     }
 
     private parseProperties(properties: IConfigPanelProperty): [IConfigPanelProperty, IConfigPanelProperty] {
@@ -111,14 +110,9 @@ export class ConfigPanelComponent implements OnInit, OnDestroy {
                         type: Array.isArray(prop.type) ? prop.type[i] : prop.type,
                         value: prop.value[i],
                         isDeleted: prop.isDeleted,
-                        isEndOfGroup: prop.isDeleted && i == prop.value.length - 1,
+                        isEndOfGroup: i == prop.value.length - 1,
+                        numberOfProperty: i + 1,
                     };
-                }
-
-                if (prop.labels) {
-                    const labels: string[] = prop.labels.slice();
-                    labels.sort();
-                    newProperties[`${name} ${labels[labels.length - 1]}`].isEndOfGroup = true;
                 }
 
                 parsedProperties[name] = prop;
@@ -134,17 +128,18 @@ export class ConfigPanelComponent implements OnInit, OnDestroy {
 
         if (elem.classList.contains('sui-config-panel__property-cross')) {
             const propertyName: string = (event.target as HTMLTextAreaElement).dataset.name as string;
-            const [parseNameArr, parseName]: [string[], string] = this.parsePropertyName(propertyName);
+            const parseName: string = this.parsePropertyName(propertyName);
 
             const property: IPropertyObjevtValue = this.parsedProperties[parseName];
             const propertyValue: string[] = property.value as string[];
             const valueLength: number = propertyValue.length;
-            const numberOfProperty: number = +parseNameArr[parseNameArr.length - 1];
+            const numberOfProperty: number = this.newProperties[propertyName].numberOfProperty as number;
 
             let changingName: string = `${parseName} ${numberOfProperty}`;
             for (let i: number = numberOfProperty; i < valueLength; i++) {
                 const nextChangingName: string = `${parseName} ${i + 1}`;
                 this.newProperties[changingName] = this.newProperties[nextChangingName];
+                this.newProperties[changingName].numberOfProperty = i;
                 changingName = nextChangingName;
             }
             delete this.newProperties[changingName];
@@ -157,8 +152,8 @@ export class ConfigPanelComponent implements OnInit, OnDestroy {
 
     public addProperty(event: Event): void {
         const propertyName: string = (event.target as HTMLTextAreaElement).name;
-        const [parseNameArr, parseName] = this.parsePropertyName(propertyName);
-        const numberOfProperty: number = +parseNameArr[parseNameArr.length - 1];
+        const parseName: string = this.parsePropertyName(propertyName);
+        const numberOfProperty: number = this.newProperties[propertyName].numberOfProperty as number;
 
         this.newProperties[propertyName].isEndOfGroup = false;
         this.newProperties[`${parseName} ${numberOfProperty + 1}`] = {
@@ -166,6 +161,7 @@ export class ConfigPanelComponent implements OnInit, OnDestroy {
             value: 'text',
             isDeleted: true,
             isEndOfGroup: true,
+            numberOfProperty: numberOfProperty + 1,
         };
 
         const property: IPropertyObjevtValue = this.parsedProperties[parseName];
@@ -180,5 +176,20 @@ export class ConfigPanelComponent implements OnInit, OnDestroy {
             return ['[', array.map((str: string) => `'${str}'`).toString(), ']'].join('');
         }
         return 'null';
+    }
+
+    public compareEntries(
+        a: KeyValue<string, IPropertyObjevtValue>,
+        b: KeyValue<string, IPropertyObjevtValue>
+    ): number {
+        if (a.value.numberOfProperty && b.value.numberOfProperty) {
+            return a.value.numberOfProperty > b.value.numberOfProperty
+                ? 1
+                : a.value.numberOfProperty > b.value.numberOfProperty
+                ? -1
+                : 0;
+        }
+
+        return 0;
     }
 }
