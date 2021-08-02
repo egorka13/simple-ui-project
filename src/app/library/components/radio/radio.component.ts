@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RadioItem, radioType } from './radio.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { RadioItem, radioType } from './radio.model';
     templateUrl: './radio.component.html',
     styleUrls: ['./radio.component.less'],
 })
-export class RadioComponent implements OnInit {
+export class RadioComponent {
     items: RadioItem[] = [];
     typeModifier: string = '';
     name: string = 'radio' + Date.now().toFixed(6);
@@ -16,15 +16,6 @@ export class RadioComponent implements OnInit {
 
     @Input()
     set type(value: radioType) {
-        this.typeModifier =  value ? '_type_' + value : '';
-    }
-
-    ngOnInit(): void {
-        for (let i: number = 0; i < this.label.length; i++) {
-            this.items.push({
-                id: [this.name, i].join('_'),
-                text: this.label[i],
-            });
-        }
+        this.typeModifier = value ? '_type_' + value : '';
     }
 }
