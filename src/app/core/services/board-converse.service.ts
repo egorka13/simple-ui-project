@@ -16,15 +16,39 @@ export class BoardConverseService {
     public selectedBoardItem: BoardItemComponent | null = null;
 
     // TODO: Consider an asObserver here.
-    public addLibraryComponent$ = new Subject<[Type<any>, IConfigPanelProperty]>();
+    public addLibraryComponent$ = new Subject<Type<any>>();
+    // TODO: Consider an asObserver here.
+    public removeLibraryComponent$ = new Subject<BoardItemComponent>();
 
-    public addLibraryComponent<LibraryComponent>(
-        libraryComponent: Type<LibraryComponent>,
-        properties: IConfigPanelProperty
-    ): void {
-        this.addLibraryComponent$.next([libraryComponent, properties]);
+    /**
+     * This function append library component to the board.
+     * @template LibraryComponent
+     * @param {Type<LibraryComponent>} libraryComponent - Library Component to append.
+     * @memberof BoardConverseService
+     */
+    public addLibraryComponent<LibraryComponent>(libraryComponent: Type<LibraryComponent>): void {
+        this.addLibraryComponent$.next(libraryComponent);
     }
 
+    /**
+     * This function remove current selected component from the board.
+     * @memberof BoardConverseService
+     */
+    public removeLibraryComponent(): void {
+        if (this.selectedBoardItem) {
+            this.removeLibraryComponent$.next(this.selectedBoardItem);
+            this.selectedBoardItem = null;
+            this.configDataService.setConfigData(null);
+        }
+    }
+
+    /**
+     * This function is used when user selects boardItem component.
+     * It sends config of the current boardItem to the config-data service.
+     * @param {(BoardItemComponent | null)} selectedBoardItem - Selected component.
+     * @returns  {void}
+     * @memberof BoardConverseService
+     */
     public selectBoardItem(selectedBoardItem: BoardItemComponent | null): void {
         if (this.selectedBoardItem === selectedBoardItem) return;
 
@@ -46,10 +70,15 @@ export class BoardConverseService {
         });
     }
 
+    /**
+     * This function sets up a listener of an update event from the config-data service.
+     * @returns  {Subscription}
+     * @memberof BoardConverseService
+     */
     public setConfigPanelListener(): Subscription {
         return this.configDataService.saveConfigData$.subscribe((properties: IConfigPanelProperty) => {
             if (!this.selectedBoardItem) return;
-            this.selectedBoardItem.setLibComponentProps(properties);
+            this.selectedBoardItem.updateLibComponent(properties);
         });
     }
 }

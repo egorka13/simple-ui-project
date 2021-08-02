@@ -1,4 +1,4 @@
-@import '/src/assets/styles/variables/colors.less';
+@import '/src/assets/styles/base.less';
 
 @component-panel-scrollbar-thumb-color: hsl(223deg, 11%, 63%);
 @component-panel-scrollbar-track-color: hsl(219deg, 100%, 14%);
@@ -7,24 +7,19 @@
 @component-panel-input-placeholder-color: hsl(0, 0%, 67%);
 @component-panel-wrapper-color: hsl(220deg, 15%, 43%);
 
-.sui-component-panel{
-    &__wrapper{
-        position: absolute;
-        z-index: 10;
-        top: 0;
-        left: 0;
-        width: 258px;
+.sui-component-panel {
+    &__wrapper {
         height: 100%;
         background: @component-panel-wrapper-color;
     }
 
-    &__search{
+    &__search {
         height: 50px;
         padding: 8px 6px 6px 6px;
         background: @sui-blue-deep-2;
         box-shadow: 2px 0px 4px @component-panel-box-shadow-color;
 
-        &-input{
+        &-input {
             height: 100%;
             width: 100%;
             border-radius: 6px;
@@ -36,16 +31,16 @@
             background-position: 10px 9px;
             background-repeat: no-repeat;
 
-            &:focus, &:active{
+            &:focus, &:active {
                 background-image: none;
 
-                &::placeholder{
+                &::placeholder {
                     font-size: 14px;
                     color: @sui-white;
                 }
             }
 
-            &::placeholder{
+            &::placeholder {
                 position: relative;
                 font-size: 14px;
                 color: @component-panel-input-placeholder-color;
@@ -53,9 +48,10 @@
         }
     }
 
-    &__content{
+    &__content {
         height: calc(~'100% - 50px');
         margin-top: 2px;
+        padding-bottom: 10px;
         overflow-y: auto;
         box-shadow: 2px 0px 4px @component-panel-box-shadow-color;
 
@@ -64,7 +60,7 @@
         }
 
         &::-webkit-scrollbar-track {
-            background: @component-panel-scrollbar-track-color;        
+            background: @component-panel-scrollbar-track-color;
         }
 
         &::-webkit-scrollbar-thumb {
@@ -72,14 +68,14 @@
         }
     }
 
-    &__component-group{
+    &__component-group {
         margin-bottom: 24px;
 
     }
 }
 
-.component-group{
-    &__header{
+.component-group {
+    &__header {
         width: 115px;
         height: 30px;
         margin-top: 3px;
@@ -88,7 +84,7 @@
         background: @sui-category-grad;
         border-radius: 4px;
 
-        &-text{
+        &-text {
             font-family: Verdana;
             font-style: normal;
             font-weight: normal;
@@ -100,7 +96,7 @@
         }
     }
 
-    &__wrapper{
+    &__wrapper {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
@@ -108,7 +104,7 @@
         padding: 7px 10px 0 10px;
     }
 
-    &__item{
+    &__item {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -116,14 +112,15 @@
         height: 70px;
         background: @sui-gray-4;
         border-radius: 5px;
+        .user-select();
 
-        &:hover{
+        &:hover {
             background-color: @sui-blue-1;
         }
 
-        &-svg{
-            
-            svg{
+        &-svg {
+
+            svg {
                 width: 25px;
                 height: 25px;
             }

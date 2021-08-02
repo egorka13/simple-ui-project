@@ -17,6 +17,7 @@ import {
 import { BoardSettingsService } from '@services/board-settings.service';
 import { BoardConverseService } from '@services/board-converse.service';
 
+import { componentModels } from '@models/config-panel.model';
 import { IDragMetadata } from '@models/board.model';
 import { IConfigPanelProperty } from '@models/config-panel.model';
 
@@ -32,7 +33,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     @ViewChild('holder')
     holder: ElementRef;
 
-    public _selected: boolean = false;
+    public _isSelected: boolean = false;
     public properties: IConfigPanelProperty;
     public libComponentName: string;
 
@@ -42,7 +43,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     @HostListener('dblclick')
     _selectLibComponent(): void {
         if (this.boardSettingsService.isInteractiveMode) return;
-        this._selected = true;
+        this._isSelected = true;
         this.boardConverseService.selectBoardItem(this);
     }
 
@@ -65,32 +66,62 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
         });
     }
 
-    public appendLibComponent<LibraryComponent>(
-        libraryComponent: Type<LibraryComponent>,
-        properties: IConfigPanelProperty
-    ): void {
-        this.properties = properties;
+    /**
+     * This function adds a library component inside the boardItem.
+     * @template LibraryComponent
+     * @param {Type<LibraryComponent>} libraryComponent - Library component.
+     * @memberof BoardItemComponent
+     */
+    public appendLibComponent<LibraryComponent>(libraryComponent: Type<LibraryComponent>): void {
         const componentFactory: ComponentFactory<LibraryComponent> =
             this.componentFactoryResolver.resolveComponentFactory<LibraryComponent>(libraryComponent);
 
+        this.libComponentName = componentFactory.selector.toLowerCase();
+        this.properties = this.objDeepCopy(componentModels[this.libComponentName]);
+
         setTimeout(() => {
             this.innerLibComponent = this.viewContainerTarget.createComponent<LibraryComponent>(componentFactory);
-            //this.libComponentName = this.innerLibComponent.componentType.name;
-            // TODO: Fix types here
-            this.libComponentName = (this.innerLibComponent.location.nativeElement.localName as string).toLowerCase();
-            this.setLibComponentProps(this.properties);
+
+            for (const key in this.properties) {
+                // TODO: Fix types here
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                this.innerLibComponent.instance[key] = this.properties[key].value;
+            }
         }, 0);
     }
 
-    public deselect(): void {
-        this._selected = false;
+    /**
+     * This function updates properties of the current boardItem.
+     * @param {IConfigPanelProperty} config - Updated property.
+     * @memberof BoardItemComponent
+     */
+    public updateLibComponent(config: IConfigPanelProperty): void {
+        for (const key in config) {
+            // TODO: Fix types here
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            this.innerLibComponent.instance[key] = config[key].value;
+        }
     }
 
-    public setLibComponentProps(properties: IConfigPanelProperty): void {
-        for (const key in properties) {
-            // TODO: Fix types here
-            this.innerLibComponent.instance[key] = properties[key].value;
-        }
+    /**
+     * This function deselect current boardItem.
+     * @memberof BoardItemComponent
+     */
+    public deselect(): void {
+        this._isSelected = false;
+    }
+
+    /**
+     * This function do deep copy of an object.
+     * @private
+     * @template Obj
+     * @param {Obj} obj - An object to copy.
+     * @returns  {Obj} - A copy of the object.
+     * @memberof BoardItemComponent
+     */
+    private objDeepCopy<Obj>(obj: Obj): Obj {
+        // Later may be changed to lodash or any other implementation.
+        return JSON.parse(JSON.stringify(obj)) as Obj;
     }
 
     /**

@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+import { HttpClientModule } from '@angular/common/http';
+import { AngularSvgIconModule } from 'angular-svg-icon';
+
 import { ButtonComponent } from './components/button/button.component';
 import { RadioComponent } from './components/radio/radio.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
@@ -23,11 +26,7 @@ import { CardComponent } from './components/card/card.component';
         SliderComponent,
         CardComponent,
     ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        CommonModule,
-    ],
+    imports: [BrowserModule, FormsModule, CommonModule, HttpClientModule, AngularSvgIconModule.forRoot()],
     exports: [
         ButtonComponent,
         RadioComponent,
@@ -38,6 +37,6 @@ import { CardComponent } from './components/card/card.component';
         SliderComponent,
         CardComponent,
     ],
-    providers: []
+    providers: [],
 })
 export class LibraryModule {}

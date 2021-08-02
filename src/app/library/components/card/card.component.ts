@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { SizeModifierType } from './card.model';
 
 @Component({
@@ -6,9 +6,13 @@ import { SizeModifierType } from './card.model';
     templateUrl: './card.component.html',
     styleUrls: ['./card.component.less'],
 })
-export class CardComponent implements OnInit {
+export class CardComponent {
+    sizeModifier: string = '';
+
     @Input()
-    size: SizeModifierType = '';
+    set size(value: SizeModifierType) {
+        this.sizeModifier = `_size_${value}` || '';
+    }
 
     @Input()
     title: string = 'Card';
@@ -18,10 +22,4 @@ export class CardComponent implements OnInit {
 
     @Input()
     contentTemplate: TemplateRef<any>;
-
-    sizeModifier: string = '';
-
-    ngOnInit(): void {
-        this.sizeModifier = this.size ? `_size_${this.size}` : '';
-    }
 }

@@ -12,6 +12,7 @@ import {
     OnDestroy,
     AfterViewInit,
     HostBinding,
+    HostListener,
 } from '@angular/core';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -19,12 +20,9 @@ import { filter, map } from 'rxjs/operators';
 import { BoardSettingsService } from '@services/board-settings.service';
 import { BoardConverseService } from '@services/board-converse.service';
 
-import { InputComponent } from '@library-components/input/input.component'; // TODO: remove this and add logic.
-import { CheckboxComponent } from '@library-components/checkbox/checkbox.component'; // TODO: remove this and add logic.
 import { BoardItemComponent } from './board-item/board-item.component';
 
 import { IDragMetadata } from '@models/board.model';
-import { IConfigPanelProperty } from '@models/config-panel.model';
 
 @Component({
     selector: 'sui-board',
@@ -46,10 +44,10 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         return this.boardSettingsService.isInfiniteBoardMode;
     }
 
-    public _showDragPanel: boolean = false;
-    public _dragging: boolean = false;
+    public _isDragPanelShown: boolean = false;
+    public _isDragging: boolean = false;
 
-    private boardItems: Array<any> = [];
+    private boardItems: Array<ComponentRef<BoardItemComponent>> = [];
     private toUnsubscribe: Array<Subscription> = [];
     private toUnlisten: Array<() => void> = [];
 
@@ -63,6 +61,13 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             y: 0,
         },
     };
+
+    @HostListener('dblclick', ['$event'])
+    _onDeselect(e: MouseEvent): void {
+        if (e.target === this.field.nativeElement) {
+            this.boardConverseService.selectBoardItem(null);
+        }
+    }
 
     constructor(
         public boardSettingsService: BoardSettingsService,
@@ -81,6 +86,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         this.setMoveListener();
         this.setZoomListener();
         this.setAddComponentListener();
+        this.setRemoveComponentListener();
 
         // Setting up a starting board size.
         setTimeout(() => {
@@ -99,68 +105,46 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         });
     }
 
-    // ---------- Showcase of adding new component to the board. ----------
-    public _addComponentDemo1(): void {
-        this.boardConverseService.addLibraryComponent(InputComponent, {
-            placeholder: {
-                value: 'Some default placeholder',
-                type: 'text',
-            },
-            size: {
-                value: 'large',
-                type: 'select',
-                options: ['default', 'small', 'large'],
-            },
-        });
-    }
-    public _addComponentDemo2(): void {
-        this.boardConverseService.addLibraryComponent(InputComponent, {
-            placeholder: {
-                value: 'Some default placeholder',
-                type: 'text',
-            },
-            size: {
-                value: 'small',
-                type: 'select',
-                options: ['default', 'small', 'large'],
-            },
-        });
-    }
-    public _addComponentDemo3(): void {
-        this.boardConverseService.addLibraryComponent(CheckboxComponent, {
-            labelText: {
-                value: 'Checkbox label',
-                type: 'text',
-            },
-            isDisabled: {
-                value: false,
-                type: 'select',
-                options: ['false', 'true'],
-            },
-            isChecked: {
-                value: false,
-                type: 'select',
-                options: ['false', 'true'],
-            },
-        });
-    }
-    // --------------------------------------------------------------------
-
+    /**
+     * This function sets up a listener of the board converse service that waiting for
+     * a board-item create event.
+     * @private
+     * @memberof BoardComponent
+     */
     private setAddComponentListener(): void {
-        const addLibComponent = <LibraryComponent>([libraryComponent, config]: [
-            Type<LibraryComponent>,
-            IConfigPanelProperty
-        ]) => {
+        const addLibComponent = <LibraryComponent>(libraryComponent: Type<LibraryComponent>) => {
             const componentFactory: ComponentFactory<BoardItemComponent> =
                 this.componentFactoryResolver.resolveComponentFactory(BoardItemComponent);
             const boardItem: ComponentRef<BoardItemComponent> = this.fieldView.createComponent(componentFactory);
 
-            boardItem.instance.appendLibComponent(libraryComponent, config);
+            boardItem.instance.appendLibComponent(libraryComponent);
 
             this.boardItems.push(boardItem);
         };
 
         this.toUnsubscribe.push(this.boardConverseService.addLibraryComponent$.subscribe(addLibComponent));
+    }
+
+    /**
+     * This function sets up a listener of the board converse service that waiting for
+     * a remove selected board-item event.
+     * @private
+     * @memberof BoardComponent
+     */
+    private setRemoveComponentListener(): void {
+        const removeLibComponent: (boardItemComponent: BoardItemComponent) => void = boardItemComponent => {
+            const itemRef: ComponentRef<BoardItemComponent> = this.boardItems.filter(
+                (item: ComponentRef<BoardItemComponent>) => {
+                    return item.instance === boardItemComponent;
+                }
+            )[0];
+
+            const index: number = this.boardItems.indexOf(itemRef);
+            this.fieldView.remove(index);
+            this.boardItems.splice(index, 1);
+        };
+
+        this.toUnsubscribe.push(this.boardConverseService.removeLibraryComponent$.subscribe(removeLibComponent));
     }
 
     /**
@@ -197,15 +181,15 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
      */
     private setSpaceHoldListener(): void {
         const unlistenSpaceDown = this.r2.listen('document', 'keydown.space', () => {
-            if (this._showDragPanel) return;
+            if (this._isDragPanelShown) return;
 
-            this._showDragPanel = true;
+            this._isDragPanelShown = true;
 
             const unlistenSpaceUp: () => void = this.r2.listen('document', 'keyup.space', () => {
                 unlistenSpaceUp();
 
-                this._dragging = false;
-                this._showDragPanel = false;
+                this._isDragging = false;
+                this._isDragPanelShown = false;
             });
         });
 
@@ -221,7 +205,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
      */
     private setMoveListener(): void {
         const setMetadata: (e: MouseEvent) => void = e => {
-            this._dragging = true;
+            this._isDragging = true;
 
             this.dragMetadata.startPosition.x = e.clientX;
             this.dragMetadata.startPosition.y = e.clientY;
@@ -247,7 +231,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         };
 
         const onMouseUp: () => void = () => {
-            this._dragging = false;
+            this._isDragging = false;
         };
 
         const onMouseDown: (e: MouseEvent) => void = e => {

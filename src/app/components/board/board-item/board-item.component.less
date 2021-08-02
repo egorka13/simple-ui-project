@@ -24,12 +24,26 @@
 
             z-index: 1;
 
-            background-color: fade(red, 5%); // TODO: Remove or rework this.
+            background-color: fade(@sui-gray-3, 5%);
         }
+    }
 
-        //.sui-board-item__holder._selected
-        &._selected {
-            box-shadow: 0 0 0 4px @sui-white, 0 0 2px 6px @sui-blue-1;
-        }
+    //.sui-board-item__selection-border
+    &__selection-border {
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        height: calc(100% + 8px);
+        width: calc(100% + 8px);
+
+        z-index: -1;
+        border-radius: 3px;
+
+        transition: box-shadow 0.1s linear;
+    }
+
+    //.sui-board-item__holder._selected > .sui-board-item__selection-border
+    &__holder._selected > &__selection-border {
+        box-shadow: 0 0 2px 2px fade(@sui-blue-1, 80%);
     }
 }

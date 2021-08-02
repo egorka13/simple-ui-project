@@ -1,5 +1,4 @@
 import { Component, ElementRef, Input, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
-import { suiSliderParams } from './slider-params.model';
 
 @Component({
     selector: 'sui-slider',
@@ -28,7 +27,7 @@ export class SliderComponent implements OnInit {
     @Input()
     showMinimalValue?: boolean = false;
 
-     /**
+    /**
      * This property responsible for showing maximum value
      */
     @Input()
