@@ -17,7 +17,7 @@
         .font-regular();
     }
 
-    &__label + &__input {
+    &__label+&__input {
         margin-left: 0.5em;
     }
 
@@ -25,27 +25,27 @@
         position: relative;
         opacity: 0;
 
-        &:not(:disabled):not(:checked) + .sui-radio__label:hover::before,
-        &:focus:not(:checked) + .sui-radio__label::before {
+        &:not(:disabled):not(:checked)+.sui-radio__label:hover::before,
+        &:focus:not(:checked)+.sui-radio__label::before {
             border-color: @lib-blue-light;
         }
 
-        &:focus + .sui-radio__label::before {
+        &:focus+.sui-radio__label::before {
             box-shadow: @radio-box-shadow-blue;
         }
 
-        &:checked + .sui-radio__label::before {
+        &:checked+.sui-radio__label::before {
             background-color: @lib-blue;
             border-color: @lib-blue;
             box-shadow: @radio-box-shadow-blue,
-            @radio-box-shadow-white-inset;
+                @radio-box-shadow-white-inset;
         }
 
-        &:checked:not(:focus) + .sui-radio__label::before {
+        &:checked:not(:focus)+.sui-radio__label::before {
             box-shadow: @radio-box-shadow-white-inset;
         }
 
-        &:disabled + .sui-radio__label {
+        &:disabled+.sui-radio__label {
             color: @lib-font-disabled;
             cursor: not-allowed;
 
@@ -55,7 +55,7 @@
             }
         }
 
-        &:disabled:checked + .sui-radio__label::before {
+        &:disabled:checked+.sui-radio__label::before {
             background-color: @lib-grey;
             box-shadow: @radio-box-shadow-grey-inset;
         }
@@ -91,18 +91,18 @@
                 height: 0px;
                 margin-left: 0;
 
-                &:checked + .sui-radio__label {
+                &:checked+.sui-radio__label {
                     color: @lib-blue;
                     border-color: currentColor;
                     box-shadow: @radio-box-shadow-blue;
                     z-index: 2;
                 }
 
-                &:checked:not(:focus) + .sui-radio__label {
+                &:checked:not(:focus)+.sui-radio__label {
                     box-shadow: none;
                 }
 
-                &:disabled + .sui-radio__label {
+                &:disabled+.sui-radio__label {
                     background-color: @lib-disabled-bg;
                     border-color: @lib-grey;
                     color: @lib-font-disabled;
@@ -110,7 +110,7 @@
                     cursor: not-allowed;
                 }
 
-                &:disabled:checked + .sui-radio__label {
+                &:disabled:checked+.sui-radio__label {
                     background-color: @lib-grey;
                 }
             }
@@ -132,6 +132,7 @@
                     border-top-left-radius: 2px;
                     border-bottom-left-radius: 2px;
                 }
+
                 &:last-of-type {
                     border-top-right-radius: 2px;
                     border-bottom-right-radius: 2px;

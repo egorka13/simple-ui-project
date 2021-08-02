@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { ILibraryInformation } from '../../models/library-getter.model';
-import { ButtonComponent } from '../../library/components/button/button.component';
-import { CardComponent } from '../../library/components/card/card.component';
-import { CheckboxComponent } from '../../library/components/checkbox/checkbox.component';
-import { InputComponent } from '../../library/components/input/input.component';
-import { InputNumberComponent } from '../../library/components/input-number/input-number.component';
-import { RadioComponent } from '../../library/components/radio/radio.component';
-import { ResultComponent } from '../../library/components/result/result.component';
-import { SliderComponent } from '../../library/components/slider/slider.component';
+import { ILibraryInformation } from '@models/library-getter.model';
+import { ButtonComponent } from '@library-components/button/button.component';
+import { CardComponent } from '@library-components/card/card.component';
+import { CheckboxComponent } from '@library-components/checkbox/checkbox.component';
+import { InputComponent } from '@library-components/input/input.component';
+import { InputNumberComponent } from '@library-components/input-number/input-number.component';
+import { RadioComponent } from '@library-components/radio/radio.component';
+import { ResultComponent } from '@library-components/result/result.component';
+import { SliderComponent } from '@library-components/slider/slider.component';
 
 @Injectable({
     providedIn: 'root',
