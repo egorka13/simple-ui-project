@@ -77,7 +77,7 @@ export class GridSettingsService {
             this.stopGridSubscribe();
         } else {
             this.subscriptions.add(
-                this.boardSettingsService.boardParametres$.subscribe(value => {
+                this.boardSettingsService.boardParameters$.subscribe(value => {
                     const canvasWidth: number = value[0];
                     const canvasHeight: number = value[1];
                     ctx.canvas.width = canvasWidth;
