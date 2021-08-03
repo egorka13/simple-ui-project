@@ -12,51 +12,109 @@ import { SliderComponent } from '@library-components/slider/slider.component';
 @Injectable({
     providedIn: 'root',
 })
+/**
+ * @class - Service used to register components in the left panel and display them in a pop-up container
+ */
 export class LibraryGetterService {
+    /**
+     * Available categories for components. To register a new category, you need to add it to this array, and also duplicate it in the model file
+     * @see ILibraryInformation
+     */
+    private deferTypes: Array<string> = ['Base', 'Logical', 'Multimedia'];
+
+    /**
+     * List with registered components
+     * @param key Unique naming of the component to avoid duplication
+     * @param group Component category
+     * @param nameComponent Component identify
+     * @param svgUrl Path for left panel's icon
+     * @param component Component instance (import new component and register in this list)
+     * @param title Component's popup title name
+     * @param description Component's popup display descriptions
+     */
     private libraryInformation: ILibraryInformation = {
-        button: {
+        suiButton: {
+            group: 'Base',
+            nameComponent: 'Button',
+            svgUrl: '/assets/icons/panel/button-icon.svg',
             component: ButtonComponent,
             title: 'Button component',
-            description: 'Text',
+            description: 'Use this to trigger an operation.',
         },
-        card: {
+        suiCard: {
+            group: 'Multimedia',
+            nameComponent: 'Card',
+            svgUrl: '/assets/icons/panel/card-icon.svg',
             component: CardComponent,
             title: 'Card component',
-            description: 'Text',
+            description:
+                'A card can be used to display content related to a single subject. The content can consist of multiple elements of varying types and sizes.',
         },
-        checkbox: {
+        suiCheckbox: {
+            group: 'Logical',
+            nameComponent: 'Checkbox',
+            svgUrl: '/assets/icons/panel/checkbox-icon.svg',
             component: CheckboxComponent,
             title: 'Checkbox component',
-            description: 'Text',
+            description: 'Used for selecting multiple values from several options.',
         },
-        input: {
+        suiInput: {
+            group: 'Base',
+            nameComponent: 'Input',
+            svgUrl: '/assets/icons/panel/input-icon.svg',
             component: InputComponent,
             title: 'Input component',
-            description: 'Text',
+            description:
+                'A basic widget for getting the user input is a text field. Keyboard and mouse can be used for providing or changing data.',
         },
-        inputNumber: {
+        suiInputNumber: {
+            group: 'Logical',
+            nameComponent: 'InputNumber',
+            svgUrl: '/assets/icons/panel/input-number-icon.svg',
             component: InputNumberComponent,
             title: 'Input number component',
-            description: 'Text',
+            description: 'Enter a number within certain range with the mouse or keyboard.',
         },
-        radio: {
+        suiRadio: {
+            group: 'Logical',
+            nameComponent: 'Radio',
+            svgUrl: '/assets/icons/panel/radio-icon.svg',
             component: RadioComponent,
             title: 'Radio button component',
-            description: 'Text',
+            description: 'Used to select a single state from multiple options.',
         },
-        result: {
+        suiResult: {
+            group: 'Multimedia',
+            nameComponent: 'Result',
+            svgUrl: '/assets/icons/panel/result-icon.svg',
             component: ResultComponent,
             title: 'Result component',
-            description: 'Text',
+            description:
+                'Use when important operations need to inform the user to process the results and the feedback is more complicated.',
         },
-        slider: {
+        suiSlider: {
+            group: 'Logical',
+            nameComponent: 'Slider',
+            svgUrl: '/assets/icons/panel/slider-icon.svg',
             component: SliderComponent,
             title: 'Slider component',
-            description: 'Text',
+            description: 'A Slider component for displaying current value and intervals in range.',
         },
     };
 
+    /**
+     * @get Component's list getter
+     * @return Component's list
+     */
     get getLibraryComponentsInfo(): ILibraryInformation {
         return this.libraryInformation;
+    }
+
+    /**
+     * @get Component categories list getter
+     * @return List of component categories
+     */
+    get getLibraryDeferTypes(): Array<string> {
+        return this.deferTypes;
     }
 }
