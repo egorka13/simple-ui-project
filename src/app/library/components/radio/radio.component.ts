@@ -1,30 +1,32 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { RadioItem, radioType } from './radio.model';
+import { Component, Input } from '@angular/core';
+import { radioType, radioView, radioSize } from './radio.model';
 
 @Component({
     selector: 'sui-radio',
     templateUrl: './radio.component.html',
     styleUrls: ['./radio.component.less'],
 })
-export class RadioComponent implements OnInit {
-    items: RadioItem[] = [];
+export class RadioComponent {
     typeModifier: string = '';
-    name: string = 'radio' + Date.now().toFixed(6);
+    viewModifier: string = '';
+    sizeModifier: string = '';
+    name: string = 'radio' + Date.now().toString();
 
     @Input()
-    label: string[] = ['Radio'];
+    label: string[] = ['radio'];
 
     @Input()
     set type(value: radioType) {
-        this.typeModifier =  value ? '_type_' + value : '';
+        this.typeModifier = '_type_' + value;
     }
 
-    ngOnInit(): void {
-        for (let i: number = 0; i < this.label.length; i++) {
-            this.items.push({
-                id: [this.name, i].join('_'),
-                text: this.label[i],
-            });
-        }
+    @Input()
+    set view(value: radioView) {
+        this.viewModifier = '_view_' + value;
+    }
+
+    @Input()
+    set size(value: radioSize) {
+        this.sizeModifier = '_size_' + value;
     }
 }
