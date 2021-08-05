@@ -1,0 +1,91 @@
+@import "colors.less";
+
+@sui-switchLtColor-default: lighten(@lib-grey, 10%);
+@sui-switchWidth: 44px;
+@sui-switchHeight: 22px;
+@sui-switchBeforeLeftPosition: (@sui-switchWidth / 2) * 1px;
+
+.sui-switch {
+
+    &__item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: @sui-switchWidth;
+        position: relative;
+        height: @sui-switchHeight;
+        appearance: none;
+        border-radius: 20px;
+        box-shadow: 0 0 0 2px @sui-switchLtColor-default;
+        background: @lib-grey;
+        border: 0;
+        transition: .5s background;
+
+        &:not(:disabled):hover {
+            cursor: pointer;
+            box-shadow: none;
+        }
+
+        &:disabled{
+            background: lighten(@lib-blue-light, 25%);
+            box-shadow: 0 0 0 2px lighten(@lib-blue-light, 30%);
+            .sui-switch__handle {
+                &::before {
+                    border: 2px solid lighten(@lib-blue-light, 25%);
+                }
+            }
+        }
+
+        &:disabled:hover {
+            cursor: not-allowed;
+        }
+
+        &:not(:disabled):active {
+            box-shadow: 0 0 0 5px hsla(209, 100%, 55%, 0.122);
+        }
+
+        &._active {
+            background: @lib-blue;
+
+            .sui-switch__info {
+                margin: 0 @sui-switchBeforeLeftPosition 0 2px;
+            }
+
+            .sui-switch__handle {
+                left: calc(100% - 22px);
+
+                &::before {
+                    border: 2px solid @lib-blue;
+                }
+            }
+        }
+    }
+
+    &__info {
+        margin: 0 2px 0 @sui-switchBeforeLeftPosition;
+        transition: .2s;
+        text-align: center;
+        color: @lib-white;
+        &-ico{
+            margin-top:3px;
+        }
+    }
+
+    &__handle {
+        position: absolute;
+        left: 0;
+        top: 0;
+        transition: .2s;
+
+        &::before {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border-radius: 100%;
+            background: @lib-white;
+            border: 2px solid @lib-grey;
+            transition: .2s;
+        }
+    }
+}

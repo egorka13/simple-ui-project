@@ -30,4 +30,10 @@
         <sui-card></sui-card>
         <sui-card size="small"></sui-card>
     </div>
+    <div class="sui-library__item">
+        <sui-switch></sui-switch>
+        <sui-switch [innerText]="['on', 'off']"></sui-switch>
+        <sui-switch [innerText]="['on', 'disabled']" [isDisabled]="true"></sui-switch>
+        <sui-switch [useMarkers]="true"></sui-switch>
+    </div>
 </div>
