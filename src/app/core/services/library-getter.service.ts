@@ -8,6 +8,7 @@ import { InputNumberComponent } from '@library-components/input-number/input-num
 import { RadioComponent } from '@library-components/radio/radio.component';
 import { ResultComponent } from '@library-components/result/result.component';
 import { SliderComponent } from '@library-components/slider/slider.component';
+import { LinkComponent } from '@library-components/link/link.component';
 
 @Injectable({
     providedIn: 'root',
@@ -52,6 +53,11 @@ export class LibraryGetterService {
         slider: {
             component: SliderComponent,
             title: 'Slider component',
+            description: 'Text',
+        },
+        link: {
+            component: LinkComponent,
+            title: 'Link component',
             description: 'Text',
         },
     };

@@ -14,6 +14,7 @@ import { InputComponent } from './components/input/input.component';
 import { InputNumberComponent } from './components/input-number/input-number.component';
 import { SliderComponent } from './components/slider/slider.component';
 import { CardComponent } from './components/card/card.component';
+import { LinkComponent } from './components/link/link.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { CardComponent } from './components/card/card.component';
         InputNumberComponent,
         SliderComponent,
         CardComponent,
+        LinkComponent,
     ],
     imports: [BrowserModule, FormsModule, CommonModule, HttpClientModule, AngularSvgIconModule.forRoot()],
     exports: [

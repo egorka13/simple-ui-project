@@ -101,4 +101,11 @@ export const componentModels: IComponentPrototype = {
         currentValue: { type: 'number', value: 0 },
         step: { type: 'number', value: 1 },
     },
+    'sui-link': {
+        text: { type: 'text', value: 'Link' },
+        color: { type: 'color', value: 'hsl(0, 0%, 0%)' },
+        colorHover: { type: 'color', value: 'hsl(0, 0%, 50%)' },
+        fontSize: { type: 'number', value: 14 },
+        href: { type: 'text', value: '' },
+    },
 };

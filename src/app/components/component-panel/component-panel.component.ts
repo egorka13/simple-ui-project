@@ -74,6 +74,12 @@ export class ComponentPanelComponent {
             svgUrl: '/assets/icons/panel/input-number-icon.svg',
             component: this.libraryGetterService.getLibraryComponentsInfo.inputNumber,
         },
+        {
+            group: 'Base',
+            nameComponent: 'Link',
+            svgUrl: '/assets/icons/panel/link-icon.svg',
+            component: this.libraryGetterService.getLibraryComponentsInfo.link,
+        },
     ];
 
     public showPopup(item: ILibraryCurrentInformation, event: Event): void {
