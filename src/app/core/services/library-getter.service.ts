@@ -101,10 +101,13 @@ export class LibraryGetterService {
             title: 'Slider component',
             description: 'A Slider component for displaying current value and intervals in range.',
         },
-        rectangle: {
-            component: RectangleComponent,
+        SuiRectangle: {
+            group: 'Base',
+            nameComponent: 'Rectangle',
+            svgUrl: '/assets/icons/panel/slider-icon.svg',
             title: 'Rectangle component',
-            description: 'Text',
+            component: RectangleComponent,
+            description: 'A Rectangle component, can be used for background, header or footer.',
         },
     };
 
