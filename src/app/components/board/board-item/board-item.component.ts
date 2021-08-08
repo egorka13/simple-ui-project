@@ -44,6 +44,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
 
     private innerLibComponent: ComponentRef<any>;
     private toUnlisten: Array<() => void> = [];
+    private deleteUnlistener: () => void;
 
     private zIndexBase: number = 100;
     private zIndexShiftState: number = 0;
@@ -57,8 +58,11 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     @HostListener('dblclick')
     _selectLibComponent(): void {
         if (this.boardSettingsService.isInteractiveMode) return;
+        if (this._isSelected) return;
+
         this._isSelected = true;
         this.boardConverseService.selectBoardItem(this);
+        this.setDeleteListener();
     }
 
     @HostListener('contextmenu', ['$event'])
@@ -117,6 +121,10 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
         this.toUnlisten.forEach(unlistener => {
             unlistener();
         });
+
+        if (this.deleteUnlistener) {
+            this.deleteUnlistener();
+        }
     }
 
     /**
@@ -162,10 +170,11 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
      */
     public deselect(): void {
         this._isSelected = false;
+        this.deleteUnlistener();
     }
 
     /**
-     * This function do deep copy of an object.
+     * This function does deep copy of an object.
      * @private
      * @template Obj
      * @param {Obj} obj - An object to copy.
@@ -175,6 +184,17 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     private objDeepCopy<Obj>(obj: Obj): Obj {
         // Later may be changed to lodash or any other implementation.
         return JSON.parse(JSON.stringify(obj)) as Obj;
+    }
+
+    /**
+     * This functio sets a listener of the delete key and delete current selected component when it is pressed.
+     * @private
+     * @memberof BoardItemComponent
+     */
+    private setDeleteListener(): void {
+        this.deleteUnlistener = this.r2.listen(document, 'keydown.delete', () => {
+            this.boardConverseService.removeLibraryComponent();
+        });
     }
 
     /**
