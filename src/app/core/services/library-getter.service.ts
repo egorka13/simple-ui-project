@@ -104,7 +104,7 @@ export class LibraryGetterService {
         SuiRectangle: {
             group: 'Base',
             nameComponent: 'Rectangle',
-            svgUrl: '/assets/icons/panel/slider-icon.svg',
+            svgUrl: '/assets/icons/panel/rectangle-icon.svg',
             title: 'Rectangle component',
             component: RectangleComponent,
             description: 'A Rectangle component, can be used for background, header or footer.',
