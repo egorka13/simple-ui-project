@@ -2,4 +2,8 @@
 
 <sui-board class="sui-wrapper__board"></sui-board>
 
-<sui-config-panel class="sui-wrapper__config-panel"></sui-config-panel>
+<sui-config-panel
+    (isHidden)="changeConfigPanelView($event)"
+    class="sui-wrapper__config-panel"
+    [class._hidden]="isHiddenConfigPanel"
+></sui-config-panel>

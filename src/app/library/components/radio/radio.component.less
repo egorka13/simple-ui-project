@@ -1,6 +1,6 @@
-@import "colors.less";
-@import "vars.less";
-@import "../../../../assets/styles/common/fonts";
+@import 'colors.less';
+@import 'vars.less';
+@import '../../../../assets/styles/common/fonts';
 
 @radio-box-shadow-blue: 0px 0px 0px 0.2em @lib-blue-transparent;
 @radio-box-shadow-white-inset: 0 0 0 0.2em @lib-white inset;
@@ -17,12 +17,8 @@
         .font-regular();
     }
 
-    &__label + &__input {
-        margin-left: 0.5em;
-    }
-
     &__input {
-        position: relative;
+        position: absolute;
         opacity: 0;
 
         &:not(:disabled):not(:checked) + .sui-radio__label:hover::before,
@@ -37,8 +33,7 @@
         &:checked + .sui-radio__label::before {
             background-color: @lib-blue;
             border-color: @lib-blue;
-            box-shadow: @radio-box-shadow-blue,
-            @radio-box-shadow-white-inset;
+            box-shadow: @radio-box-shadow-blue, @radio-box-shadow-white-inset;
         }
 
         &:checked:not(:focus) + .sui-radio__label::before {
@@ -64,11 +59,16 @@
     &__label {
         display: inline-flex;
         align-items: center;
+        margin-right: 1em;
         position: relative;
 
         border-radius: 0;
 
         cursor: pointer;
+
+        &:last-child {
+            margin-right: 0;
+        }
 
         &::before {
             content: '';
@@ -87,10 +87,6 @@
     &__wrapper._type_button {
         .sui-radio {
             &__input {
-                width: 0px;
-                height: 0px;
-                margin-left: 0;
-
                 &:checked + .sui-radio__label {
                     color: @lib-blue;
                     border-color: currentColor;
@@ -116,7 +112,7 @@
             }
 
             &__label {
-                gap: 0.5em;
+                margin-right: 0;
                 padding: 0.3em 1em;
 
                 background-color: @lib-white;
@@ -154,6 +150,71 @@
                     display: none;
                 }
             }
+        }
+    }
+
+    &__wrapper._view_column {
+        flex-direction: column;
+
+        .sui-radio__label {
+            margin: 0 0 0.5em;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        &._type_button {
+            .sui-radio__label {
+                margin: 0;
+                justify-content: center;
+
+                &:first-of-type {
+                    border-top-right-radius: 2px;
+                    border-bottom-left-radius: 0;
+                }
+
+                &:last-of-type {
+                    border-bottom-left-radius: 2px;
+                    border-top-right-radius: 0;
+                }
+            }
+        }
+    }
+
+    &__wrapper._size_small {
+        .sui-radio__label {
+            font-size: 0.8em;
+
+            &::before {
+                width: 0.8em;
+                height: 0.8em;
+            }
+        }
+    }
+
+    &__wrapper._size_large {
+        .sui-radio__label {
+            font-size: 1.2em;
+
+            &::before {
+                width: 1.2em;
+                height: 1.2em;
+            }
+        }
+    }
+
+    &__wrapper._size_small._type_button {
+        .sui-radio__label {
+            font-size: inherit;
+            padding: 0.2em 0.4em;
+        }
+    }
+
+    &__wrapper._size_large._type_button {
+        .sui-radio__label {
+            font-size: inherit;
+            padding: 0.5em 1.5em;
         }
     }
 }
