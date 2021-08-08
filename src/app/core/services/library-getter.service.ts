@@ -101,10 +101,13 @@ export class LibraryGetterService {
             title: 'Slider component',
             description: 'A Slider component for displaying current value and intervals in range.',
         },
-        link: {
+        suiLink: {
+            group: 'Base',
+            nameComponent: 'Link',
+            svgUrl: '/assets/icons/panel/link-icon.svg',
             component: LinkComponent,
             title: 'Link component',
-            description: 'Text',
+            description: 'A link component.',
         },
     };
 
