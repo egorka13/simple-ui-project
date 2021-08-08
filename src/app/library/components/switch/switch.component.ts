@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { resultTypes } from './switch.model';
+import { resultTypes, TypeSwitch } from './switch.model';
 
 @Component({
     selector: 'sui-switch',
@@ -11,18 +11,16 @@ import { resultTypes } from './switch.model';
  */
 export class SwitchComponent implements OnInit {
     /**
-     * IAn input parameter responsible for putting the component in an inactive state.
-     * Disabled by default
+     * An input parameter that sets the text in the checked state
      */
     @Input()
-    isDisabled: boolean = false;
+    checkedText: string = '';
 
     /**
-     * The text inside the component. The first parameter is the text in the active state
-     * of the component, the second is for the disabled state.
+     * An input parameter that sets the text in the unchecked state
      */
     @Input()
-    innerText?: Array<string>;
+    unCheckedText?: string;
 
     /**
      * This input parameter automatically switches the state
@@ -47,21 +45,39 @@ export class SwitchComponent implements OnInit {
     switchStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     /**
-     * The parameter responsible for the active state of the component. By default - the component is not in the pressed state
+     * The parameter responsible for the active state of the component.
      */
-    public isChecked: boolean = false;
+    @Input()
+    isChecked: boolean = false;
+
+    /**
+     * The parameter responsible for the disable state of the component.
+     */
+    @Input()
+    isDisabled: boolean = false;
     /**
      * Parameter responsible for the internal text of the component
      */
-    public text: string;
+    public _text: string = '';
+
+    public _svgPaths: TypeSwitch = resultTypes;
+
     /**
      * @see SwitchComponent.useMarkers
      * The current parameter is required to set the path to the checkmark and cross icons, respectively
      */
-    public markerPath: string = resultTypes.off;
+    public _markerPath: string = resultTypes.off;
 
     ngOnInit(): void {
-        this.text = this.checkInnerText();
+        this.init();
+    }
+
+    /**
+     * Sets the required value of inner text
+     * @param value Required value for installation
+     */
+    set setText(value: string) {
+        this._text = value;
     }
 
     /**
@@ -70,34 +86,37 @@ export class SwitchComponent implements OnInit {
     public onClick(): void {
         this.isChecked = !this.isChecked;
         this.switchStatus.emit(this.isChecked);
-        //If the inner text parameter exists
-        if (this.innerText) {
-            //If component is checked we insert new text
-            if (this.isChecked) {
-                this.text = this.innerText[0];
-            } else {
-                this.text = this.innerText[1];
+
+        if (this.isChecked) {
+            this.setText = this.checkedText;
+        } else {
+            if (this.unCheckedText) {
+                this.setText = this.unCheckedText;
             }
         }
         //If the markers parameter exists
         if (this.useMarkers) {
             //If component is checked we change marker's paths
             if (this.isChecked) {
-                this.markerPath = resultTypes.on;
+                this._markerPath = resultTypes.on;
             } else {
-                this.markerPath = resultTypes.off;
+                this._markerPath = resultTypes.off;
             }
         }
     }
 
-    /**
-     * The method checks for the presence of the internal text of the component
-     * @returns an empty string if no inner text parameters were found
-     */
-    private checkInnerText(): string {
-        if (this.innerText) {
-            return this.innerText[1];
+    private init() {
+        if (this.isChecked) {
+            this.setText = this.checkedText;
+        } else {
+            if (this.unCheckedText) {
+                this.setText = this.unCheckedText;
+            }
         }
-        return '';
+        if (this.useMarkers) {
+            if (this.isChecked) {
+                this._markerPath = resultTypes.on;
+            }
+        }
     }
 }

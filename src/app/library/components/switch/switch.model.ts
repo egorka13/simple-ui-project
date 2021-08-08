@@ -2,10 +2,13 @@
 const path: string = 'app/library/assets/icons/switch/';
 
 export interface TypeSwitch {
-    [key: string]: string;
+    on: string;
+    off: string;
+    load: string;
 }
 
 export const resultTypes: TypeSwitch = {
     on: path + 'on.svg',
     off: path + 'off.svg',
+    load: path + 'load.svg',
 };

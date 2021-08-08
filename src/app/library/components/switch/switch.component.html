@@ -1,24 +1,24 @@
 <div class="sui-switch__wrapper">
     <button
         (click)="onClick()"
+        class="sui-switch__item"
         [ngClass]="{
-            'sui-switch__item': true,
             _active: isChecked
         }"
         type="button"
-        [disabled]="isDisabled || isLoading"
+        [disabled]="isLoading || isDisabled"
     >
         <div class="sui-switch__handle">
             <svg-icon
                 *ngIf="isLoading"
                 [svgClass]="'sui-switch__handle-loading'"
-                src="app/library/assets/icons/switch/load.svg"
+                [src]="_svgPaths.load"
             ></svg-icon>
         </div>
-        <span *ngIf="innerText || useMarkers" class="sui-switch__info">
-            {{ text }}
+        <span class="sui-switch__info">
+            {{ _text }}
             <span *ngIf="useMarkers" class="sui-switch__info-markers">
-                <svg-icon [svgClass]="'sui-switch__info-ico'" [src]="markerPath"></svg-icon>
+                <svg-icon [svgClass]="'sui-switch__info-ico'" [src]="_markerPath"></svg-icon>
             </span>
         </span>
     </button>

@@ -2,12 +2,25 @@
 
 @sui-switchLtColor-default: lighten(@lib-grey, 10%);
 @sui-switchLtColor-disabled: lighten(@lib-blue-light, 25%);
+@sui-switchColorBorder-disabled: lighten(@lib-grey, 8%);
 @sui-switchLtShadowColor-disabled: lighten(@lib-blue-light, 30%);
 @sui-switchShadowActiveColor: hsla(209, 100%, 55%, 0.122);
 @sui-switchDisabledAnimationTime: .8s;
 @sui-switchWidth: 44px;
 @sui-switchHeight: 22px;
 @sui-switchBeforeLeftPosition: (@sui-switchWidth / 2) * 1px;
+@sui-switchFontSize: 12px;
+
+.disabledStyles(@background, @shadow, @border) {
+    background: @background;
+    box-shadow: 0 0 0 2px @shadow;
+
+    .sui-switch__handle {
+        &::before {
+            border: 2px solid @border;
+        }
+    }
+}
 
 .sui-switch {
 
@@ -32,14 +45,11 @@
         }
 
         &:disabled {
-            background: @sui-switchLtColor-disabled;
-            box-shadow: 0 0 0 2px @sui-switchLtShadowColor-disabled;
+            .disabledStyles(@sui-switchLtColor-default, @sui-switchColorBorder-disabled, @sui-switchColorBorder-disabled);
+        }
 
-            .sui-switch__handle {
-                &::before {
-                    border: 2px solid @sui-switchLtColor-disabled;
-                }
-            }
+        &:disabled._active {
+            .disabledStyles(@sui-switchLtColor-disabled, @sui-switchLtShadowColor-disabled, @sui-switchLtColor-disabled);
         }
 
         &:disabled:hover {
@@ -74,6 +84,7 @@
         transition: .2s;
         text-align: center;
         color: @lib-white;
+        font-size: @sui-switchFontSize;
 
         //.sui-switch__info-ico
         &-ico {
@@ -106,7 +117,7 @@
         &-loading {
             position: relative;
             margin: 0 auto;
-            animation: @sui-switchDisabledAnimationTime speenRound infinite;
+            animation: @sui-switchDisabledAnimationTime speenRound linear infinite;
         }
     }
 }
@@ -114,18 +125,6 @@
 @keyframes speenRound {
     0% {
         transform: rotate(0deg);
-    }
-
-    25% {
-        transform: rotate(90deg);
-    }
-
-    50% {
-        transform: rotate(180deg);
-    }
-
-    75% {
-        transform: rotate(270deg);
     }
 
     100% {
