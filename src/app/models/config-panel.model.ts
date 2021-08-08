@@ -13,6 +13,7 @@ export interface IPropertyObjevtValue {
     isDeleted?: boolean;
     isEndOfGroup?: boolean;
     labels?: string[];
+    numberOfProperty?: number;
 }
 
 export interface IConfigPanelProperty {
@@ -25,13 +26,13 @@ export interface IComponentPrototype {
 
 export const componentModels: IComponentPrototype = {
     'sui-button': {
-        type: { type: 'select', options: ['default', 'primary', 'dashed', 'text', 'link'], value: '' },
-        size: { type: 'select', options: ['default', 'small', 'large'], value: '' },
+        type: { type: 'select', options: ['default', 'primary', 'dashed', 'text', 'link'], value: 'default' },
+        size: { type: 'select', options: ['default', 'small', 'large'], value: 'default' },
         isGhost: { type: 'select', options: ['false', 'true'], value: false },
         innerText: { type: 'text', value: 'Button' },
     },
     'sui-card': {
-        size: { type: 'select', options: ['default', 'small'], value: '' },
+        size: { type: 'select', options: ['default', 'small'], value: 'default' },
         title: { type: 'text', value: 'Card' },
         text: { type: 'text', value: 'Card content' },
         contentTempalte: { type: 'text', value: '' },
@@ -43,26 +44,28 @@ export const componentModels: IComponentPrototype = {
     },
     'sui-input': {
         placeholder: { type: 'text', value: 'input text' },
-        size: { type: 'select', options: ['default', 'small', 'large'], value: '' },
+        size: { type: 'select', options: ['default', 'small', 'large'], value: 'default' },
     },
     'sui-input-number': {
         value: { type: 'number', value: '' },
         min: { type: 'number', value: '' },
         max: { type: 'number', value: '' },
-        size: { type: 'select', options: ['default', 'small', 'large'], value: '' },
+        size: { type: 'select', options: ['default', 'small', 'large'], value: 'default' },
     },
     'sui-radio': {
-        label: { type: 'text', isDeleted: true, value: ['Radio'] },
-        type: { type: 'select', options: ['defualt', 'button'], value: '' },
+        label: { type: 'text', isDeleted: true, value: ['radio'] },
+        type: { type: 'select', options: ['default', 'button'], value: 'default' },
+        view: { type: 'select', options: ['row', 'column'], value: 'row' },
+        size: { type: 'select', options: ['default', 'small', 'large'], value: 'default' },
     },
     'sui-result': {
         title: {
-            type: 'text',
+            type: ['text', 'text', 'color', 'text'],
             labels: ['text', 'fontFamily', 'fontColor', 'fontSize'],
             value: ['Successfully Purchased Cloud Server ECS!', '', '', ''],
         },
         subtitle: {
-            type: 'text',
+            type: ['text', 'text', 'color', 'text'],
             labels: ['text', 'fontFamily', 'fontColor', 'fontSize'],
             value: [
                 'Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait.',
