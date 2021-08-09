@@ -1,0 +1,9 @@
+<div class="sui-alert__wrapper" [class]="'_type_' + type" [class._size_large]="description.trim()">
+    <div *ngIf="icon" class="sui-alert__icon">
+        <svg-icon src="{{ assetsPath + type + (this.description ? '-large' : '') + '.svg' }}"></svg-icon>
+    </div>
+    <div class="sui-alert__content">
+        <div class="sui-alert__message">{{ message }}</div>
+        <div *ngIf="description" class="sui-alert__description">{{ description }}</div>
+    </div>
+</div>
