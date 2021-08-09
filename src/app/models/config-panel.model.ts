@@ -111,4 +111,11 @@ export const componentModels: IComponentPrototype = {
         fontSize: { type: 'number', value: 14 },
         href: { type: 'text', value: '' },
     },
+    'sui-rectangle': {
+        backgroundColor: { type: 'color', value: '#007bff' },
+        width: { type: 'number', value: '300' },
+        height: { type: 'number', value: '50' },
+        fullWidth: { type: 'select', options: ['false', 'true'], value: false },
+        fullHeight: { type: 'select', options: ['false', 'true'], value: false },
+    },
 };
