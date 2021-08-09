@@ -20,8 +20,6 @@ import { Subscription } from 'rxjs';
 import { BoardSettingsService } from '@services/board-settings.service';
 import { BoardConverseService } from '@services/board-converse.service';
 
-import { ContextMenuComponent } from './context-menu/context-menu.component';
-
 import { componentModels } from '@models/config-panel.model';
 import { IDragMetadata } from '@models/board.model';
 import { IConfigPanelProperty } from '@models/config-panel.model';
@@ -46,6 +44,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     private toUnlisten: Array<() => void> = [];
     private deleteUnlistener: () => void;
 
+    private menuSubscription: Subscription;
     private zIndexBase: number = 100;
     private zIndexShiftState: number = 0;
     private zIndexString: string = `z-index: ${this.zIndexBase + this.zIndexShiftState}`;
@@ -62,37 +61,14 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
 
         this._isSelected = true;
         this.boardConverseService.selectBoardItem(this);
-        this.setDeleteListener();
+        this.setDeleteKeyListener();
     }
 
     @HostListener('contextmenu', ['$event'])
     _showRightClickMenu(e: MouseEvent): void {
         e.preventDefault();
 
-        console.log('context menu shown');
-        const componentFactory: ComponentFactory<ContextMenuComponent> =
-            this.componentFactoryResolver.resolveComponentFactory(ContextMenuComponent);
-        const menuComponentRef: ComponentRef<ContextMenuComponent> =
-            this.viewContainerTarget.createComponent(componentFactory);
-
-        const menuSubscription: Subscription = menuComponentRef.instance.zIndexChange$.subscribe((num: number) => {
-            if (num === -1) {
-                this.zIndexShift -= 1;
-            }
-            if (num === 1) {
-                this.zIndexShift += 1;
-            }
-        });
-
-        const unlistener: () => void = this.r2.listen('document', 'mouseup', () => {
-            console.log('context menu hidden');
-
-            setTimeout(() => {
-                menuSubscription.unsubscribe();
-                menuComponentRef.destroy();
-                unlistener();
-            }, 0);
-        });
+        this.boardConverseService.showContextMenu(e.clientX, e.clientY, this);
     }
 
     constructor(
@@ -124,6 +100,10 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
 
         if (this.deleteUnlistener) {
             this.deleteUnlistener();
+        }
+
+        if (this.menuSubscription) {
+            this.menuSubscription.unsubscribe();
         }
     }
 
@@ -194,7 +174,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
      * @private
      * @memberof BoardItemComponent
      */
-    private setDeleteListener(): void {
+    private setDeleteKeyListener(): void {
         this.deleteUnlistener = this.r2.listen(document, 'keydown.delete', () => {
             this.boardConverseService.removeLibraryComponent();
         });

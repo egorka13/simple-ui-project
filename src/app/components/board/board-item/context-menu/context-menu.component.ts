@@ -1,5 +1,8 @@
-import { Component, Input, HostBinding } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, HostListener } from '@angular/core';
+
+import { BoardConverseService } from '@services/board-converse.service';
+
+import { BoardItemComponent } from '@components/board/board-item/board-item.component';
 
 @Component({
     selector: 'sui-context-menu',
@@ -7,24 +10,25 @@ import { Subject } from 'rxjs';
     styleUrls: ['./context-menu.component.less'],
 })
 export class ContextMenuComponent {
-    @Input()
-    xPosition: number;
+    public top: string;
+    public left: string;
+    public boardItem: BoardItemComponent;
 
-    @Input()
-    yPosition: number;
+    @HostListener('contextmenu', ['$event'])
+    _onCOntextMenu(e: MouseEvent): void {
+        e.preventDefault();
+    }
 
-    public zIndexChange$: Subject<number> = new Subject();
-
-    @HostBinding('style.top')
-    top: string = '50%';
-
-    @HostBinding('style.left')
-    left: string = '50%';
+    constructor(public boardConverseService: BoardConverseService) {}
 
     public _goUp(): void {
-        this.zIndexChange$.next(1);
+        if (this.boardItem) {
+            this.boardItem.zIndexShift += 1;
+        }
     }
     public _goDown(): void {
-        this.zIndexChange$.next(-1);
+        if (this.boardItem) {
+            this.boardItem.zIndexShift -= 1;
+        }
     }
 }

@@ -9,29 +9,35 @@
 >
     <!-- Showcases -->
     <div class="sui-board__field-showcases">
-        <h1>Scale {{ boardSettingsService.scale }}</h1>
-        <input type="number" [(ngModel)]="boardSettingsService.height" />
-        <input type="number" [(ngModel)]="boardSettingsService.width" />
+        <!-- <h1>Scale {{ boardSettingsService.scale }}</h1> -->
+        <!-- <input type="number" [(ngModel)]="boardSettingsService.height" /> -->
+        <!-- <input type="number" [(ngModel)]="boardSettingsService.width" /> -->
         <button
             (click)="boardSettingsService.isInteractiveMode = !boardSettingsService.isInteractiveMode"
             [style.outline]="'1px solid gray'"
         >
             Toggle Interactive Mode
         </button>
-        <button
+        <!-- <button
             (click)="boardSettingsService.isInfiniteBoardMode = !boardSettingsService.isInfiniteBoardMode"
             [style.outline]="'1px solid gray'"
         >
             Toggle Infinite Mode
-        </button>
-        <button (click)="boardConverseService.removeLibraryComponent()" [style.outline]="'1px solid gray'">
+        </button> -->
+        <!-- <button (click)="boardConverseService.removeLibraryComponent()" [style.outline]="'1px solid gray'">
             Delete selected
-        </button>
+        </button> -->
     </div>
 
     <sui-grid></sui-grid>
-    <ng-container #viewContainerTarget></ng-container>
+
+    <div class="sui-board__components">
+        <ng-container #viewComponentsContainer></ng-container>
+    </div>
 </section>
+
+<ng-container #viewContextMenuContainer></ng-container>
+
 <div
     class="sui-board__move-plug"
     draggable="false"

@@ -19,6 +19,10 @@ export class BoardConverseService {
     public addLibraryComponent$ = new Subject<Type<any>>();
     // TODO: Consider an asObserver here.
     public removeLibraryComponent$ = new Subject<BoardItemComponent>();
+    // TODO: Consider an asObserver here.
+    public showContextMenu$ = new Subject<[number, number, BoardItemComponent]>();
+    // TODO: Consider an asObserver here.
+    public zIndexChange$: Subject<number> = new Subject();
 
     /**
      * This function append library component to the board.
@@ -42,14 +46,8 @@ export class BoardConverseService {
         }
     }
 
-    public increaseSelectedZIndex(): void {
-        if (!this.selectedBoardItem) return;
-        this.selectedBoardItem.zIndexShift += 1;
-    }
-
-    public decreaseSelectedZIndex(): void {
-        if (!this.selectedBoardItem) return;
-        this.selectedBoardItem.zIndexShift -= 1;
+    public showContextMenu(x: number, y: number, boardItem: BoardItemComponent): void {
+        this.showContextMenu$.next([x, y, boardItem]);
     }
 
     /**
@@ -73,8 +71,6 @@ export class BoardConverseService {
         }
 
         const suiComponentTag: string = this.selectedBoardItem.libComponentName;
-
-        this.increaseSelectedZIndex();
 
         this.configDataService.setConfigData({
             suiComponent: suiComponentTag,

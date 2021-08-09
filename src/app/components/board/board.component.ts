@@ -21,6 +21,7 @@ import { BoardSettingsService } from '@services/board-settings.service';
 import { BoardConverseService } from '@services/board-converse.service';
 
 import { BoardItemComponent } from './board-item/board-item.component';
+import { ContextMenuComponent } from './board-item/context-menu/context-menu.component'; // TODO: Change pass here.
 
 import { IDragMetadata } from '@models/board.model';
 
@@ -33,8 +34,11 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     @ViewChild('field')
     field: ElementRef;
 
-    @ViewChild('viewContainerTarget', { read: ViewContainerRef })
-    fieldView: ViewContainerRef;
+    @ViewChild('viewComponentsContainer', { read: ViewContainerRef })
+    componentsContainerView: ViewContainerRef;
+
+    @ViewChild('viewContextMenuContainer', { read: ViewContainerRef })
+    contextMenuView: ViewContainerRef;
 
     @ViewChild('fieldMovePlug')
     fieldMovePlug: ElementRef;
@@ -87,6 +91,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         this.setZoomListener();
         this.setAddComponentListener();
         this.setRemoveComponentListener();
+        this.setContextMenuListener();
 
         // Setting up a starting board size.
         setTimeout(() => {
@@ -103,6 +108,30 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         });
     }
 
+    private setContextMenuListener(): void {
+        const createContextMenu = ([x, y, boardItem]: [number, number, BoardItemComponent]) => {
+            const componentFactory: ComponentFactory<ContextMenuComponent> =
+                this.componentFactoryResolver.resolveComponentFactory(ContextMenuComponent);
+
+            const menuComponentRef: ComponentRef<ContextMenuComponent> =
+                this.contextMenuView.createComponent(componentFactory);
+
+            menuComponentRef.instance.left = x.toString() + 'px';
+            menuComponentRef.instance.top = y.toString() + 'px';
+
+            menuComponentRef.instance.boardItem = boardItem;
+
+            const unlistener: () => void = this.r2.listen(menuComponentRef.location.nativeElement, 'mouseup', () => {
+                setTimeout(() => {
+                    menuComponentRef.destroy();
+                    unlistener();
+                });
+            });
+        };
+
+        this.toUnsubscribe.add(this.boardConverseService.showContextMenu$.subscribe(createContextMenu));
+    }
+
     /**
      * This function sets up a listener of the board converse service that waiting for
      * a board-item create event.
@@ -113,7 +142,8 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         const addLibComponent = <LibraryComponent>(libraryComponent: Type<LibraryComponent>) => {
             const componentFactory: ComponentFactory<BoardItemComponent> =
                 this.componentFactoryResolver.resolveComponentFactory(BoardItemComponent);
-            const boardItem: ComponentRef<BoardItemComponent> = this.fieldView.createComponent(componentFactory);
+            const boardItem: ComponentRef<BoardItemComponent> =
+                this.componentsContainerView.createComponent(componentFactory);
 
             boardItem.instance.appendLibComponent(libraryComponent);
 
@@ -138,7 +168,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             )[0];
 
             const index: number = this.boardItems.indexOf(itemRef);
-            this.fieldView.remove(index);
+            this.componentsContainerView.remove(index);
             this.boardItems.splice(index, 1);
         };
 
