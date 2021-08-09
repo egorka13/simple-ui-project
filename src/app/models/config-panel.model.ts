@@ -108,6 +108,6 @@ export const componentModels: IComponentPrototype = {
         type: { type: 'select', options: ['success', 'info', 'warning', 'error'], value: 'success' },
         message: { type: 'text', value: 'Success text' },
         description: { type: 'text', value: '' },
-        icon: { type: 'select', value: false },
+        icon: { type: 'select', options: ['false', 'true'], value: false },
     },
 };

@@ -1,4 +1,4 @@
-<div class="sui-alert__wrapper" [class]="'_type_' + type" [class._size_large]="description.trim()">
+<div class="sui-alert__wrapper" [class]="'_type_' + type" [class._size_large]="description">
     <div *ngIf="icon" class="sui-alert__icon">
         <svg-icon src="{{ assetsPath + type + (this.description ? '-large' : '') + '.svg' }}"></svg-icon>
     </div>
