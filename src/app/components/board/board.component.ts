@@ -48,7 +48,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     public _isDragging: boolean = false;
 
     private boardItems: Array<ComponentRef<BoardItemComponent>> = [];
-    private toUnsubscribe: Array<Subscription> = [];
+    private toUnsubscribe: Subscription = new Subscription();
     private toUnlisten: Array<() => void> = [];
 
     private dragMetadata: IDragMetadata = {
@@ -80,7 +80,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
 
     ngAfterViewInit(): void {
         this.boardSettingsService.setBoardElement(this.boardElement.nativeElement);
-        this.toUnsubscribe.push(this.boardConverseService.setConfigPanelListener());
+        this.toUnsubscribe.add(this.boardConverseService.setConfigPanelListener());
 
         this.setSpaceHoldListener();
         this.setMoveListener();
@@ -96,9 +96,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.toUnsubscribe.forEach(sub => {
-            sub.unsubscribe();
-        });
+        this.toUnsubscribe.unsubscribe();
 
         this.toUnlisten.forEach(unlistener => {
             unlistener();
@@ -122,7 +120,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             this.boardItems.push(boardItem);
         };
 
-        this.toUnsubscribe.push(this.boardConverseService.addLibraryComponent$.subscribe(addLibComponent));
+        this.toUnsubscribe.add(this.boardConverseService.addLibraryComponent$.subscribe(addLibComponent));
     }
 
     /**
@@ -144,7 +142,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             this.boardItems.splice(index, 1);
         };
 
-        this.toUnsubscribe.push(this.boardConverseService.removeLibraryComponent$.subscribe(removeLibComponent));
+        this.toUnsubscribe.add(this.boardConverseService.removeLibraryComponent$.subscribe(removeLibComponent));
     }
 
     /**
@@ -168,7 +166,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             this.boardSettingsService.changeScale(-deltaY / Math.abs(deltaY));
         };
 
-        this.toUnsubscribe.push(wheel$.subscribe({ next: e => changeScale(e.deltaY) }));
+        this.toUnsubscribe.add(wheel$.subscribe({ next: e => changeScale(e.deltaY) }));
     }
 
     /**
