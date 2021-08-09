@@ -26,14 +26,12 @@ export class LinkComponent {
         this.fontSizeValue = `${value}px`;
     }
 
-    onMouseEnter(): string {
+    onMouseEnter(): void {
         this.colorValue = this.color;
         this.color = this.colorHover;
-        return this.color;
     }
 
-    onMouseLeave(): string {
+    onMouseLeave(): void {
         this.color = this.colorValue;
-        return this.color;
     }
 }
