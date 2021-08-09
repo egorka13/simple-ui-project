@@ -104,4 +104,10 @@ export const componentModels: IComponentPrototype = {
         currentValue: { type: 'number', value: 0 },
         step: { type: 'number', value: 1 },
     },
+    'sui-alert': {
+        type: { type: 'select', options: ['success', 'info', 'warning', 'error'], value: 'success' },
+        message: { type: 'text', value: 'Success text' },
+        description: { type: 'text', value: '' },
+        icon: { type: 'select', value: false },
+    },
 };
