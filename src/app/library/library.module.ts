@@ -15,6 +15,7 @@ import { InputNumberComponent } from './components/input-number/input-number.com
 import { SliderComponent } from './components/slider/slider.component';
 import { CardComponent } from './components/card/card.component';
 import { LinkComponent } from './components/link/link.component';
+import { RectangleComponent } from './components/rectangle/rectangle.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { LinkComponent } from './components/link/link.component';
         SliderComponent,
         CardComponent,
         LinkComponent,
+        RectangleComponent,
     ],
     imports: [BrowserModule, FormsModule, CommonModule, HttpClientModule, AngularSvgIconModule.forRoot()],
     exports: [
@@ -39,6 +41,7 @@ import { LinkComponent } from './components/link/link.component';
         SliderComponent,
         CardComponent,
         LinkComponent,
+        RectangleComponent,
     ],
     providers: [],
 })
