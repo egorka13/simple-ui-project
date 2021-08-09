@@ -38,6 +38,7 @@ import { LinkComponent } from './components/link/link.component';
         InputNumberComponent,
         SliderComponent,
         CardComponent,
+        LinkComponent,
     ],
     providers: [],
 })
