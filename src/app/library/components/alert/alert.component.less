@@ -1,0 +1,64 @@
+@import 'colors.less';
+@import 'vars.less';
+@import '../../../../assets/styles/common/fonts';
+
+@alert-background-success: hsl(90, 100%, 96%);
+@alert-border-success: hsl(94, 70%, 74%);
+
+@alert-background-info: hsl(199, 100%, 95%);
+@alert-border-info: hsl(203, 100%, 78%);
+
+@alert-background-warning: hsl(50, 100%, 95%);
+@alert-border-warning: hsl(46, 100%, 78%);
+
+@alert-background-error: hsl(8, 100%, 97%);
+@alert-border-error: hsl(5, 100%, 89%);
+
+.sui-alert {
+    &__wrapper {
+        display: flex;
+        width: 220px;
+        padding: 8px 15px;
+        position: relative;
+
+        border: 1px solid black;
+        border-radius: 2px;
+
+        .font-regular();
+        font-size: 14px;
+        word-break: break-all;
+
+        &._type_success {
+            background-color: @alert-background-success;
+            border-color: @alert-border-success;
+        }
+
+        &._type_info {
+            background-color: @alert-background-info;
+            border-color: @alert-border-info;
+        }
+
+        &._type_warning {
+            background-color: @alert-background-warning;
+            border-color: @alert-border-warning;
+        }
+
+        &._type_error {
+            background-color: @alert-background-error;
+            border-color: @alert-border-error;
+        }
+
+        &._size_large {
+            .sui-alert__message {
+                margin-bottom: 5px;
+
+                .font-medium();
+                font-size: 16px;
+            }
+        }
+    }
+
+    &__icon {
+        margin-right: 12px;
+    }
+}

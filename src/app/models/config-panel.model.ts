@@ -104,6 +104,12 @@ export const componentModels: IComponentPrototype = {
         currentValue: { type: 'number', value: 0 },
         step: { type: 'number', value: 1 },
     },
+    'sui-alert': {
+        type: { type: 'select', options: ['success', 'info', 'warning', 'error'], value: 'success' },
+        message: { type: 'text', value: 'Success text' },
+        description: { type: 'text', value: '' },
+        hasIcon: { type: 'select', options: ['false', 'true'], value: false },
+    },
     'sui-rectangle': {
         backgroundColor: { type: 'color', value: '#007bff' },
         width: { type: 'number', value: '300' },
