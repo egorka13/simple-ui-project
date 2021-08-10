@@ -85,6 +85,10 @@
         text-align: center;
         color: @lib-white;
         font-size: @sui-switchFontSize;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
 
         //.sui-switch__info-ico
         &-ico {
@@ -98,7 +102,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        left: 5px;
+        left: 10px;
         transition: .2s;
 
         //.sui-switch__handle::before
@@ -115,8 +119,9 @@
 
         //.sui-switch__handle-loading
         &-loading {
-            position: relative;
-            margin: 0 auto;
+            position: absolute;
+            left: -6px;
+            top: -6px;
             animation: @sui-switchDisabledAnimationTime speenRound linear infinite;
         }
     }

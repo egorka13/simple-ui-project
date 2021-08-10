@@ -10,17 +10,29 @@ import { resultTypes, TypeSwitch } from './switch.model';
  * @class Simple UI switch component
  */
 export class SwitchComponent implements OnInit {
+    private checkedText: string = '';
+    private uncheckedText: string = '';
     /**
      * An input parameter that sets the text in the checked state
      */
     @Input()
-    checkedText: string = '';
+    set setCheckedText(value: string) {
+        if (this.isChecked) {
+            this._text = value;
+        }
+        this.checkedText = value;
+    }
 
     /**
      * An input parameter that sets the text in the unchecked state
      */
     @Input()
-    unCheckedText?: string;
+    set setUnCheckedText(value: string) {
+        if (!this.isChecked) {
+            this._text = value;
+        }
+        this.uncheckedText = value;
+    }
 
     /**
      * This input parameter automatically switches the state
@@ -69,15 +81,8 @@ export class SwitchComponent implements OnInit {
     public _markerPath: string = resultTypes.off;
 
     ngOnInit(): void {
+        console.log(this.checkedText, this.uncheckedText);
         this.init();
-    }
-
-    /**
-     * Sets the required value of inner text
-     * @param value Required value for installation
-     */
-    set setText(value: string) {
-        this._text = value;
     }
 
     /**
@@ -88,12 +93,11 @@ export class SwitchComponent implements OnInit {
         this.switchStatus.emit(this.isChecked);
 
         if (this.isChecked) {
-            this.setText = this.checkedText;
+            this._text = this.checkedText;
         } else {
-            if (this.unCheckedText) {
-                this.setText = this.unCheckedText;
-            }
+            this._text = this.uncheckedText;
         }
+
         //If the markers parameter exists
         if (this.useMarkers) {
             //If component is checked we change marker's paths
@@ -106,13 +110,6 @@ export class SwitchComponent implements OnInit {
     }
 
     private init() {
-        if (this.isChecked) {
-            this.setText = this.checkedText;
-        } else {
-            if (this.unCheckedText) {
-                this.setText = this.unCheckedText;
-            }
-        }
         if (this.useMarkers) {
             if (this.isChecked) {
                 this._markerPath = resultTypes.on;
