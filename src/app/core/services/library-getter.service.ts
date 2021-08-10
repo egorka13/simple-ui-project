@@ -1,3 +1,4 @@
+import { AlertComponent } from './../../library/components/alert/alert.component';
 import { Injectable } from '@angular/core';
 import { ILibraryInformation } from '@models/library-getter.model';
 import { ButtonComponent } from '@library-components/button/button.component';
@@ -109,6 +110,14 @@ export class LibraryGetterService {
             component: SwitchComponent,
             title: 'Switch component',
             description: 'Switching Selector.',
+        },
+        suiAlert: {
+            group: 'Multimedia',
+            nameComponent: 'Alert',
+            svgUrl: '/assets/icons/panel/alert-icon.svg',
+            component: AlertComponent,
+            title: 'Alert component',
+            description: 'Use when you need to show alert messages to users.',
         },
         suiRectangle: {
             group: 'Base',
