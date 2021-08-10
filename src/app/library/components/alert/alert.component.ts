@@ -19,5 +19,5 @@ export class AlertComponent {
     public description: string = '';
 
     @Input()
-    public icon: boolean = false;
+    public hasIcon: boolean = false;
 }
