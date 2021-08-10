@@ -9,6 +9,7 @@ import { InputNumberComponent } from '@library-components/input-number/input-num
 import { RadioComponent } from '@library-components/radio/radio.component';
 import { ResultComponent } from '@library-components/result/result.component';
 import { SliderComponent } from '@library-components/slider/slider.component';
+import { RectangleComponent } from '@library-components/rectangle/rectangle.component';
 
 @Injectable({
     providedIn: 'root',
@@ -108,6 +109,14 @@ export class LibraryGetterService {
             component: AlertComponent,
             title: 'Alert component',
             description: 'Use when you need to show alert messages to users.',
+        },
+        suiRectangle: {
+            group: 'Base',
+            nameComponent: 'Rectangle',
+            svgUrl: '/assets/icons/panel/rectangle-icon.svg',
+            title: 'Rectangle component',
+            component: RectangleComponent,
+            description: 'A Rectangle component, can be used for background, header or footer.',
         },
     };
 
