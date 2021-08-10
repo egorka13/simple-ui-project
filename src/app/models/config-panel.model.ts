@@ -105,6 +105,13 @@ export const componentModels: IComponentPrototype = {
         step: { type: 'number', value: 1 },
     },
     'sui-switch': {},
+    'sui-link': {
+        text: { type: 'text', value: 'Link' },
+        color: { type: 'color', value: 'hsl(0, 0%, 0%)' },
+        colorHover: { type: 'color', value: 'hsl(0, 0%, 50%)' },
+        fontSize: { type: 'number', value: 14 },
+        href: { type: 'text', value: '' },
+    },
     'sui-alert': {
         type: { type: 'select', options: ['success', 'info', 'warning', 'error'], value: 'success' },
         message: { type: 'text', value: 'Success text' },
