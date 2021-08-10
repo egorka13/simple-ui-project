@@ -15,6 +15,9 @@ import { InputNumberComponent } from './components/input-number/input-number.com
 import { SliderComponent } from './components/slider/slider.component';
 import { CardComponent } from './components/card/card.component';
 import { SwitchComponent } from './components/switch/switch.component';
+import { LinkComponent } from './components/link/link.component';
+import { AlertComponent } from './components/alert/alert.component';
+import { RectangleComponent } from './components/rectangle/rectangle.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +30,9 @@ import { SwitchComponent } from './components/switch/switch.component';
         SliderComponent,
         CardComponent,
         SwitchComponent,
+        LinkComponent,
+        AlertComponent,
+        RectangleComponent,
     ],
     imports: [BrowserModule, FormsModule, CommonModule, HttpClientModule, AngularSvgIconModule.forRoot()],
     exports: [
@@ -39,6 +45,9 @@ import { SwitchComponent } from './components/switch/switch.component';
         SliderComponent,
         CardComponent,
         SwitchComponent,
+        LinkComponent,
+        AlertComponent,
+        RectangleComponent,
     ],
     providers: [],
 })

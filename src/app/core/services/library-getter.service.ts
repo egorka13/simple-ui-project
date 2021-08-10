@@ -1,3 +1,4 @@
+import { AlertComponent } from './../../library/components/alert/alert.component';
 import { Injectable } from '@angular/core';
 import { ILibraryInformation } from '@models/library-getter.model';
 import { ButtonComponent } from '@library-components/button/button.component';
@@ -9,6 +10,8 @@ import { RadioComponent } from '@library-components/radio/radio.component';
 import { ResultComponent } from '@library-components/result/result.component';
 import { SliderComponent } from '@library-components/slider/slider.component';
 import { SwitchComponent } from '@library-components/switch/switch.component';
+import { LinkComponent } from '@library-components/link/link.component';
+import { RectangleComponent } from '@library-components/rectangle/rectangle.component';
 
 @Injectable({
     providedIn: 'root',
@@ -108,6 +111,30 @@ export class LibraryGetterService {
             component: SwitchComponent,
             title: 'Switch component',
             description: 'Switching Selector.',
+        },
+        suiLink: {
+            group: 'Base',
+            nameComponent: 'Link',
+            svgUrl: '/assets/icons/panel/link-icon.svg',
+            component: LinkComponent,
+            title: 'Link component',
+            description: 'A link component.',
+        },
+        suiAlert: {
+            group: 'Multimedia',
+            nameComponent: 'Alert',
+            svgUrl: '/assets/icons/panel/alert-icon.svg',
+            component: AlertComponent,
+            title: 'Alert component',
+            description: 'Use when you need to show alert messages to users.',
+        },
+        suiRectangle: {
+            group: 'Base',
+            nameComponent: 'Rectangle',
+            svgUrl: '/assets/icons/panel/rectangle-icon.svg',
+            title: 'Rectangle component',
+            component: RectangleComponent,
+            description: 'A Rectangle component, can be used for background, header or footer.',
         },
     };
 
