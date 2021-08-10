@@ -9,6 +9,7 @@ import { InputNumberComponent } from '@library-components/input-number/input-num
 import { RadioComponent } from '@library-components/radio/radio.component';
 import { ResultComponent } from '@library-components/result/result.component';
 import { SliderComponent } from '@library-components/slider/slider.component';
+import { LinkComponent } from '@library-components/link/link.component';
 import { RectangleComponent } from '@library-components/rectangle/rectangle.component';
 
 @Injectable({
@@ -101,6 +102,14 @@ export class LibraryGetterService {
             component: SliderComponent,
             title: 'Slider component',
             description: 'A Slider component for displaying current value and intervals in range.',
+        },
+        suiLink: {
+            group: 'Base',
+            nameComponent: 'Link',
+            svgUrl: '/assets/icons/panel/link-icon.svg',
+            component: LinkComponent,
+            title: 'Link component',
+            description: 'A link component.',
         },
         suiAlert: {
             group: 'Multimedia',
