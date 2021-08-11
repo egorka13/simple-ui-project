@@ -49,8 +49,12 @@
                     <button type="button" class="sui-header__navigation-btn _arrow" title="Redo">
                         <svg-icon src="../../../assets/icons/header/header-next-arrow.svg"></svg-icon>
                     </button>
-                    <button type="button" class="sui-header__navigation-btn _remove" title="Remove element">
-                        <svg-icon src="../../../assets/icons/header/header-remove.svg"></svg-icon>
+                    <button type="button" class="sui-header__navigation-btn _clear" title="Clear board">
+                        <svg-icon
+                            [svgClass]="'sui-header__navigation-clear'"
+                            src="../../../assets/icons/header/header-clear.svg"
+                        >
+                        </svg-icon>
                     </button>
                     <button
                         (click)="onClickSetGridState()"
@@ -59,6 +63,14 @@
                         title="On/off grid"
                     >
                         <svg-icon [src]="getGridPath()"></svg-icon>
+                    </button>
+                    <button
+                        (click)="onClickSetInteractiveModeState()"
+                        type="button"
+                        class="sui-header__navigation-btn _interactive"
+                        title="Toggle interactive mode"
+                    >
+                        <svg-icon [src]="getToggleModeIcoPath()"></svg-icon>
                     </button>
                     <a class="sui-header__navlink" href="/lib" title="show lib components"
                         ><svg-icon

@@ -15,6 +15,8 @@ export class HeaderComponent {
     //Property showing the state of the main screen grid
     public gridState: boolean = this.gridSettingsService.gridStatus;
 
+    public interactiveState: boolean = false;
+
     /**
      * Method that returns the path to the grid icon
      * @see HeaderComponent.gridState
@@ -23,6 +25,21 @@ export class HeaderComponent {
     public getGridPath(): string {
         const iconPath = '../../../assets/icons/header/';
         return this.gridState ? iconPath + 'header-grid-btn.svg' : iconPath + 'header-grid-none.svg';
+    }
+
+    /**
+     * Method that returns the path to the grid icon
+     * @see HeaderComponent.gridState
+     * @returns Method that returns the path to the grid icon depending on whether the option is enabled
+     */
+    public getToggleModeIcoPath(): string {
+        const iconPath = '../../../assets/icons/header/';
+        return this.interactiveState ? iconPath + 'header-interactive-hover.svg' : iconPath + 'header-interactive.svg';
+    }
+
+    public onClickSetInteractiveModeState(): void {
+        this.interactiveState = !this.interactiveState;
+        this.boardSettingsService.isInteractiveMode = !this.boardSettingsService.isInteractiveMode;
     }
 
     /**

@@ -98,6 +98,11 @@
             }
         }
 
+        //.sui-header__navigation-clear
+        &-clear{
+            transition: 0.2s;
+        }
+
         //.sui-header__navigation-btn
         &-btn {
             box-sizing: border-box;
@@ -109,12 +114,21 @@
                 .sui-header__navigation-btnZoom {
                     fill: @sui-blue-1;
                 }
+                .sui-header__navigation-clear{
+                    fill: @sui-blue-1;
+                }
             }
 
             //.sui-header__navigation-btn _grid
             &._grid {
                 width: 28px;
                 height: 26px;
+            }
+
+            &._arrow{
+                &:hover{
+                    fill: @sui-blue-1;
+                }
             }
         }
 
