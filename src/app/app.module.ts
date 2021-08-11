@@ -19,7 +19,7 @@ import { PanelFilterPipe } from '@pipes/panel-filter.pipe';
 import { PanelGroupPipe } from '@pipes/panel-group.pipe';
 import { GridComponent } from '@components/header/grid/grid.component';
 import { PopupComponent } from '@components/component-panel/popup/popup.component';
-import { ContextMenuComponent } from './components/board/board-item/context-menu/context-menu.component';
+import { ContextMenuComponent } from './components/board/context-menu/context-menu.component';
 
 @NgModule({
     declarations: [

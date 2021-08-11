@@ -21,7 +21,7 @@ import { BoardSettingsService } from '@services/board-settings.service';
 import { BoardConverseService } from '@services/board-converse.service';
 
 import { BoardItemComponent } from './board-item/board-item.component';
-import { ContextMenuComponent } from './board-item/context-menu/context-menu.component'; // TODO: Change pass here.
+import { ContextMenuComponent } from './context-menu/context-menu.component';
 
 import { IDragMetadata } from '@models/board.model';
 
