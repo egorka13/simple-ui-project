@@ -18,6 +18,7 @@
         >
             Toggle Interactive Mode
         </button>
+        <button (click)="boardConverseService.wipeBoard()" [style.outline]="'1px solid gray'">Wipe the board</button>
         <!-- <button
             (click)="boardSettingsService.isInfiniteBoardMode = !boardSettingsService.isInfiniteBoardMode"
             [style.outline]="'1px solid gray'"

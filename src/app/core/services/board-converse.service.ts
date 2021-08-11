@@ -22,6 +22,7 @@ export class BoardConverseService {
     // TODO: Consider an asObserver here.
     public showContextMenu$ = new Subject<[number, number, BoardItemComponent]>();
     // TODO: Consider an asObserver here.
+    public wipeBoard$ = new Subject();
     public zIndexChange$: Subject<number> = new Subject();
 
     /**
@@ -35,10 +36,32 @@ export class BoardConverseService {
     }
 
     /**
+     * This function deletes all board-item components on the board.
+     * @memberof BoardConverseService
+     */
+    public wipeBoard(): void {
+        this.wipeBoard$.next();
+    }
+
+    /**
+     * This function remove transmitted board-item.
+     * @param {BoardItemComponent} boardItem - Component to remove.
+     * @memberof BoardConverseService
+     */
+    public removeBoardItemComponent(boardItem: BoardItemComponent): void {
+        this.removeLibraryComponent$.next(boardItem);
+
+        if (boardItem === this.selectedBoardItem) {
+            this.selectedBoardItem = null;
+            this.configDataService.setConfigData(null);
+        }
+    }
+
+    /**
      * This function remove current selected component from the board.
      * @memberof BoardConverseService
      */
-    public removeLibraryComponent(): void {
+    public removeSelectedComponent(): void {
         if (this.selectedBoardItem) {
             this.removeLibraryComponent$.next(this.selectedBoardItem);
             this.selectedBoardItem = null;

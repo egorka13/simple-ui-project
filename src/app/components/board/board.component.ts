@@ -91,6 +91,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         this.setZoomListener();
         this.setAddComponentListener();
         this.setRemoveComponentListener();
+        this.setWipeBoardListener();
         this.setContextMenuListener();
 
         // Setting up a starting board size.
@@ -168,11 +169,27 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             )[0];
 
             const index: number = this.boardItems.indexOf(itemRef);
-            this.componentsContainerView.remove(index);
             this.boardItems.splice(index, 1);
+            itemRef.destroy();
         };
 
         this.toUnsubscribe.add(this.boardConverseService.removeLibraryComponent$.subscribe(removeLibComponent));
+    }
+
+    /**
+     * This function sets up a listener that deletes all board-item components from the board.
+     * @private
+     * @memberof BoardComponent
+     */
+    private setWipeBoardListener(): void {
+        this.toUnsubscribe.add(
+            this.boardConverseService.wipeBoard$.subscribe(() => {
+                this.boardItems.forEach((item: ComponentRef<BoardItemComponent>) => {
+                    item.destroy();
+                });
+                this.boardItems = [];
+            })
+        );
     }
 
     /**

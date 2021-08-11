@@ -26,9 +26,16 @@ export class ContextMenuComponent {
             this.boardItem.zIndexShift += 1;
         }
     }
+
     public _goDown(): void {
         if (this.boardItem) {
             this.boardItem.zIndexShift -= 1;
+        }
+    }
+
+    public _delete(): void {
+        if (this.boardItem) {
+            this.boardConverseService.removeBoardItemComponent(this.boardItem);
         }
     }
 }

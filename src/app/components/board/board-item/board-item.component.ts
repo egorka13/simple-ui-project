@@ -194,7 +194,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
      */
     private setDeleteKeyListener(): void {
         this.deleteUnlistener = this.r2.listen(document, 'keydown.delete', () => {
-            this.boardConverseService.removeLibraryComponent();
+            this.boardConverseService.removeSelectedComponent();
         });
     }
 
