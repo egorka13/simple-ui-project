@@ -138,7 +138,10 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
             this.componentFactoryResolver.resolveComponentFactory<LibraryComponent>(libraryComponent);
 
         this.libComponentName = componentFactory.selector.toLowerCase();
-        this.properties = this.objDeepCopy(componentModels[this.libComponentName]);
+
+        if (componentModels[this.libComponentName]) {
+            this.properties = this.objDeepCopy(componentModels[this.libComponentName]);
+        }
 
         setTimeout(() => {
             this.innerLibComponent = this.viewContainerTarget.createComponent<LibraryComponent>(componentFactory);
