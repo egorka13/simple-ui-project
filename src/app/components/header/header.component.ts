@@ -118,6 +118,7 @@ export class HeaderComponent {
      */
     onClickZoomIn(): void {
         this.boardSettingsService.changeScale(1);
+        this.boardSettingsService.enableSmoothTransition();
     }
 
     /**
@@ -125,5 +126,6 @@ export class HeaderComponent {
      */
     onClickZoomOut(): void {
         this.boardSettingsService.changeScale(-1);
+        this.boardSettingsService.enableSmoothTransition();
     }
 }
