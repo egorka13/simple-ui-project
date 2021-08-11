@@ -110,7 +110,7 @@ export const componentModels: IComponentPrototype = {
         setUnCheckedText: { type: 'text', value: '' },
         isLoading: { type: 'select', options: ['false', 'true'], value: false },
         useMarkers: { type: 'select', options: ['false', 'true'], value: false },
-        isChecked: { type: 'select', options: ['false', 'true'], value: false },
+        setChecked: { type: 'select', options: ['false', 'true'], value: false },
         isDisabled: { type: 'select', options: ['false', 'true'], value: false },
     },
 

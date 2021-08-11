@@ -12,6 +12,8 @@ import { resultTypes, TypeSwitch } from './switch.model';
 export class SwitchComponent implements OnInit {
     private checkedText: string = '';
     private uncheckedText: string = '';
+    public isChecked: boolean = false;
+    public isDisabled: boolean = false;
     /**
      * An input parameter that sets the text in the checked state
      */
@@ -60,13 +62,32 @@ export class SwitchComponent implements OnInit {
      * The parameter responsible for the active state of the component.
      */
     @Input()
-    isChecked: boolean = false;
+    set setChecked(value: boolean) {
+        this.isChecked = value;
+        if (this.isChecked) {
+            this._text = this.checkedText;
+        } else {
+            this._text = this.uncheckedText;
+        }
+
+        //If the markers parameter exists
+        if (this.useMarkers) {
+            //If component is checked we change marker's paths
+            if (this.isChecked) {
+                this._markerPath = resultTypes.on;
+            } else {
+                this._markerPath = resultTypes.off;
+            }
+        }
+    }
 
     /**
      * The parameter responsible for the disable state of the component.
      */
     @Input()
-    isDisabled: boolean = false;
+    set setDisabled(value: boolean) {
+        this.isDisabled = value;
+    }
     /**
      * Parameter responsible for the internal text of the component
      */
@@ -81,7 +102,6 @@ export class SwitchComponent implements OnInit {
     public _markerPath: string = resultTypes.off;
 
     ngOnInit(): void {
-        console.log(this.checkedText, this.uncheckedText);
         this.init();
     }
 
