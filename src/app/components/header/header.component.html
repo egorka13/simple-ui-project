@@ -62,7 +62,7 @@
                         class="sui-header__navigation-btn _grid"
                         title="On/off grid"
                     >
-                        <svg-icon [src]="getGridPath()"></svg-icon>
+                        <svg-icon [src]="getIconPath(gridState, 'header-grid-btn.svg', 'header-grid-none.svg')"></svg-icon>
                     </button>
                     <button
                         (click)="onClickSetInteractiveModeState()"
@@ -70,7 +70,7 @@
                         class="sui-header__navigation-btn _interactive"
                         title="Toggle interactive mode"
                     >
-                        <svg-icon [src]="getToggleModeIcoPath()"></svg-icon>
+                        <svg-icon [src]="getIconPath(interactiveState, 'header-interactive-hover.svg', 'header-interactive.svg')"></svg-icon>
                     </button>
                     <a class="sui-header__navlink" href="/lib" title="show lib components"
                         ><svg-icon

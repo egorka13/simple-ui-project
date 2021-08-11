@@ -18,23 +18,15 @@ export class HeaderComponent {
     public interactiveState: boolean = false;
 
     /**
-     * Method that returns the path to the grid icon
-     * @see HeaderComponent.gridState
-     * @returns Method that returns the path to the grid icon depending on whether the option is enabled
+     * Method for getting the path of the icon, depending on the state
+     * @param state states of some value
+     * @param acceptPath path to icon in case of true value
+     * @param negativePath  path to icon in case of false value
+     * @returns returns the path to the icons located in the application header directory
      */
-    public getGridPath(): string {
+    public getIconPath(state: boolean, acceptPath: string, negativePath: string): string {
         const iconPath = '../../../assets/icons/header/';
-        return this.gridState ? iconPath + 'header-grid-btn.svg' : iconPath + 'header-grid-none.svg';
-    }
-
-    /**
-     * Method that returns the path to the grid icon
-     * @see HeaderComponent.gridState
-     * @returns Method that returns the path to the grid icon depending on whether the option is enabled
-     */
-    public getToggleModeIcoPath(): string {
-        const iconPath = '../../../assets/icons/header/';
-        return this.interactiveState ? iconPath + 'header-interactive-hover.svg' : iconPath + 'header-interactive.svg';
+        return state ? iconPath + acceptPath : iconPath + negativePath;
     }
 
     public onClickSetInteractiveModeState(): void {
