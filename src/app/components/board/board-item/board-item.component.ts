@@ -145,6 +145,24 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             this.innerLibComponent.instance[key] = config[key].value;
         }
+
+        setTimeout(() => {
+            const styles: CSSStyleDeclaration = getComputedStyle(this.boardItem.nativeElement);
+            // prettier-ignore
+            const transformMatrix: Array<string> = styles.transform.match(/-?\d+(\.\d+)?/g) ||
+                                                   [ '1', '0', '0', '1', '0', '0'];
+
+            let x = +transformMatrix[4];
+            let y = +transformMatrix[5];
+
+            if (!this.boardSettingsService.isInfiniteBoardMode) {
+                [x, y] = this.disignateBorder(x, y);
+            }
+
+            const transformString: string = `translate(${x}px, ${y}px)`;
+
+            this.r2.setStyle(this.boardItem.nativeElement, 'transform', transformString);
+        });
     }
 
     /**
