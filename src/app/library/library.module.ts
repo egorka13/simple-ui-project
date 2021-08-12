@@ -14,7 +14,6 @@ import { InputComponent } from './components/input/input.component';
 import { InputNumberComponent } from './components/input-number/input-number.component';
 import { SliderComponent } from './components/slider/slider.component';
 import { CardComponent } from './components/card/card.component';
-import { SwitchComponent } from './components/switch/switch.component';
 import { LinkComponent } from './components/link/link.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { RectangleComponent } from './components/rectangle/rectangle.component';
@@ -29,7 +28,6 @@ import { RectangleComponent } from './components/rectangle/rectangle.component';
         InputNumberComponent,
         SliderComponent,
         CardComponent,
-        SwitchComponent,
         LinkComponent,
         AlertComponent,
         RectangleComponent,
@@ -44,7 +42,6 @@ import { RectangleComponent } from './components/rectangle/rectangle.component';
         InputNumberComponent,
         SliderComponent,
         CardComponent,
-        SwitchComponent,
         LinkComponent,
         AlertComponent,
         RectangleComponent,
