@@ -13,9 +13,9 @@ import { Router } from '@angular/router';
  */
 export class HeaderComponent {
     //Property showing the state of the main screen grid
-    public isGridState: boolean = this.gridSettingsService.gridStatus;
+    public isGridMode: boolean = this.gridSettingsService.gridStatus;
 
-    public isInteractiveState: boolean = false;
+    public isInteractiveMode: boolean = false;
 
     /**
      * Method for getting the path of the icon, depending on the state
@@ -30,7 +30,7 @@ export class HeaderComponent {
     }
 
     public onClickSetInteractiveModeState(): void {
-        this.isInteractiveState = !this.isInteractiveState;
+        this.isInteractiveMode = !this.isInteractiveMode;
         this.boardSettingsService.isInteractiveMode = !this.boardSettingsService.isInteractiveMode;
     }
 
@@ -40,8 +40,8 @@ export class HeaderComponent {
      * @see GridSettingsService
      */
     public onClickSetGridState(): void {
-        this.isGridState = !this.isGridState;
-        this.gridSettingsService.setGridStatus(this.isGridState);
+        this.isGridMode = !this.isGridMode;
+        this.gridSettingsService.setGridStatus(this.isGridMode);
     }
 
     /**
