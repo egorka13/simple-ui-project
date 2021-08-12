@@ -104,6 +104,16 @@ export const componentModels: IComponentPrototype = {
         currentValue: { type: 'number', value: 0 },
         step: { type: 'number', value: 1 },
     },
+
+    'sui-switch': {
+        setCheckedText: { type: 'text', value: '' },
+        setUnCheckedText: { type: 'text', value: '' },
+        isLoading: { type: 'select', options: ['false', 'true'], value: false },
+        useMarkers: { type: 'select', options: ['false', 'true'], value: false },
+        setChecked: { type: 'select', options: ['false', 'true'], value: false },
+        isDisabled: { type: 'select', options: ['false', 'true'], value: false },
+    },
+
     'sui-link': {
         text: { type: 'text', value: 'Link' },
         color: { type: 'color', value: 'hsl(0, 0%, 0%)' },
