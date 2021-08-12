@@ -40,6 +40,8 @@ export class BoardConverseService {
      * @memberof BoardConverseService
      */
     public wipeBoard(): void {
+        this.selectedBoardItem = null;
+        this.configDataService.setConfigData(null);
         this.wipeBoard$.next();
     }
 
