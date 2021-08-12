@@ -13,16 +13,25 @@ import { Router } from '@angular/router';
  */
 export class HeaderComponent {
     //Property showing the state of the main screen grid
-    public gridState: boolean = this.gridSettingsService.gridStatus;
+    public isGridMode: boolean = this.gridSettingsService.gridStatus;
+
+    public isInteractiveMode: boolean = false;
 
     /**
-     * Method that returns the path to the grid icon
-     * @see HeaderComponent.gridState
-     * @returns Method that returns the path to the grid icon depending on whether the option is enabled
+     * Method for getting the path of the icon, depending on the state
+     * @param state states of some value
+     * @param acceptPath path to icon in case of true value
+     * @param negativePath  path to icon in case of false value
+     * @returns returns the path to the icons located in the application header directory
      */
-    public getGridPath(): string {
+    public getIconPath(state: boolean, acceptPath: string, negativePath: string): string {
         const iconPath = '../../../assets/icons/header/';
-        return this.gridState ? iconPath + 'header-grid-btn.svg' : iconPath + 'header-grid-none.svg';
+        return state ? iconPath + acceptPath : iconPath + negativePath;
+    }
+
+    public onClickSetInteractiveModeState(): void {
+        this.isInteractiveMode = !this.isInteractiveMode;
+        this.boardSettingsService.isInteractiveMode = !this.boardSettingsService.isInteractiveMode;
     }
 
     /**
@@ -31,8 +40,8 @@ export class HeaderComponent {
      * @see GridSettingsService
      */
     public onClickSetGridState(): void {
-        this.gridState = !this.gridState;
-        this.gridSettingsService.setGridStatus(this.gridState);
+        this.isGridMode = !this.isGridMode;
+        this.gridSettingsService.setGridStatus(this.isGridMode);
     }
 
     /**
@@ -101,6 +110,7 @@ export class HeaderComponent {
      */
     onClickZoomIn(): void {
         this.boardSettingsService.changeScale(1);
+        this.boardSettingsService.enableSmoothTransition();
     }
 
     /**
@@ -108,5 +118,6 @@ export class HeaderComponent {
      */
     onClickZoomOut(): void {
         this.boardSettingsService.changeScale(-1);
+        this.boardSettingsService.enableSmoothTransition();
     }
 }
