@@ -109,6 +109,13 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         });
     }
 
+    /**
+     * This function sets up a listener of the board converse service that waiting for a context menu call.
+     * When it emits the board component creates a context menu component and positions it.
+     * Once a user presses anywhere on the page the context menu is deleted.
+     * @private
+     * @memberof BoardComponent
+     */
     private setContextMenuListener(): void {
         const createContextMenu = ([x, y, boardItem]: [number, number, BoardItemComponent]) => {
             const componentFactory: ComponentFactory<ContextMenuComponent> =

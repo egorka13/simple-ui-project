@@ -123,6 +123,9 @@ export class HeaderComponent {
         this.boardSettingsService.enableSmoothTransition();
     }
 
+    /**
+     * Deletes all components on the board
+     */
     onClickWipeBoard(): void {
         this.boardConverseService.wipeBoard();
     }

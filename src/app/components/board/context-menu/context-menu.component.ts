@@ -21,18 +21,30 @@ export class ContextMenuComponent {
 
     constructor(public boardConverseService: BoardConverseService) {}
 
+    /**
+     * This function increase z-index of the board-item component.
+     * @memberof ContextMenuComponent
+     */
     public _goUp(): void {
         if (this.boardItem) {
             this.boardItem.zIndexShift += 1;
         }
     }
 
+    /**
+     * This function decrease z-index of the board-item component.
+     * @memberof ContextMenuComponent
+     */
     public _goDown(): void {
         if (this.boardItem) {
             this.boardItem.zIndexShift -= 1;
         }
     }
 
+    /**
+     * This function delete board-item component.
+     * @memberof ContextMenuComponent
+     */
     public _delete(): void {
         if (this.boardItem) {
             this.boardConverseService.removeBoardItemComponent(this.boardItem);

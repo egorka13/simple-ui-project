@@ -71,6 +71,13 @@ export class BoardConverseService {
         }
     }
 
+    /**
+     * This function shows context menu on the page.
+     * @param {number} x - X coordinate of a fixed context menu frame (top left corner).
+     * @param {number} y - Y coordinate of a fixed context menu frame (top ledt corner).
+     * @param {BoardItemComponent} boardItem - Board-item on which the context menu called.
+     * @memberof BoardConverseService
+     */
     public showContextMenu(x: number, y: number, boardItem: BoardItemComponent): void {
         this.showContextMenu$.next([x, y, boardItem]);
     }

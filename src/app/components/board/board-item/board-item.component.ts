@@ -188,7 +188,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     }
 
     /**
-     * This functio sets a listener of the delete key and delete current selected component when it is pressed.
+     * This function sets a listener of the delete key and delete current selected component when it is pressed.
      * @private
      * @memberof BoardItemComponent
      */
