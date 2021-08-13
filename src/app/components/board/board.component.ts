@@ -129,12 +129,30 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
 
             menuComponentRef.instance.boardItem = boardItem;
 
-            const unlistener: () => void = this.r2.listen(menuComponentRef.location.nativeElement, 'mouseup', () => {
-                setTimeout(() => {
-                    menuComponentRef.destroy();
-                    unlistener();
+            const destroySubscriptions: Array<() => void> = [];
+
+            const destroyContextMenu: () => void = () => {
+                menuComponentRef.destroy();
+                destroySubscriptions.forEach(unsubscribe => {
+                    unsubscribe();
                 });
-            });
+            };
+
+            destroySubscriptions.push(
+                this.r2.listen(document, 'keydown', () => {
+                    setTimeout(() => {
+                        destroyContextMenu();
+                    });
+                })
+            );
+
+            destroySubscriptions.push(
+                this.r2.listen(menuComponentRef.location.nativeElement, 'mouseup', () => {
+                    setTimeout(() => {
+                        destroyContextMenu();
+                    });
+                })
+            );
         };
 
         this.toUnsubscribe.add(this.boardConverseService.showContextMenu$.subscribe(createContextMenu));
