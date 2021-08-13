@@ -42,7 +42,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
 
     private innerLibComponent: ComponentRef<any>;
     private toUnlisten: Array<() => void> = [];
-    private deleteUnlistener: () => void;
+    private deleteKeyUnlistener: () => void;
 
     private menuSubscription: Subscription;
     private zIndexBase: number = 100;
@@ -98,8 +98,8 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
             unlistener();
         });
 
-        if (this.deleteUnlistener) {
-            this.deleteUnlistener();
+        if (this.deleteKeyUnlistener) {
+            this.deleteKeyUnlistener();
         }
 
         if (this.menuSubscription) {
@@ -171,7 +171,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
      */
     public deselect(): void {
         this._isSelected = false;
-        this.deleteUnlistener();
+        this.deleteKeyUnlistener();
     }
 
     /**
@@ -193,7 +193,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
      * @memberof BoardItemComponent
      */
     private setDeleteKeyListener(): void {
-        this.deleteUnlistener = this.r2.listen(document, 'keydown.delete', () => {
+        this.deleteKeyUnlistener = this.r2.listen(document, 'keydown.delete', () => {
             this.boardConverseService.removeSelectedComponent();
         });
     }
