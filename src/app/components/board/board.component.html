@@ -7,29 +7,6 @@
     [style.width]="boardSettingsService.width + 'px'"
     #field
 >
-    <!-- Showcases -->
-    <div class="sui-board__field-showcases">
-        <!-- <h1>Scale {{ boardSettingsService.scale }}</h1> -->
-        <!-- <input type="number" [(ngModel)]="boardSettingsService.height" /> -->
-        <!-- <input type="number" [(ngModel)]="boardSettingsService.width" /> -->
-        <button
-            (click)="boardSettingsService.isInteractiveMode = !boardSettingsService.isInteractiveMode"
-            [style.outline]="'1px solid gray'"
-        >
-            Toggle Interactive Mode
-        </button>
-        <button (click)="boardConverseService.wipeBoard()" [style.outline]="'1px solid gray'">Wipe the board</button>
-        <!-- <button
-            (click)="boardSettingsService.isInfiniteBoardMode = !boardSettingsService.isInfiniteBoardMode"
-            [style.outline]="'1px solid gray'"
-        >
-            Toggle Infinite Mode
-        </button> -->
-        <!-- <button (click)="boardConverseService.removeLibraryComponent()" [style.outline]="'1px solid gray'">
-            Delete selected
-        </button> -->
-    </div>
-
     <sui-grid></sui-grid>
 
     <div class="sui-board__components">
