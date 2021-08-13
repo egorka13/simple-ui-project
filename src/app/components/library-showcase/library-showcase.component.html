@@ -31,6 +31,16 @@
         <sui-card size="small"></sui-card>
     </div>
     <div class="sui-library__item">
+        <sui-switch [setChecked]="true"></sui-switch>
+        <sui-switch [setChecked]="true" [setCheckedText]="'开启'" [setUnCheckedText]="'关闭'"></sui-switch>
+        <sui-switch [setCheckedText]="'1'" [setUnCheckedText]="'0'"></sui-switch>
+        <sui-switch [useMarkers]="true" [setChecked]="true"></sui-switch>
+        <sui-switch [setDisabled]="true" [setChecked]="true"></sui-switch>
+        <sui-switch [isLoading]="true" [setChecked]="true"></sui-switch>
+        <sui-switch [isLoading]="true" [setChecked]="false"></sui-switch>
+        <sui-switch [setDisabled]="true" [setChecked]="true" [setCheckedText]="'checked disabled'"></sui-switch>
+    </div>
+    <div class="sui-library__item">
         <sui-link></sui-link>
     </div>
     <div class="sui-library__item">
