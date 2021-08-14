@@ -18,6 +18,7 @@ import { SwitchComponent } from './components/switch/switch.component';
 import { LinkComponent } from './components/link/link.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { RectangleComponent } from './components/rectangle/rectangle.component';
+import { TabsComponent } from './components/tabs/tabs.component';
 
 @NgModule({
     declarations: [
@@ -33,6 +34,7 @@ import { RectangleComponent } from './components/rectangle/rectangle.component';
         LinkComponent,
         AlertComponent,
         RectangleComponent,
+        TabsComponent,
     ],
     imports: [BrowserModule, FormsModule, CommonModule, HttpClientModule, AngularSvgIconModule.forRoot()],
     exports: [
@@ -48,6 +50,7 @@ import { RectangleComponent } from './components/rectangle/rectangle.component';
         LinkComponent,
         AlertComponent,
         RectangleComponent,
+        TabsComponent,
     ],
     providers: [],
 })

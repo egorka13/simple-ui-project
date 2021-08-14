@@ -1,0 +1,74 @@
+@import "colors.less";
+
+:host {
+    padding: 10px;
+}
+
+.sui-tabs {
+    &__wrapper {
+        min-width: 500px;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    &__navigation {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        max-width: 800px;
+
+        /* для Chrome/Edge/Safari */
+        &::-webkit-scrollbar {
+            width: 1px;
+            height: 2px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            height: 2px;
+        }
+    }
+
+    &__btn {
+        display: flex;
+        flex-wrap: nowrap;
+
+        &-item {
+            text-align: center;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin: 0;
+            font-size: 14px;
+            font-family: Arial, Helvetica, sans-serif;
+            transition: .2s ease-in-out;
+
+            &:nth-child(1) {
+                padding-left: 0px;
+            }
+
+            &:not(:disabled):hover {
+                color: @lib-blue;
+            }
+
+            &:disabled {
+                color: @lib-font-disabled;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    &__delimiter {
+        height: 1px;
+        background: @lib-grey;
+
+        &-item {
+            position: relative;
+            height: 2px;
+            width: 35px;
+            background: @lib-active-blue;
+            transition: .2s;
+        }
+    }
+}
