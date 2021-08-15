@@ -1,4 +1,7 @@
-<div class="sui-tabs__wrapper">
+<div class="sui-tabs__wrapper"
+[ngClass]="{
+    '_fullSize': isFullSizeMode
+}">
     <nav class="sui-tabs__navigation">
         <div #btnContainer class="sui-tabs__btn" (click)="onClickItem($event)">
             <button *ngFor="let item of innerContent; let i = index" 
@@ -18,7 +21,7 @@
     </nav>
     <div class="sui-tabs__content">
         {{ templateContent }}
-        <ng-container #tabsContent></ng-container>
+        <ng-template #tabsContent></ng-template>
     </div>
 </div>
 

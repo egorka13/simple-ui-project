@@ -10,6 +10,9 @@
         display: flex;
         flex-direction: column;
         gap: 25px;
+        &._fullSize{
+            width: 100vw;
+        }
     }
 
     &__navigation {
@@ -18,7 +21,6 @@
         gap: 15px;
         overflow-x: auto;
         overflow-y: hidden;
-        max-width: 800px;
 
         &::-webkit-scrollbar {
             width: 1px;

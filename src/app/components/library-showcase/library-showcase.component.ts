@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { suiSliderParams } from '@library-components/slider/slider-params.model';
 import { TabsContent } from '@library-components/tabs/tabs.model';
+import { LibraryGetterService } from '@services/library-getter.service';
 
 @Component({
     selector: 'sui-library-showcase',
@@ -8,15 +8,7 @@ import { TabsContent } from '@library-components/tabs/tabs.model';
     styleUrls: ['./library-showcase.component.less'],
 })
 export class LibraryShowcaseComponent {
-    public sliderComponentParams: suiSliderParams[] = [
-        {
-            showMinimalValue: true,
-            showMaximumValue: true,
-        },
-        {
-            setLegend: 'Disabled Version',
-        },
-    ];
+    constructor(private libraryGetterService: LibraryGetterService) {}
 
     public tabsContent: TabsContent[] = [
         {
@@ -30,9 +22,9 @@ export class LibraryShowcaseComponent {
             content: 'Content of tab-2',
         },
         {
-            tabTitle: 'Tab-1',
+            tabTitle: 'Tab-3',
             isDisable: false,
-            content: 'Content of tab-3',
+            content: this.libraryGetterService.getLibraryComponentsInfo.suiSwitch.component,
         },
     ];
 }

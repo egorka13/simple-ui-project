@@ -18,12 +18,20 @@ import { TabsContent } from './tabs.model';
 export class TabsComponent implements AfterViewInit {
     public delimiterXpos: string = '0px';
     public targetElementWidth: string = '0px';
-    public delimiterContainerWidth: string = '500px';
-    private different: number = 20;
     public templateContent: string = '';
+    public delimiterContainerWidth: string = '500px';
+    public isFullSizeMode: boolean = false;
+
+    private different: number = 20;
 
     @Input()
     innerContent: Array<TabsContent> = [];
+
+    @Input()
+    set setFullSizeMode(value: boolean) {
+        this.isFullSizeMode = value;
+        this.fullMode();
+    }
 
     @ViewChild('btnContainer')
     btnContainerRef: ElementRef;
@@ -31,10 +39,7 @@ export class TabsComponent implements AfterViewInit {
     @ViewChild('tabsContent', { read: ViewContainerRef })
     contentContainer: ViewContainerRef;
 
-    constructor(
-        private componentFactoryResolver: ComponentFactoryResolver,
-        public viewContainerRef: ViewContainerRef
-    ) {}
+    constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
     public onClickItem(event: Event): void {
         const targetElement: HTMLElement = event.target as HTMLElement;
@@ -64,7 +69,7 @@ export class TabsComponent implements AfterViewInit {
                 const targetComponent = this.componentFactoryResolver.resolveComponentFactory(
                     this.innerContent[elementNumber - 1].content
                 );
-                this.viewContainerRef.createComponent(targetComponent);
+                this.contentContainer.createComponent(targetComponent);
                 break;
             default:
                 console.log(
@@ -76,10 +81,7 @@ export class TabsComponent implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        const btnContainer: HTMLElement = this.btnContainerRef.nativeElement as HTMLElement;
-        setTimeout(() => {
-            this.delimiterContainerWidth = `${btnContainer.scrollWidth}px`;
-        }, 0);
+        this.fullMode();
     }
 
     private getType(value: any): string {
@@ -88,6 +90,17 @@ export class TabsComponent implements AfterViewInit {
 
     private clearContent(): void {
         this.templateContent = '';
-        this.viewContainerRef.clear();
+        this.contentContainer.clear();
+    }
+
+    private fullMode(): void {
+        const btnContainer: HTMLElement = this.btnContainerRef.nativeElement as HTMLElement;
+        setTimeout(() => {
+            if (!this.isFullSizeMode) {
+                this.delimiterContainerWidth = `${btnContainer.scrollWidth}px`;
+            } else {
+                this.delimiterContainerWidth = '100vw';
+            }
+        }, 0);
     }
 }
