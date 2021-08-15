@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 
 import { TabsContent } from './tabs.model';
+import { LibraryGetterService } from '@services/library-getter.service';
 
 @Component({
     selector: 'sui-tabs',
@@ -16,20 +17,41 @@ import { TabsContent } from './tabs.model';
     styleUrls: ['./tabs.component.less'],
 })
 export class TabsComponent implements AfterViewInit {
-    public delimiterXpos: string = '0px';
-    public targetElementWidth: string = '0px';
-    public templateContent: string = '';
-    public delimiterContainerWidth: string = '500px';
+    public _delimiterXpos: string = '0px';
+    public _targetElementWidth: string = '0px';
+    public _templateContent: string = '';
+    public _delimiterContainerWidth: string = '500px';
+    public _maxNavigationContainerWidth: string = '800px';
+
+    private _different: number = 20;
+
     public isFullSizeMode: boolean = false;
 
-    private different: number = 20;
-
     @Input()
-    innerContent: Array<TabsContent> = [];
+    innerContent: Array<TabsContent> = [
+        {
+            tabTitle: 'Tab-1',
+            isDisable: false,
+            content: 'Content of tab-1',
+        },
+        {
+            tabTitle: 'Tab-2',
+            isDisable: false,
+            content: 'Content of tab-2',
+        },
+        {
+            tabTitle: 'Tab-3',
+            isDisable: false,
+            content: this.libraryGetterService.getLibraryComponentsInfo.suiSwitch.component,
+        },
+    ];
 
     @Input()
     set setFullSizeMode(value: boolean) {
         this.isFullSizeMode = value;
+        if (!value) {
+            this._delimiterContainerWidth = '500px';
+        }
         this.fullMode();
     }
 
@@ -39,21 +61,24 @@ export class TabsComponent implements AfterViewInit {
     @ViewChild('tabsContent', { read: ViewContainerRef })
     contentContainer: ViewContainerRef;
 
-    constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
+    constructor(
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private libraryGetterService: LibraryGetterService
+    ) {}
 
     public onClickItem(event: Event): void {
         const targetElement: HTMLElement = event.target as HTMLElement;
-        const elementNumber: number = Number(targetElement.classList[0].slice(-1));
+        const elementNumber: number = parseInt(targetElement.classList[0].replace(/[^\d]/g, ''));
         const contentType: string = this.getType(this.innerContent[elementNumber - 1].content);
         this.renderContent(contentType, elementNumber);
         if (targetElement.parentElement) {
             const diff: number = targetElement.offsetLeft - targetElement.parentElement.offsetLeft;
             if (elementNumber > 1) {
-                this.delimiterXpos = `${diff}px`;
-                this.targetElementWidth = `${targetElement.clientWidth}px`;
+                this._delimiterXpos = `${diff}px`;
+                this._targetElementWidth = `${targetElement.clientWidth}px`;
             } else {
-                this.targetElementWidth = `${targetElement.clientWidth - this.different}px`;
-                this.delimiterXpos = '0px';
+                this._targetElementWidth = `${targetElement.clientWidth - this._different}px`;
+                this._delimiterXpos = '0px';
             }
         }
     }
@@ -62,7 +87,7 @@ export class TabsComponent implements AfterViewInit {
         switch (type) {
             case 'String':
                 this.clearContent();
-                this.templateContent = this.innerContent[elementNumber - 1].content;
+                this._templateContent = this.innerContent[elementNumber - 1].content;
                 break;
             case 'Function':
                 this.clearContent();
@@ -89,18 +114,21 @@ export class TabsComponent implements AfterViewInit {
     }
 
     private clearContent(): void {
-        this.templateContent = '';
+        this._templateContent = '';
         this.contentContainer.clear();
     }
 
     private fullMode(): void {
-        const btnContainer: HTMLElement = this.btnContainerRef.nativeElement as HTMLElement;
         setTimeout(() => {
+            const btnContainer: HTMLElement = this.btnContainerRef.nativeElement as HTMLElement;
+            console.log(btnContainer.scrollWidth);
             if (!this.isFullSizeMode) {
-                this.delimiterContainerWidth = `${btnContainer.scrollWidth}px`;
+                this._maxNavigationContainerWidth = '800px';
+                this._delimiterContainerWidth = `${btnContainer.scrollWidth}px`;
             } else {
-                this.delimiterContainerWidth = '100vw';
+                this._delimiterContainerWidth = '100vw';
+                this._maxNavigationContainerWidth = 'none';
             }
-        }, 0);
+        }, 100);
     }
 }

@@ -132,4 +132,8 @@ export const componentModels: IComponentPrototype = {
         fullWidth: { type: 'select', options: ['false', 'true'], value: false },
         fullHeight: { type: 'select', options: ['false', 'true'], value: false },
     },
+
+    'sui-tabs': {
+        setFullSizeMode: { type: 'select', options: ['false', 'true'], value: false },
+    },
 };

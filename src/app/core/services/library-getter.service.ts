@@ -12,6 +12,7 @@ import { SliderComponent } from '@library-components/slider/slider.component';
 import { SwitchComponent } from '@library-components/switch/switch.component';
 import { LinkComponent } from '@library-components/link/link.component';
 import { RectangleComponent } from '@library-components/rectangle/rectangle.component';
+import { TabsComponent } from '@library-components/tabs/tabs.component';
 
 @Injectable({
     providedIn: 'root',
@@ -136,6 +137,14 @@ export class LibraryGetterService {
             component: RectangleComponent,
             description: 'A Rectangle component, can be used for background, header or footer.',
         },
+        suiTabs: {
+            group: 'Multimedia',
+            nameComponent: 'Tabs',
+            svgUrl: '/assets/icons/panel/sui-tabs.svg',
+            title: 'Tabs component',
+            component: TabsComponent,
+            description: 'Tabs make it easy to switch between different views.',
+        }
     };
 
     /**

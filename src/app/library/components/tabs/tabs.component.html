@@ -1,28 +1,42 @@
-<div class="sui-tabs__wrapper"
-[ngClass]="{
-    '_fullSize': isFullSizeMode
-}">
-    <nav class="sui-tabs__navigation">
+<div
+    class="sui-tabs__wrapper"
+    [ngClass]="{
+        _fullSize: isFullSizeMode
+    }"
+>
+    <nav
+        class="sui-tabs__navigation"
+        [ngStyle]="{
+            maxWidth: _maxNavigationContainerWidth
+        }"
+    >
         <div #btnContainer class="sui-tabs__btn" (click)="onClickItem($event)">
-            <button *ngFor="let item of innerContent; let i = index" 
-            [class]="'sui-tabs__btn-item sui-tabs__btn-' + (i + 1)"
-            type="button" 
-            [disabled]="item.isDisable">{{item.tabTitle}}
+            <button
+                *ngFor="let item of innerContent; let i = index"
+                [class]="'sui-tabs__btn-item sui-tabs__btn-' + (i + 1)"
+                type="button"
+                [disabled]="item.isDisable"
+            >
+                {{ item.tabTitle }}
             </button>
         </div>
-        <div class="sui-tabs__delimiter" [ngStyle]="{
-            width: delimiterContainerWidth
-        }">
-            <div class="sui-tabs__delimiter-item" [ngStyle]="{
-                marginLeft: delimiterXpos,
-                width: targetElementWidth
-            }"></div>
+        <div
+            class="sui-tabs__delimiter"
+            [ngStyle]="{
+                width: _delimiterContainerWidth
+            }"
+        >
+            <div
+                class="sui-tabs__delimiter-item"
+                [ngStyle]="{
+                    marginLeft: _delimiterXpos,
+                    width: _targetElementWidth
+                }"
+            ></div>
         </div>
     </nav>
     <div class="sui-tabs__content">
-        {{ templateContent }}
+        {{ _templateContent }}
         <ng-template #tabsContent></ng-template>
     </div>
 </div>
-
-
