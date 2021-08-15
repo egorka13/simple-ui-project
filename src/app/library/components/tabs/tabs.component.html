@@ -1,9 +1,11 @@
 <div class="sui-tabs__wrapper">
     <nav class="sui-tabs__navigation">
         <div #btnContainer class="sui-tabs__btn" (click)="onClickItem($event)">
-            <button class="sui-tabs__btn-item sui-tabs__btn-1" type="button">Tab 1</button>
-            <button class="sui-tabs__btn-item sui-tabs__btn-2" type="button" disabled>Tab 2</button>
-            <button class="sui-tabs__btn-item sui-tabs__btn-3" type="button">Tab 3</button>
+            <button *ngFor="let item of innerContent; let i = index" 
+            [class]="'sui-tabs__btn-item sui-tabs__btn-' + (i + 1)"
+            type="button" 
+            [disabled]="item.isDisable">{{item.tabTitle}}
+            </button>
         </div>
         <div class="sui-tabs__delimiter" [ngStyle]="{
             width: delimiterContainerWidth
@@ -15,7 +17,9 @@
         </div>
     </nav>
     <div class="sui-tabs__content">
-        <p>Test Content</p>
-        <ng-template #tabsContent></ng-template>
+        {{ templateContent }}
+        <ng-container #tabsContent></ng-container>
     </div>
 </div>
+
+
