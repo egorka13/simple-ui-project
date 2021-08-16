@@ -21,6 +21,7 @@ import { BoardSettingsService } from '@services/board-settings.service';
 import { BoardConverseService } from '@services/board-converse.service';
 
 import { BoardItemComponent } from './board-item/board-item.component';
+import { ContextMenuComponent } from './context-menu/context-menu.component';
 
 import { IDragMetadata } from '@models/board.model';
 
@@ -33,8 +34,11 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     @ViewChild('field')
     field: ElementRef;
 
-    @ViewChild('viewContainerTarget', { read: ViewContainerRef })
-    fieldView: ViewContainerRef;
+    @ViewChild('viewComponentsContainer', { read: ViewContainerRef })
+    componentsContainerView: ViewContainerRef;
+
+    @ViewChild('viewContextMenuContainer', { read: ViewContainerRef })
+    contextMenuView: ViewContainerRef;
 
     @ViewChild('fieldMovePlug')
     fieldMovePlug: ElementRef;
@@ -48,7 +52,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     public _isDragging: boolean = false;
 
     private boardItems: Array<ComponentRef<BoardItemComponent>> = [];
-    private toUnsubscribe: Array<Subscription> = [];
+    private toUnsubscribe: Subscription = new Subscription();
     private toUnlisten: Array<() => void> = [];
 
     private dragMetadata: IDragMetadata = {
@@ -80,13 +84,15 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
 
     ngAfterViewInit(): void {
         this.boardSettingsService.setBoardElement(this.boardElement.nativeElement);
-        this.toUnsubscribe.push(this.boardConverseService.setConfigPanelListener());
+        this.toUnsubscribe.add(this.boardConverseService.setConfigPanelListener());
 
         this.setSpaceHoldListener();
         this.setMoveListener();
         this.setZoomListener();
         this.setAddComponentListener();
         this.setRemoveComponentListener();
+        this.setWipeBoardListener();
+        this.setContextMenuListener();
 
         // Setting up a starting board size.
         setTimeout(() => {
@@ -96,13 +102,60 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.toUnsubscribe.forEach(sub => {
-            sub.unsubscribe();
-        });
+        this.toUnsubscribe.unsubscribe();
 
         this.toUnlisten.forEach(unlistener => {
             unlistener();
         });
+    }
+
+    /**
+     * This function sets up a listener of the board converse service that waiting for a context menu call.
+     * When it emits the board component creates a context menu component and positions it.
+     * Once a user presses anywhere on the page the context menu is deleted.
+     * @private
+     * @memberof BoardComponent
+     */
+    private setContextMenuListener(): void {
+        const createContextMenu = ([x, y, boardItem]: [number, number, BoardItemComponent]) => {
+            const componentFactory: ComponentFactory<ContextMenuComponent> =
+                this.componentFactoryResolver.resolveComponentFactory(ContextMenuComponent);
+
+            const menuComponentRef: ComponentRef<ContextMenuComponent> =
+                this.contextMenuView.createComponent(componentFactory);
+
+            menuComponentRef.instance.left = x.toString() + 'px';
+            menuComponentRef.instance.top = y.toString() + 'px';
+
+            menuComponentRef.instance.boardItem = boardItem;
+
+            const destroySubscriptions: Array<() => void> = [];
+
+            const destroyContextMenu: () => void = () => {
+                menuComponentRef.destroy();
+                destroySubscriptions.forEach(unsubscribe => {
+                    unsubscribe();
+                });
+            };
+
+            destroySubscriptions.push(
+                this.r2.listen(document, 'keydown', () => {
+                    setTimeout(() => {
+                        destroyContextMenu();
+                    });
+                })
+            );
+
+            destroySubscriptions.push(
+                this.r2.listen(menuComponentRef.location.nativeElement, 'mouseup', () => {
+                    setTimeout(() => {
+                        destroyContextMenu();
+                    });
+                })
+            );
+        };
+
+        this.toUnsubscribe.add(this.boardConverseService.showContextMenu$.subscribe(createContextMenu));
     }
 
     /**
@@ -115,14 +168,15 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         const addLibComponent = <LibraryComponent>(libraryComponent: Type<LibraryComponent>) => {
             const componentFactory: ComponentFactory<BoardItemComponent> =
                 this.componentFactoryResolver.resolveComponentFactory(BoardItemComponent);
-            const boardItem: ComponentRef<BoardItemComponent> = this.fieldView.createComponent(componentFactory);
+            const boardItem: ComponentRef<BoardItemComponent> =
+                this.componentsContainerView.createComponent(componentFactory);
 
             boardItem.instance.appendLibComponent(libraryComponent);
 
             this.boardItems.push(boardItem);
         };
 
-        this.toUnsubscribe.push(this.boardConverseService.addLibraryComponent$.subscribe(addLibComponent));
+        this.toUnsubscribe.add(this.boardConverseService.addLibraryComponent$.subscribe(addLibComponent));
     }
 
     /**
@@ -140,11 +194,27 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             )[0];
 
             const index: number = this.boardItems.indexOf(itemRef);
-            this.fieldView.remove(index);
             this.boardItems.splice(index, 1);
+            itemRef.destroy();
         };
 
-        this.toUnsubscribe.push(this.boardConverseService.removeLibraryComponent$.subscribe(removeLibComponent));
+        this.toUnsubscribe.add(this.boardConverseService.removeLibraryComponent$.subscribe(removeLibComponent));
+    }
+
+    /**
+     * This function sets up a listener that deletes all board-item components from the board.
+     * @private
+     * @memberof BoardComponent
+     */
+    private setWipeBoardListener(): void {
+        this.toUnsubscribe.add(
+            this.boardConverseService.wipeBoard$.subscribe(() => {
+                this.boardItems.forEach((item: ComponentRef<BoardItemComponent>) => {
+                    item.destroy();
+                });
+                this.boardItems = [];
+            })
+        );
     }
 
     /**
@@ -168,7 +238,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             this.boardSettingsService.changeScale(-deltaY / Math.abs(deltaY));
         };
 
-        this.toUnsubscribe.push(wheel$.subscribe({ next: e => changeScale(e.deltaY) }));
+        this.toUnsubscribe.add(wheel$.subscribe({ next: e => changeScale(e.deltaY) }));
     }
 
     /**

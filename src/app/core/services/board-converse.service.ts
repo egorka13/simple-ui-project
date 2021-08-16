@@ -19,6 +19,11 @@ export class BoardConverseService {
     public addLibraryComponent$ = new Subject<Type<any>>();
     // TODO: Consider an asObserver here.
     public removeLibraryComponent$ = new Subject<BoardItemComponent>();
+    // TODO: Consider an asObserver here.
+    public showContextMenu$ = new Subject<[number, number, BoardItemComponent]>();
+    // TODO: Consider an asObserver here.
+    public wipeBoard$ = new Subject();
+    public zIndexChange$: Subject<number> = new Subject();
 
     /**
      * This function append library component to the board.
@@ -31,15 +36,50 @@ export class BoardConverseService {
     }
 
     /**
+     * This function deletes all board-item components on the board.
+     * @memberof BoardConverseService
+     */
+    public wipeBoard(): void {
+        this.selectedBoardItem = null;
+        this.configDataService.setConfigData(null);
+        this.wipeBoard$.next();
+    }
+
+    /**
+     * This function remove transmitted board-item.
+     * @param {BoardItemComponent} boardItem - Component to remove.
+     * @memberof BoardConverseService
+     */
+    public removeBoardItemComponent(boardItem: BoardItemComponent): void {
+        this.removeLibraryComponent$.next(boardItem);
+
+        if (boardItem === this.selectedBoardItem) {
+            this.selectedBoardItem = null;
+            this.configDataService.setConfigData(null);
+        }
+    }
+
+    /**
      * This function remove current selected component from the board.
      * @memberof BoardConverseService
      */
-    public removeLibraryComponent(): void {
+    public removeSelectedComponent(): void {
         if (this.selectedBoardItem) {
             this.removeLibraryComponent$.next(this.selectedBoardItem);
             this.selectedBoardItem = null;
             this.configDataService.setConfigData(null);
         }
+    }
+
+    /**
+     * This function shows context menu on the page.
+     * @param {number} x - X coordinate of a fixed context menu frame (top left corner).
+     * @param {number} y - Y coordinate of a fixed context menu frame (top ledt corner).
+     * @param {BoardItemComponent} boardItem - Board-item on which the context menu called.
+     * @memberof BoardConverseService
+     */
+    public showContextMenu(x: number, y: number, boardItem: BoardItemComponent): void {
+        this.showContextMenu$.next([x, y, boardItem]);
     }
 
     /**

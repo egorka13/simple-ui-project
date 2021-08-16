@@ -8,11 +8,14 @@ import {
     ViewContainerRef,
     ComponentRef,
     HostListener,
+    HostBinding,
     Renderer2,
     NgZone,
     OnDestroy,
     AfterViewInit,
 } from '@angular/core';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 
 import { BoardSettingsService } from '@services/board-settings.service';
 import { BoardConverseService } from '@services/board-converse.service';
@@ -39,12 +42,33 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
 
     private innerLibComponent: ComponentRef<any>;
     private toUnlisten: Array<() => void> = [];
+    private deleteKeyUnlistener: () => void;
+
+    private menuSubscription: Subscription;
+    private zIndexBase: number = 100;
+    private zIndexShiftState: number = 0;
+    private zIndexString: string = `z-index: ${this.zIndexBase + this.zIndexShiftState}`;
+
+    @HostBinding('style')
+    get _zIndex(): SafeStyle {
+        return this.sanitizer.bypassSecurityTrustStyle(this.zIndexString);
+    }
 
     @HostListener('dblclick')
     _selectLibComponent(): void {
         if (this.boardSettingsService.isInteractiveMode) return;
+        if (this._isSelected) return;
+
         this._isSelected = true;
         this.boardConverseService.selectBoardItem(this);
+        this.setDeleteKeyListener();
+    }
+
+    @HostListener('contextmenu', ['$event'])
+    _showRightClickMenu(e: MouseEvent): void {
+        e.preventDefault();
+
+        this.boardConverseService.showContextMenu(e.clientX, e.clientY, this);
     }
 
     constructor(
@@ -53,8 +77,17 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
         private componentFactoryResolver: ComponentFactoryResolver,
         private boardItem: ElementRef,
         private r2: Renderer2,
-        private ngZone: NgZone
+        private ngZone: NgZone,
+        private sanitizer: DomSanitizer
     ) {}
+
+    get zIndexShift(): number {
+        return this.zIndexShiftState;
+    }
+    set zIndexShift(zIndex: number) {
+        this.zIndexShiftState = zIndex;
+        this.zIndexString = `z-index: ${this.zIndexBase + this.zIndexShiftState}`;
+    }
 
     ngAfterViewInit(): void {
         this.setMoveListener();
@@ -64,6 +97,14 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
         this.toUnlisten.forEach(unlistener => {
             unlistener();
         });
+
+        if (this.deleteKeyUnlistener) {
+            this.deleteKeyUnlistener();
+        }
+
+        if (this.menuSubscription) {
+            this.menuSubscription.unsubscribe();
+        }
     }
 
     /**
@@ -77,7 +118,10 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
             this.componentFactoryResolver.resolveComponentFactory<LibraryComponent>(libraryComponent);
 
         this.libComponentName = componentFactory.selector.toLowerCase();
-        this.properties = this.objDeepCopy(componentModels[this.libComponentName]);
+
+        if (componentModels[this.libComponentName]) {
+            this.properties = this.objDeepCopy(componentModels[this.libComponentName]);
+        }
 
         setTimeout(() => {
             this.innerLibComponent = this.viewContainerTarget.createComponent<LibraryComponent>(componentFactory);
@@ -101,6 +145,24 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             this.innerLibComponent.instance[key] = config[key].value;
         }
+
+        setTimeout(() => {
+            const styles: CSSStyleDeclaration = getComputedStyle(this.boardItem.nativeElement);
+            // prettier-ignore
+            const transformMatrix: Array<string> = styles.transform.match(/-?\d+(\.\d+)?/g) ||
+                                                   [ '1', '0', '0', '1', '0', '0'];
+
+            let x = +transformMatrix[4];
+            let y = +transformMatrix[5];
+
+            if (!this.boardSettingsService.isInfiniteBoardMode) {
+                [x, y] = this.disignateBorder(x, y);
+            }
+
+            const transformString: string = `translate(${x}px, ${y}px)`;
+
+            this.r2.setStyle(this.boardItem.nativeElement, 'transform', transformString);
+        });
     }
 
     /**
@@ -109,10 +171,11 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
      */
     public deselect(): void {
         this._isSelected = false;
+        this.deleteKeyUnlistener();
     }
 
     /**
-     * This function do deep copy of an object.
+     * This function does deep copy of an object.
      * @private
      * @template Obj
      * @param {Obj} obj - An object to copy.
@@ -122,6 +185,17 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     private objDeepCopy<Obj>(obj: Obj): Obj {
         // Later may be changed to lodash or any other implementation.
         return JSON.parse(JSON.stringify(obj)) as Obj;
+    }
+
+    /**
+     * This function sets a listener of the delete key and delete current selected component when it is pressed.
+     * @private
+     * @memberof BoardItemComponent
+     */
+    private setDeleteKeyListener(): void {
+        this.deleteKeyUnlistener = this.r2.listen(document, 'keydown.delete', () => {
+            this.boardConverseService.removeSelectedComponent();
+        });
     }
 
     /**

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BoardSettingsService } from '@services/board-settings.service';
+import { BoardConverseService } from '@services/board-converse.service';
 import { GridSettingsService } from '@services/grid-settings.service';
 import { Router } from '@angular/router';
 
@@ -58,6 +59,7 @@ export class HeaderComponent {
 
     constructor(
         public boardSettingsService: BoardSettingsService,
+        public boardConverseService: BoardConverseService,
         public gridSettingsService: GridSettingsService,
         private router: Router
     ) {}
@@ -119,5 +121,12 @@ export class HeaderComponent {
     onClickZoomOut(): void {
         this.boardSettingsService.changeScale(-1);
         this.boardSettingsService.enableSmoothTransition();
+    }
+
+    /**
+     * Deletes all components on the board
+     */
+    onClickWipeBoard(): void {
+        this.boardConverseService.wipeBoard();
     }
 }
