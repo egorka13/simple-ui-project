@@ -19,6 +19,7 @@ import { filter, map } from 'rxjs/operators';
 
 import { BoardSettingsService } from '@services/board-settings.service';
 import { BoardConverseService } from '@services/board-converse.service';
+import { ZIndexService } from '@services/z-index.service';
 
 import { BoardItemComponent } from './board-item/board-item.component';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
@@ -76,6 +77,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     constructor(
         public boardSettingsService: BoardSettingsService,
         public boardConverseService: BoardConverseService,
+        public zIndexService: ZIndexService,
         public boardElement: ElementRef,
         private componentFactoryResolver: ComponentFactoryResolver,
         private r2: Renderer2,
@@ -174,6 +176,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             boardItem.instance.appendLibComponent(libraryComponent);
 
             this.boardItems.push(boardItem);
+            this.zIndexService.addNewItem(boardItem.instance);
         };
 
         this.toUnsubscribe.add(this.boardConverseService.addLibraryComponent$.subscribe(addLibComponent));
