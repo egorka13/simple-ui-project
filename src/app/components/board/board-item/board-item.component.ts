@@ -93,10 +93,11 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
 
     ngAfterViewInit(): void {
         this.setMoveListener();
+        this.zIndexService.addNewItem(this);
     }
 
     ngOnDestroy(): void {
-        this.zIndexService.deleteItem(this);
+        this.zIndexService.removeItem(this);
 
         this.toUnlisten.forEach(unlistener => {
             unlistener();
