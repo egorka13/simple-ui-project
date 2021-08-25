@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs';
 
 import { BoardSettingsService } from '@services/board-settings.service';
 import { BoardConverseService } from '@services/board-converse.service';
+import { ZIndexService } from '@services/z-index.service';
 
 import { componentModels } from '@models/config-panel.model';
 import { IDragMetadata } from '@models/board.model';
@@ -74,6 +75,7 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
     constructor(
         public boardSettingsService: BoardSettingsService,
         public boardConverseService: BoardConverseService,
+        private zIndexService: ZIndexService,
         private componentFactoryResolver: ComponentFactoryResolver,
         private boardItem: ElementRef,
         private r2: Renderer2,
@@ -91,9 +93,12 @@ export class BoardItemComponent implements AfterViewInit, OnDestroy {
 
     ngAfterViewInit(): void {
         this.setMoveListener();
+        this.zIndexService.addNewItem(this);
     }
 
     ngOnDestroy(): void {
+        this.zIndexService.removeItem(this);
+
         this.toUnlisten.forEach(unlistener => {
             unlistener();
         });
