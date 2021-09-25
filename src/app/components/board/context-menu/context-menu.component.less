@@ -1,3 +1,7 @@
+@import '../../../../assets/styles/base.less';
+
+@transition: all 0.2s ease-out;
+
 :host {
     position: fixed;
     z-index: 100;
@@ -10,15 +14,33 @@
 .sui-context-menu {
     &__frame {
         position: fixed;
+        display: flex;
+        flex-direction: column;
+        border-radius: 2px;
 
-        background-color: white;
+        background-color: @sui-blue-deep-1;
+
+        text-align: center;
+        color: @sui-white;
+        .font-regular();
+        font-size: 16px;
     }
 
     &__button {
+        background-color: @sui-blue-2;
+        border-radius: 2px;
+        border: none;
         display: block;
         height: 20px;
-        width: 160px;
+        width: 140px;
+        margin-bottom: 3px;
 
-        border: 1px solid black;
+        transition: @transition;
+
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: lighten(@sui-blue-2, 20%);
+        }
     }
 }
