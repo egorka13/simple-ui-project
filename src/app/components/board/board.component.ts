@@ -147,7 +147,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             );
 
             destroySubscriptions.push(
-                this.r2.listen(menuComponentRef.location.nativeElement, 'mouseup', () => {
+                this.r2.listen(menuComponentRef.location.nativeElement, 'click', () => {
                     setTimeout(() => {
                         destroyContextMenu();
                     });
