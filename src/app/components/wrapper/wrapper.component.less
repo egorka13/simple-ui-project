@@ -1,0 +1,39 @@
+@import '/src/assets/styles/variables/colors.less';
+
+:host {
+    flex: 1;
+
+    display: flex;
+    position: relative;
+
+    overflow: hidden;
+}
+
+.sui-wrapper {
+    &__board {
+        flex: 1;
+    }
+
+    &__component-panel {
+        width: 258px;
+        height: 100%;
+
+        position: absolute;
+        z-index: 10;
+        left: 0;
+    }
+
+    &__config-panel {
+        width: 258px;
+        height: 100%;
+
+        position: absolute;
+        right: 0;
+
+        transition: all 0.3s ease-out;
+
+        &._hidden {
+            right: -258px;
+        }
+    }
+}

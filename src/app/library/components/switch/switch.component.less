@@ -1,0 +1,138 @@
+@import "colors.less";
+
+@sui-switchLtColor-default: lighten(@lib-grey, 10%);
+@sui-switchLtColor-disabled: lighten(@lib-blue-light, 25%);
+@sui-switchColorBorder-disabled: lighten(@lib-grey, 8%);
+@sui-switchLtShadowColor-disabled: lighten(@lib-blue-light, 30%);
+@sui-switchShadowActiveColor: hsla(209, 100%, 55%, 0.122);
+@sui-switchDisabledAnimationTime: .8s;
+@sui-switchWidth: 44px;
+@sui-switchHeight: 22px;
+@sui-switchBeforeLeftPosition: (@sui-switchWidth / 2) * 1px;
+@sui-switchFontSize: 12px;
+
+.disabledStyles(@background, @shadow, @border) {
+    background: @background;
+    box-shadow: 0 0 0 2px @shadow;
+
+    .sui-switch__handle {
+        &::before {
+            border: 2px solid @border;
+        }
+    }
+}
+
+.sui-switch {
+
+    //.sui-switch__item
+    &__item {
+        position: relative;
+        appearance: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: @sui-switchWidth;
+        min-height: @sui-switchHeight;
+        border-radius: 20px;
+        box-shadow: 0 0 0 2px @sui-switchLtColor-default;
+        background: @lib-grey;
+        border: 0;
+        transition: .5s background;
+
+        &:not(:disabled):hover {
+            cursor: pointer;
+            box-shadow: none;
+        }
+
+        &:disabled {
+            .disabledStyles(@sui-switchLtColor-default, @sui-switchColorBorder-disabled, @sui-switchColorBorder-disabled);
+        }
+
+        &:disabled._active {
+            .disabledStyles(@sui-switchLtColor-disabled, @sui-switchLtShadowColor-disabled, @sui-switchLtColor-disabled);
+        }
+
+        &:disabled:hover {
+            cursor: not-allowed;
+        }
+
+        &:not(:disabled):active {
+            box-shadow: 0 0 0 5px @sui-switchShadowActiveColor;
+        }
+
+        //.sui-switch__item _active
+        &._active {
+            background: @lib-blue;
+
+            .sui-switch__info {
+                margin: 0 @sui-switchBeforeLeftPosition 0 2px;
+            }
+
+            .sui-switch__handle {
+                left: calc(100% - 10px);
+
+                &::before {
+                    border: 2px solid @lib-blue;
+                }
+            }
+        }
+    }
+
+    //.sui-switch__info
+    &__info {
+        margin: 0 2px 0 @sui-switchBeforeLeftPosition;
+        transition: .2s;
+        text-align: center;
+        color: @lib-white;
+        font-size: @sui-switchFontSize;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+
+        //.sui-switch__info-ico
+        &-ico {
+            margin-top: 3px;
+        }
+    }
+
+    //.sui-switch__handle
+    &__handle {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        left: 10px;
+        transition: .2s;
+
+        //.sui-switch__handle::before
+        &::before {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border-radius: 100%;
+            background: @lib-white;
+            border: 2px solid @lib-grey;
+            transition: .2s;
+        }
+
+        //.sui-switch__handle-loading
+        &-loading {
+            position: absolute;
+            left: -6px;
+            top: -6px;
+            animation: @sui-switchDisabledAnimationTime speenRound linear infinite;
+        }
+    }
+}
+
+@keyframes speenRound {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

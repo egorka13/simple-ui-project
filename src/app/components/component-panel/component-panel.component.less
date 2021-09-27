@@ -1,0 +1,129 @@
+@import '/src/assets/styles/base.less';
+
+@component-panel-scrollbar-thumb-color: hsl(223deg, 11%, 63%);
+@component-panel-scrollbar-track-color: hsl(219deg, 100%, 14%);
+@component-panel-box-shadow-color: hsla(0, 0%, 0%, 0.25);
+@component-panel-box-shadow-input-color: hsla(0, 0%, 0%, 0.5);
+@component-panel-input-placeholder-color: hsl(0, 0%, 67%);
+@component-panel-wrapper-color: hsl(220deg, 15%, 43%);
+
+.sui-component-panel {
+    &__wrapper {
+        height: 100%;
+        background: @component-panel-wrapper-color;
+    }
+
+    &__search {
+        height: 50px;
+        padding: 8px 6px 6px 6px;
+        background: @sui-blue-deep-2;
+        box-shadow: 2px 0px 4px @component-panel-box-shadow-color;
+
+        &-input {
+            height: 100%;
+            width: 100%;
+            border-radius: 6px;
+            text-indent: 30px;
+            font-size: 14px;
+            box-shadow: inset 0px 1px 4px @component-panel-box-shadow-input-color;
+            background-image: url(/assets/icons/panel/search-icon.svg);
+            background-size: 20px;
+            background-position: 10px 9px;
+            background-repeat: no-repeat;
+
+            &:focus, &:active {
+                background-image: none;
+
+                &::placeholder {
+                    font-size: 14px;
+                    color: @sui-white;
+                }
+            }
+
+            &::placeholder {
+                position: relative;
+                font-size: 14px;
+                color: @component-panel-input-placeholder-color;
+            }
+        }
+    }
+
+    &__content {
+        height: calc(~'100% - 50px');
+        margin-top: 2px;
+        padding-bottom: 10px;
+        overflow-y: auto;
+        box-shadow: 2px 0px 4px @component-panel-box-shadow-color;
+
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: @component-panel-scrollbar-track-color;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: @component-panel-scrollbar-thumb-color;
+        }
+    }
+
+    &__component-group {
+        margin-bottom: 24px;
+
+    }
+}
+
+.component-group {
+    &__header {
+        width: 115px;
+        height: 30px;
+        margin-top: 3px;
+        margin-left: 6px;
+        padding: 6px 0 7px 10px;
+        background: @sui-category-grad;
+        border-radius: 4px;
+
+        &-text {
+            font-family: Verdana;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 18px;
+            letter-spacing: 0.01em;
+            text-align: left;
+            color: darken(@sui-white, 4%);
+        }
+    }
+
+    &__wrapper {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 7px 10px 0 10px;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        height: 70px;
+        background: @sui-gray-4;
+        border-radius: 5px;
+        .user-select();
+
+        &:hover {
+            background-color: @sui-blue-1;
+        }
+
+        &-svg {
+
+            svg {
+                width: 25px;
+                height: 25px;
+            }
+        }
+    }
+}

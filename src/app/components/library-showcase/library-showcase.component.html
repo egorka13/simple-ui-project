@@ -1,0 +1,55 @@
+<div class="sui-library">
+    <div class="sui-library__item">
+        <sui-button></sui-button>
+    </div>
+    <div class="sui-library__item">
+        <sui-input size="small" placeholder="custom placeholder"></sui-input>
+        <sui-input></sui-input>
+        <sui-input size="large"></sui-input>
+    </div>
+    <div class="sui-library__item">
+        <sui-checkbox labelText="Checkbox1"></sui-checkbox>
+        <sui-checkbox labelText="Checkbox2" [isChecked]="true"></sui-checkbox>
+        <sui-checkbox labelText="Checkbox3" [isDisabled]="true"></sui-checkbox>
+        <sui-checkbox labelText="Checkbox4" [isDisabled]="true" [isChecked]="true"></sui-checkbox>
+    </div>
+    <div class="sui-library__item">
+        <sui-result></sui-result>
+    </div>
+    <div class="sui-library__item">
+        <sui-input-number min="1" max="99" size="large"></sui-input-number>
+        <sui-input-number min="1" max="99"></sui-input-number>
+        <sui-input-number min="1" max="99" size="small"></sui-input-number>
+    </div>
+    <div class="sui-library__item">
+        <sui-slider></sui-slider>
+        <!-- <sui-slider [customParams]="sliderComponentParams[0]"></sui-slider> -->
+        <!-- <sui-slider [disabled]="true" [customParams]="sliderComponentParams[1]"></sui-slider> -->
+    </div>
+    <div class="sui-library__item">
+        <sui-card></sui-card>
+        <sui-card size="small"></sui-card>
+    </div>
+    <div class="sui-library__item">
+        <sui-switch [setChecked]="true"></sui-switch>
+        <sui-switch [setChecked]="true" [setCheckedText]="'开启'" [setUnCheckedText]="'关闭'"></sui-switch>
+        <sui-switch [setCheckedText]="'1'" [setUnCheckedText]="'0'"></sui-switch>
+        <sui-switch [useMarkers]="true" [setChecked]="true"></sui-switch>
+        <sui-switch [setDisabled]="true" [setChecked]="true"></sui-switch>
+        <sui-switch [isLoading]="true" [setChecked]="true"></sui-switch>
+        <sui-switch [isLoading]="true" [setChecked]="false"></sui-switch>
+        <sui-switch [setDisabled]="true" [setChecked]="true" [setCheckedText]="'checked disabled'"></sui-switch>
+    </div>
+    <div class="sui-library__item">
+        <sui-link></sui-link>
+    </div>
+    <div class="sui-library__item">
+        <sui-alert></sui-alert>
+        <sui-alert type="info" message="Info message" [hasIcon]="true"></sui-alert>
+        <sui-alert type="warning" message="Warning message" description="Description text"></sui-alert>
+        <sui-alert type="error" message="Error message" [hasIcon]="true" description="Description text"></sui-alert>
+    </div>
+    <div class="sui-library__item"> 
+      <sui-rectangle></sui-rectangle>
+    </div>
+</div>

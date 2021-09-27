@@ -1,0 +1,112 @@
+<header class="sui-header__wrapper">
+    <div class="sui-header__content">
+        <a class="sui-header__content-mainlink" title="Go home page" href="/"
+            ><img
+                class="sui-header__content-logotype"
+                src="../../../assets/icons/header/logotype.svg"
+                alt="simple ui logotype"
+        /></a>
+        <div class="sui-header__navigation">
+            <nav class="sui-header__navigation-wrapper">
+                <input
+                    (change)="onChangeInput($event)"
+                    (click)="onClickInput($event)"
+                    (keyup)="onKeyUpInput($event)"
+                    type="text"
+                    class="sui-header__navigation-zoomInput"
+                    value="{{ getRounderScale() }}%"
+                    maxlength="4"
+                    title="Change board's custom zoom in percent"
+                />
+                <div class="sui-header__navigation-zoomBtns">
+                    <button
+                        (click)="onClickZoomIn()"
+                        type="button"
+                        class="sui-header__navigation-btn"
+                        title="Add board zoom to 10%"
+                    >
+                        <svg-icon
+                            [svgClass]="'sui-header__navigation-btnZoom'"
+                            src="../../../assets/icons/header/header-zoom-in.svg"
+                        ></svg-icon>
+                    </button>
+                    <button
+                        (click)="onClickZoomOut()"
+                        type="button"
+                        class="sui-header__navigation-btn _zoom"
+                        title="Add board zoom to -10%"
+                    >
+                        <svg-icon
+                            [svgClass]="'sui-header__navigation-btnZoom'"
+                            src="../../../assets/icons/header/header-zoom-out.svg"
+                        ></svg-icon>
+                    </button>
+                </div>
+                <div class="sui-header__navigation-actions">
+                    <button type="button" class="sui-header__navigation-btn _arrow" title="Undo">
+                        <svg-icon src="../../../assets/icons/header/header-back-arrow.svg"></svg-icon>
+                    </button>
+                    <button type="button" class="sui-header__navigation-btn _arrow" title="Redo">
+                        <svg-icon src="../../../assets/icons/header/header-next-arrow.svg"></svg-icon>
+                    </button>
+                    <button
+                        (click)="onClickWipeBoard()"
+                        type="button"
+                        class="sui-header__navigation-btn _clear"
+                        title="Clear board"
+                    >
+                        <svg-icon
+                            [svgClass]="'sui-header__navigation-clear'"
+                            src="../../../assets/icons/header/header-clear.svg"
+                        >
+                        </svg-icon>
+                    </button>
+                    <button
+                        (click)="onClickSetGridState()"
+                        type="button"
+                        class="sui-header__navigation-btn _grid"
+                        title="On/off grid"
+                    >
+                        <svg-icon
+                            [src]="getIconPath(isGridMode, 'header-grid-btn.svg', 'header-grid-none.svg')"
+                        ></svg-icon>
+                    </button>
+                    <button
+                        (click)="onClickSetInteractiveModeState()"
+                        type="button"
+                        class="sui-header__navigation-btn _interactive"
+                        title="Toggle interactive mode"
+                    >
+                        <svg-icon
+                            [src]="
+                                getIconPath(isInteractiveMode, 'header-interactive-hover.svg', 'header-interactive.svg')
+                            "
+                        ></svg-icon>
+                    </button>
+                    <a class="sui-header__navlink" href="/lib" title="show lib components"
+                        ><svg-icon
+                            [svgClass]="'sui-header__navlink-ico'"
+                            src="../../../assets/icons/header/header-lib.svg"
+                        ></svg-icon
+                    ></a>
+                </div>
+            </nav>
+        </div>
+        <div class="sui-header__boardSettings">
+            <input
+                class="sui-header__boardSettings-setting"
+                [(ngModel)]="boardSettingsService.width"
+                placeholder="Board width"
+                title="Change board's width"
+            />
+            <span class="sui-header__boardSettings-marker">px</span>
+            <input
+                class="sui-header__boardSettings-setting"
+                [(ngModel)]="boardSettingsService.height"
+                placeholder="Board height"
+                title="Change board's height"
+            />
+        </div>
+    </div>
+    <div class="sui-header__rainbowBorder"></div>
+</header>

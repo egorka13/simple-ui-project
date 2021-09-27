@@ -1,0 +1,25 @@
+<div class="sui-input-number__inner">
+    <div class="sui-input-number__handler-wrap handler">
+        <span class="sui-input-number__handler handler__up" (click)="onIncrement()">
+            <span class="handler__up-inner">
+                <svg-icon src="app/library/assets/icons/input-number/arrow-up.svg"></svg-icon>
+            </span>
+        </span>
+        <span class="sui-input-number__handler handler__down" (click)="onDecrement()">
+            <span class="handler__down-inner">
+                <svg-icon src="app/library/assets/icons/input-number/arrow-down.svg"></svg-icon>
+            </span>
+        </span>
+    </div>
+    <div class="sui-input-number__wrap">
+        <input
+            #inputNumber
+            [min]="min"
+            [max]="max"
+            [(ngModel)]="value"
+            [class]="sizeModifier"
+            (keyup)="onChange()"
+            class="sui-input-number__input"
+        />
+    </div>
+</div>

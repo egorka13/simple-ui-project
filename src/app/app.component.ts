@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-root',
+    selector: 'sui-app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.less']
+    styleUrls: ['./app.component.less'],
 })
-export class AppComponent {
-    title = 'simple-ui';
-}
+export class AppComponent {}

@@ -1,0 +1,57 @@
+<div
+    [ngStyle]="{ width: wrapperWidth }"
+    class="sui-slider__wrapper"
+    (mouseup)="onMouseUp()"
+    (mousedown)="onMouseDown()"
+    (mouseover)="onMouseOver()"
+    (mouseout)="onMouseOut()"
+>
+    <input
+        [min]="minValue"
+        [max]="maxValue"
+        [value]="currentValue"
+        [step]="step"
+        #suiSlider
+        class="sui-slider__item"
+        type="range"
+        name="sui-slider"
+        id="sui-slider"
+        [(ngModel)]="currentValue"
+        (change)="onChange()"
+        [disabled]="disabled"
+    />
+    <div
+        [ngClass]="{
+            'sui-slider__mark-text': true,
+            _disabled: showMarker
+        }"
+        [ngStyle]="{ marginLeft: getCurrentMarkerOffset() }"
+        class="sui-slider__mark"
+    >
+        <label for="sui-slider">{{ currentValue }}</label>
+    </div>
+    <div [ngClass]="{ _disabled: disabled }" class="sui-slider__progress" id="progress-common">
+        <div #suiProgressBar [ngStyle]="{ width: getCurrentProgressWidth() }" class="sui-slider__progress-bar"></div>
+    </div>
+    <span
+        [ngStyle]="setCustomProperty('color', valuesColor)"
+        *ngIf="showMinimalValue"
+        class="sui-slider__information-text"
+        title="minimal value"
+        >{{ minValue }}</span
+    >
+    <h1
+        [ngStyle]="setCustomProperty('color', legendColor)"
+        *ngIf="legend"
+        class="sui-slider__information-title"
+    >
+        {{ legend }}
+    </h1>
+    <span
+        [ngStyle]="setCustomProperty('color', valuesColor)"
+        *ngIf="showMaximumValue"
+        class="sui-slider__information-text _max"
+        title="maximum value"
+        >{{ maxValue }}</span
+    >
+</div>

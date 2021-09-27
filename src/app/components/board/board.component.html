@@ -1,0 +1,24 @@
+<section
+    class="sui-board__field"
+    draggable="false"
+    [ngClass]="{ _smooth: boardSettingsService.isTransition }"
+    [style.transform]="boardSettingsService.transformStyle$ | async"
+    [style.height]="boardSettingsService.height + 'px'"
+    [style.width]="boardSettingsService.width + 'px'"
+    #field
+>
+    <sui-grid></sui-grid>
+
+    <div class="sui-board__components">
+        <ng-container #viewComponentsContainer></ng-container>
+    </div>
+</section>
+
+<ng-container #viewContextMenuContainer></ng-container>
+
+<div
+    class="sui-board__move-plug"
+    draggable="false"
+    [ngClass]="{ _active: _isDragPanelShown, _dragging: _isDragging }"
+    #fieldMovePlug
+></div>

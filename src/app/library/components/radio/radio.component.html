@@ -1,0 +1,6 @@
+<div class="sui-radio__wrapper" [ngClass]="[typeModifier, viewModifier, sizeModifier]">
+    <ng-container *ngFor="let item of label; let i = index">
+        <input [id]="name + '_' + i" type="radio" class="sui-radio__input" [name]="name" />
+        <label class="sui-radio__label" [for]="name + '_' + i">{{ item }}</label>
+    </ng-container>
+</div>

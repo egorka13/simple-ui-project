@@ -7,8 +7,8 @@
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
-                    "inlineTemplate": true,
-                    "inlineStyle": true,
+                    "inlineTemplate": false,
+                    "inlineStyle": false,
                     "style": "less",
                     "skipTests": true
                 },
@@ -36,7 +36,7 @@
             },
             "root": "",
             "sourceRoot": "src",
-            "prefix": "app",
+            "prefix": "sui",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
@@ -49,12 +49,19 @@
                         "inlineStyleLanguage": "less",
                         "assets": [
                             "src/favicon.ico",
-                            "src/assets"
+                            "src/assets",
+                            "src/app/library/assets"
                         ],
                         "styles": [
                             "src/styles.less",
-                            "src/assets/styles/base.less"
+                            "src/assets/styles/base.less",
+                            "src/app/library/assets/styles/index.less"
                         ],
+                        "stylePreprocessorOptions": {
+                            "includePaths": [
+                                "src/app/library/assets/styles"
+                            ]
+                        },
                         "scripts": []
                     },
                     "configurations": {

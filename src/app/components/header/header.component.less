@@ -1,0 +1,189 @@
+@import '../../../assets/styles/variables/colors';
+
+:host {
+    width: 100%;
+}
+
+.sui-header {
+    //.sui-header__wrapper
+    &__wrapper {
+        background: @sui-blue-deep-2;
+        box-sizing: border-box;
+        box-shadow: 0px 5px 5px hsla(0, 0%, 0%, 0.25);
+    }
+
+    //.sui-header__content
+    &__content {
+        display: flex;
+        padding: 5px 10px 5px 30px;
+
+        &-logotype {
+            width: 45px;
+            height: 45px;
+        }
+    }
+
+    //.sui-header__rainbowBorder
+    &__rainbowBorder {
+        height: 2px;
+        background: linear-gradient(
+            90deg,
+            hsl(0, 100%, 50%) 29.07%,
+            hsl(29, 100%, 50%) 37.58%,
+            hsl(61, 100%, 50%) 46.37%,
+            hsl(130, 100%, 50%) 56.28%,
+            hsl(205, 100%, 50%) 66.32%,
+            hsl(227, 100%, 50%) 76%,
+            hsl(259, 100%, 50%) 84.21%
+        );
+        animation: rainbowLoad 0.5s ease-in-out;
+    }
+
+    //.sui-header__navlink
+    &__navlink {
+        margin: 0;
+        display: flex;
+        align-items: center;
+
+        &:hover {
+            .sui-header__navlink-ico {
+                fill: @sui-blue-1;
+            }
+        }
+
+        //.sui-header__navlink-ico
+        &-ico {
+            fill: @sui-white;
+            margin-top: 5px;
+            width: 30px;
+            height: 16px;
+            transition: 0.2s;
+        }
+    }
+
+    //.sui-header__navigation
+    &__navigation {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        //.sui-header__navigation-wrapper
+        &-wrapper {
+            display: flex;
+            margin-left: 5%;
+            justify-content: center;
+            align-items: center;
+            max-width: 500px;
+            gap: 10px;
+
+            @media (max-width: 1920px) {
+                margin-left: 10%;
+            }
+        }
+
+        //.sui-header__navigation-zoomInput
+        &-zoomInput {
+            width: 50px;
+            height: 25px;
+            text-align: center;
+            box-shadow: inset 0px 4px 4px hsla(0, 0%, 0%, 0.25);
+            border-radius: 5px;
+            background: @sui-blue-deep-3;
+            color: @sui-white;
+            font-size: 14px;
+
+            &::placeholder {
+                color: @sui-white;
+                font-size: 14px;
+            }
+        }
+
+        //.sui-header__navigation-clear
+        &-clear{
+            transition: 0.2s;
+        }
+
+        //.sui-header__navigation-btn
+        &-btn {
+            box-sizing: border-box;
+            padding-top: 5px;
+            width: 27px;
+            height: 26px;
+
+            &:hover {
+                .sui-header__navigation-btnZoom {
+                    fill: @sui-blue-1;
+                }
+                .sui-header__navigation-clear{
+                    fill: @sui-blue-1;
+                }
+            }
+
+            //.sui-header__navigation-btn _grid
+            &._grid {
+                width: 28px;
+                height: 26px;
+            }
+
+            &._arrow{
+                &:hover{
+                    fill: @sui-blue-1;
+                }
+            }
+        }
+
+        //.sui-header__navigation-btnZoom
+        &-btnZoom {
+            fill: @sui-white;
+            transition: 0.2s;
+            pointer-events: all;
+        }
+
+        //.sui-header__navigation-actions
+        &-actions {
+            display: flex;
+        }
+    }
+
+    //.sui-header__boardSettings
+    &__boardSettings {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+
+        //.sui-header__boardSettings-settings
+        &-setting {
+            width: 100px;
+            height: 25px;
+            text-align: center;
+            border-radius: 5px;
+            border: none;
+            background: @sui-blue-deep-3;
+            color: @sui-white;
+            font-size: 14px;
+
+            &::placeholder {
+                color: @sui-white;
+                font-size: 12px;
+                opacity: 0.8;
+            }
+        }
+
+        //.sui-header__boardSettings-marker
+        &-marker {
+            color: @sui-white;
+        }
+    }
+}
+
+//Rainbow stripe loading animation
+@keyframes rainbowLoad {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 100%;
+    }
+}

@@ -1,0 +1,161 @@
+//Icon params
+@sui-resultC-lowIcoResolution: 64px;
+@sui-resultC-lhighIcoWidth: 251px;
+@sui-resultC-highIcoHeight: 294px;
+
+//Title params
+@sui-resultC-mainTitleColor: #000000d9;
+@sui-resultC-subTitleColor: #00000073;
+@sui-resultC-mainFont: Arial, Helvetica, sans-serif;
+@sui-resultC-mainTitleSize: 24px;
+
+//Button params (general)
+@sui-resultC-shadow: 0 2px #00000004;
+@sui-resultC-generalColor: #1890ff;
+@sui-resultC-generalColorHover: #40a9ff;
+
+//Button params (additional)
+@sui-resultC-additionalBack: #fff;
+@sui-resultC-additionalBorder: #d9d9d9;
+
+//Links
+@sui-resultC-linksColor: white;
+
+:host {
+    display: inline-block;
+}
+
+.sui-result {
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    &__image {
+        &-ico._success {
+            width: @sui-resultC-lowIcoResolution;
+            height: @sui-resultC-lowIcoResolution;
+        }
+
+        &-ico._info {
+            width: @sui-resultC-lowIcoResolution;
+            height: @sui-resultC-lowIcoResolution;
+        }
+
+        &-ico._warning {
+            width: @sui-resultC-lowIcoResolution;
+            height: @sui-resultC-lowIcoResolution;
+        }
+
+        &-ico._error {
+            width: @sui-resultC-lowIcoResolution;
+            height: @sui-resultC-lowIcoResolution;
+        }
+
+        &-ico._403 {
+            width: @sui-resultC-lhighIcoWidth;
+            height: @sui-resultC-highIcoHeight;
+        }
+
+        &-ico._404 {
+            width: @sui-resultC-lhighIcoWidth;
+            height: @sui-resultC-highIcoHeight;
+        }
+
+        &-ico._500 {
+            width: @sui-resultC-lhighIcoWidth;
+            height: @sui-resultC-highIcoHeight;
+        }
+    }
+
+    &__information {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        gap: 2px;
+        font-family: @sui-resultC-mainFont;
+
+        &-title {
+            color: @sui-resultC-mainTitleColor;
+            font-size: @sui-resultC-mainTitleSize;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        &-subtitle {
+            color: @sui-resultC-subTitleColor;
+            font-size: 14px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+    }
+
+    &__navigation {
+        display: flex;
+        gap: 10px;
+
+        &-btn {
+            line-height: 1.5715;
+            position: relative;
+            display: inline-block;
+            font-weight: 400;
+            white-space: nowrap;
+            text-align: center;
+            background-image: none;
+            border: 1px solid @sui-resultC-additionalBorder;
+            box-shadow: @sui-resultC-shadow;
+            cursor: pointer;
+            transition: all .3s cubic-bezier(.645, .045, .355, 1);
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            touch-action: manipulation;
+            height: 32px;
+            padding: 4px 15px;
+            font-size: 14px;
+            border-radius: 2px;
+            background: @sui-resultC-additionalBack;
+
+            &:hover {
+                border-color: @sui-resultC-generalColorHover;
+            }
+
+            &:focus {
+                outline: 1px solid @sui-resultC-generalColor;
+            }
+
+            &._general {
+                background: @sui-resultC-generalColor;
+
+                &:hover {
+                    background: @sui-resultC-generalColorHover;
+                }
+            }
+        }
+
+        &-link {
+            text-decoration: none;
+            color: @sui-resultC-mainTitleColor;
+            transition: all .3s cubic-bezier(.645, .045, .355, 1);
+
+            &._general {
+                color: @sui-resultC-linksColor;
+
+                &:hover {
+                    color: @sui-resultC-linksColor;
+                }
+            }
+
+            &:active {
+                text-decoration: none;
+            }
+
+            &:hover {
+                color: @sui-resultC-generalColorHover;
+            }
+        }
+    }
+}
