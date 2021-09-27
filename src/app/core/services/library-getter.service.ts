@@ -1,4 +1,3 @@
-import { AlertComponent } from './../../library/components/alert/alert.component';
 import { Injectable } from '@angular/core';
 import { ILibraryInformation } from '@models/library-getter.model';
 import { ButtonComponent } from '@library-components/button/button.component';
@@ -12,6 +11,7 @@ import { SliderComponent } from '@library-components/slider/slider.component';
 import { SwitchComponent } from '@library-components/switch/switch.component';
 import { LinkComponent } from '@library-components/link/link.component';
 import { RectangleComponent } from '@library-components/rectangle/rectangle.component';
+import { AlertComponent } from '@library-components/alert/alert.component';
 
 @Injectable({
     providedIn: 'root',
@@ -40,7 +40,7 @@ export class LibraryGetterService {
         suiButton: {
             group: 'Base',
             nameComponent: 'Button',
-            svgUrl: '/assets/icons/panel/button-icon.svg',
+            svgUrl: './assets/icons/panel/button-icon.svg',
             component: ButtonComponent,
             title: 'Button component',
             description: 'Use this to trigger an operation.',
@@ -48,7 +48,7 @@ export class LibraryGetterService {
         suiCard: {
             group: 'Multimedia',
             nameComponent: 'Card',
-            svgUrl: '/assets/icons/panel/card-icon.svg',
+            svgUrl: './assets/icons/panel/card-icon.svg',
             component: CardComponent,
             title: 'Card component',
             description:
@@ -57,7 +57,7 @@ export class LibraryGetterService {
         suiCheckbox: {
             group: 'Logical',
             nameComponent: 'Checkbox',
-            svgUrl: '/assets/icons/panel/checkbox-icon.svg',
+            svgUrl: './assets/icons/panel/checkbox-icon.svg',
             component: CheckboxComponent,
             title: 'Checkbox component',
             description: 'Used for selecting multiple values from several options.',
@@ -65,7 +65,7 @@ export class LibraryGetterService {
         suiInput: {
             group: 'Base',
             nameComponent: 'Input',
-            svgUrl: '/assets/icons/panel/input-icon.svg',
+            svgUrl: './assets/icons/panel/input-icon.svg',
             component: InputComponent,
             title: 'Input component',
             description:
@@ -74,7 +74,7 @@ export class LibraryGetterService {
         suiInputNumber: {
             group: 'Logical',
             nameComponent: 'InputNumber',
-            svgUrl: '/assets/icons/panel/input-number-icon.svg',
+            svgUrl: './assets/icons/panel/input-number-icon.svg',
             component: InputNumberComponent,
             title: 'Input number component',
             description: 'Enter a number within certain range with the mouse or keyboard.',
@@ -82,7 +82,7 @@ export class LibraryGetterService {
         suiRadio: {
             group: 'Logical',
             nameComponent: 'Radio',
-            svgUrl: '/assets/icons/panel/radio-icon.svg',
+            svgUrl: './assets/icons/panel/radio-icon.svg',
             component: RadioComponent,
             title: 'Radio button component',
             description: 'Used to select a single state from multiple options.',
@@ -90,7 +90,7 @@ export class LibraryGetterService {
         suiResult: {
             group: 'Multimedia',
             nameComponent: 'Result',
-            svgUrl: '/assets/icons/panel/result-icon.svg',
+            svgUrl: './assets/icons/panel/result-icon.svg',
             component: ResultComponent,
             title: 'Result component',
             description:
@@ -99,7 +99,7 @@ export class LibraryGetterService {
         suiSlider: {
             group: 'Logical',
             nameComponent: 'Slider',
-            svgUrl: '/assets/icons/panel/slider-icon.svg',
+            svgUrl: './assets/icons/panel/slider-icon.svg',
             component: SliderComponent,
             title: 'Slider component',
             description: 'A Slider component for displaying current value and intervals in range.',
@@ -107,7 +107,7 @@ export class LibraryGetterService {
         suiSwitch: {
             group: 'Logical',
             nameComponent: 'Switch',
-            svgUrl: '/assets/icons/panel/sui-switch.svg',
+            svgUrl: './assets/icons/panel/sui-switch.svg',
             component: SwitchComponent,
             title: 'Switch component',
             description: 'Switching Selector.',
@@ -115,7 +115,7 @@ export class LibraryGetterService {
         suiLink: {
             group: 'Base',
             nameComponent: 'Link',
-            svgUrl: '/assets/icons/panel/link-icon.svg',
+            svgUrl: './assets/icons/panel/link-icon.svg',
             component: LinkComponent,
             title: 'Link component',
             description: 'A link component.',
@@ -123,7 +123,7 @@ export class LibraryGetterService {
         suiAlert: {
             group: 'Multimedia',
             nameComponent: 'Alert',
-            svgUrl: '/assets/icons/panel/alert-icon.svg',
+            svgUrl: './assets/icons/panel/alert-icon.svg',
             component: AlertComponent,
             title: 'Alert component',
             description: 'Use when you need to show alert messages to users.',
@@ -131,7 +131,7 @@ export class LibraryGetterService {
         suiRectangle: {
             group: 'Base',
             nameComponent: 'Rectangle',
-            svgUrl: '/assets/icons/panel/rectangle-icon.svg',
+            svgUrl: './assets/icons/panel/rectangle-icon.svg',
             title: 'Rectangle component',
             component: RectangleComponent,
             description: 'A Rectangle component, can be used for background, header or footer.',
